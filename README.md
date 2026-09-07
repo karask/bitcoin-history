@@ -6,7 +6,8 @@ ChatGPT login is required to use the local website.
 The public site is deployed automatically from `main` to
 `https://kkarasavvas.com/bitcoin-history/` by GitHub Actions. `npm run build:pages`
 creates the static export in `dist/client` with the `/bitcoin-history` base path
-used in production.
+used in production. It also normalizes Vinext's asset output for the GitHub
+project-site mount path.
 
 ## Run the local ride
 
