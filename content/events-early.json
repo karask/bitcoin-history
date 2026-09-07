@@ -1,0 +1,5244 @@
+[
+  {
+    "slug": "bitcoin-org-domain-registered",
+    "date": "2008-08-18",
+    "precision": "day",
+    "title": "bitcoin.org is registered",
+    "summary": "The domain bitcoin.org was registered before Bitcoin was publicly announced.",
+    "details": "The registration created the project’s first durable public address while its author remained pseudonymous. The site later hosted the white paper, software, and introductory material.",
+    "whyItMatters": "It is the earliest public infrastructure tied directly to the Bitcoin project.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "bitcoin.org",
+      "domain",
+      "Satoshi Nakamoto"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "WHOIS record for bitcoin.org",
+        "publisher": "ICANN Lookup",
+        "url": "https://lookup.icann.org/en/lookup",
+        "type": "primary"
+      },
+      {
+        "title": "Early history",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Early_history",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "satoshi-contacts-wei-dai",
+    "date": "2008-08-22",
+    "precision": "day",
+    "title": "Satoshi contacts Wei Dai",
+    "summary": "Satoshi Nakamoto emailed Wei Dai about citing b-money in a forthcoming electronic-cash paper.",
+    "details": "The message described a system expanding earlier ideas into a complete working design and linked a pre-release draft. The exchange documents Bitcoin’s intellectual connection to cypherpunk digital-money research.",
+    "whyItMatters": "The correspondence places Bitcoin in a traceable lineage of prior decentralized-money proposals.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "b-money",
+      "cypherpunks",
+      "email"
+    ],
+    "actors": [
+      "Satoshi Nakamoto",
+      "Wei Dai",
+      "Adam Back"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Wei Dai/Satoshi Nakamoto emails",
+        "publisher": "Gwern.net",
+        "url": "https://gwern.net/doc/bitcoin/2008-nakamoto",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-white-paper-announced",
+    "date": "2008-10-31",
+    "precision": "day",
+    "title": "The Bitcoin white paper is announced",
+    "summary": "Satoshi Nakamoto announced “Bitcoin: A Peer-to-Peer Electronic Cash System” on the Cryptography Mailing List.",
+    "details": "The nine-page paper proposed electronic payments without a trusted financial intermediary. It combined proof of work, a peer-to-peer timestamp server, and economic incentives into a system designed to resist double spending.",
+    "whyItMatters": "The paper supplied Bitcoin’s foundational design and public rationale.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "white paper",
+      "peer-to-peer",
+      "proof of work"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin P2P e-cash paper",
+        "publisher": "Cryptography Mailing List",
+        "url": "https://www.metzdowd.com/pipermail/cryptography/2008-October/014810.html",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bitcoin.pdf",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-sourceforge-project-registered",
+    "date": "2008-11-09",
+    "precision": "day",
+    "title": "Bitcoin is registered on SourceForge",
+    "summary": "The Bitcoin project was registered on SourceForge to host and distribute its open-source software.",
+    "details": "SourceForge supplied code hosting, downloads, and project infrastructure for the early client. Its surviving project metadata records the registration date.",
+    "whyItMatters": "The registration turned the published design into an identifiable open-source software project.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "origins"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "SourceForge",
+      "open source",
+      "software"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin download project details",
+        "publisher": "SourceForge",
+        "url": "https://sourceforge.net/projects/bitcoin/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "genesis-block-mined",
+    "date": "2009-01-03",
+    "precision": "day",
+    "title": "The genesis block is mined",
+    "summary": "Satoshi Nakamoto created Bitcoin’s first block and embedded a newspaper headline in its coinbase data.",
+    "details": "Block 0 began the chain and created a 50 BTC subsidy that cannot be spent under the original client’s handling of the genesis block. Its text references The Times headline about a second bank bailout, providing a public timestamp and enduring historical context.",
+    "whyItMatters": "The genesis block is the starting point of Bitcoin’s ledger and monetary issuance.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol",
+      "mining"
+    ],
+    "kind": "launch",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "genesis block",
+      "coinbase",
+      "The Times"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 0",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 0",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/0",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The coinbase contains: The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.",
+    "blockHeight": 0
+  },
+  {
+    "slug": "bitcoin-version-0-1-released",
+    "date": "2009-01-09",
+    "precision": "day",
+    "title": "Bitcoin v0.1 is released",
+    "summary": "Satoshi Nakamoto released the first public Bitcoin software and announced it on the Cryptography Mailing List.",
+    "details": "The Windows-only client implemented mining, wallet functions, transaction relay, and full validation. Nakamoto invited participants to run nodes and generate coins while the network was small.",
+    "whyItMatters": "The release made the white paper’s system usable as a live peer-to-peer network.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "origins"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "release",
+      "Bitcoin 0.1",
+      "open source"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin v0.1 released",
+        "publisher": "Cryptography Mailing List",
+        "url": "https://www.metzdowd.com/pipermail/cryptography/2009-January/014994.html",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Satoshi Nakamoto announced the release to the Cryptography Mailing List on 8 January 2009; the SourceForge upload is dated 9 January. The original release targeted Windows and used CPU mining."
+  },
+  {
+    "slug": "hal-finney-running-bitcoin",
+    "date": "2009-01-10",
+    "precision": "day",
+    "title": "Hal Finney posts “Running bitcoin”",
+    "summary": "Cryptographer Hal Finney publicly reported that he was running the new Bitcoin software.",
+    "details": "Finney was among the first people outside Nakamoto to test the client and communicate about its behavior. His brief post became an emblem of Bitcoin’s transition from a one-person project to a network with independent participants.",
+    "whyItMatters": "It records one of the earliest known independent Bitcoin nodes and miners.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "adoption"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Hal Finney",
+      "early adopter",
+      "social media"
+    ],
+    "actors": [
+      "Hal Finney"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Running bitcoin",
+        "publisher": "X (archived post)",
+        "url": "https://x.com/halfin/status/1110302988",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "first-person-to-person-bitcoin-transaction",
+    "date": "2009-01-12",
+    "precision": "day",
+    "title": "The first person-to-person Bitcoin transaction",
+    "summary": "Satoshi Nakamoto sent 10 BTC to Hal Finney in Bitcoin’s first known transfer between two people.",
+    "details": "The transaction was confirmed in block 170 after Finney began testing the software. It demonstrated that independently operated clients could create, relay, and settle a payment on the new network.",
+    "whyItMatters": "This was Bitcoin’s first documented payment from one participant to another.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "adoption",
+      "protocol"
+    ],
+    "kind": "record",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "first transaction",
+      "Hal Finney",
+      "payment"
+    ],
+    "actors": [
+      "Satoshi Nakamoto",
+      "Hal Finney"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin transaction f4184f…",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/tx/f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin and me",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=155054.0",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 170",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/170",
+        "type": "primary"
+      }
+    ],
+    "blockHeight": 170,
+    "txid": "f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16"
+  },
+  {
+    "slug": "satoshi-p2p-foundation-announcement",
+    "date": "2009-02-11",
+    "precision": "day",
+    "title": "Satoshi announces Bitcoin to the P2P Foundation",
+    "summary": "Nakamoto introduced the running software to a wider audience and stated the problem it was built to solve.",
+    "details": "The post described a system with no central server and no trusted parties, and argued that conventional currency requires trusting a central bank not to debase it and banks not to lose the money. It is the fullest statement of motivation Nakamoto published under his own account.",
+    "whyItMatters": "It moved Bitcoin from a cryptography mailing list to a general technology audience, and set out the argument the project has been read through ever since.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Satoshi Nakamoto",
+      "announcement",
+      "trust"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin open source implementation of P2P currency",
+        "publisher": "P2P Foundation",
+        "url": "https://web.archive.org/web/20090221024857/http://p2pfoundation.ning.com:80/forum/topics/bitcoin-open-source",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "bitcoin-version-0-1-released",
+      "bitcoin-white-paper-announced"
+    ]
+  },
+  {
+    "slug": "new-liberty-standard-exchange-rate",
+    "date": "2009-10-05",
+    "precision": "day",
+    "title": "A first published dollar exchange rate",
+    "summary": "New Liberty Standard published an exchange rate of 1,309.03 BTC per U.S. dollar based on estimated electricity costs.",
+    "details": "The formula divided a computer’s electricity expense by the bitcoins it generated. The quote was not yet a liquid market price, but it offered a reproducible way to express Bitcoin in conventional money.",
+    "whyItMatters": "The rate gave Bitcoin one of its earliest explicit valuations in fiat currency.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "mining"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "exchange rate",
+      "electricity",
+      "valuation"
+    ],
+    "actors": [
+      "New Liberty Standard"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Historical Price Data for 2009",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=601.0",
+        "type": "primary"
+      },
+      {
+        "title": "Important milestones of the Bitcoin project",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Category:History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "first-bitcoin-fiat-trade",
+    "date": "2009-10-12",
+    "precision": "day",
+    "title": "The first known bitcoin-for-fiat trade",
+    "summary": "Martti Malmi sold 5,050 BTC to New Liberty Standard for $5.02 sent through PayPal.",
+    "details": "Malmi recorded the sale in his early-account notes, and the payment valued each bitcoin at roughly one-tenth of a U.S. cent. It is distinct from merely publishing an indicative exchange rate.",
+    "whyItMatters": "The trade established a documented market exchange between bitcoin and sovereign money.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "FI"
+      },
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "fiat",
+      "PayPal",
+      "first trade"
+    ],
+    "actors": [
+      "Martti Malmi",
+      "New Liberty Standard"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "The first Bitcoin trade was made through PayPal in exchange for U.S. dollars",
+        "publisher": "BitcoinHistory.net",
+        "url": "https://www.bitcoinhistory.net/the-first-bitcoin-trade-was-made-through-paypal-in-exchange-for-us-dollars",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin Firsts",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Bitcoin_Firsts",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcointalk-forum-launched",
+    "date": "2009-11-22",
+    "precision": "day",
+    "title": "The Bitcoin forum opens",
+    "summary": "Satoshi Nakamoto launched a dedicated discussion board, later known as BitcoinTalk, for the growing project.",
+    "details": "The forum replaced scattered mailing-list threads with a searchable public record of releases, bug reports, trades and arguments. Nearly every documented decision of Bitcoin's first years survives because it happened there.",
+    "whyItMatters": "It is the primary archive of Bitcoin's early history, and the reason so much of that history can be cited at all.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "origins"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BitcoinTalk",
+      "forum",
+      "community"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Satoshi Nakamoto's forum posts",
+        "publisher": "Satoshi Nakamoto Institute",
+        "url": "https://satoshi.nakamotoinstitute.org/posts/bitcointalk/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-version-0-2-released",
+    "date": "2009-12-16",
+    "precision": "day",
+    "title": "Bitcoin v0.2 adds Linux support",
+    "summary": "Bitcoin v0.2 expanded the original client with Linux support and improved use of multiple processor cores.",
+    "details": "The release made it easier to run nodes and mine outside the Windows environment. Broader operating-system support reduced an early barrier to independent participation.",
+    "whyItMatters": "It widened access to the reference implementation during Bitcoin’s first year.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "release",
+      "Linux",
+      "mining"
+    ],
+    "actors": [
+      "Satoshi Nakamoto",
+      "Bitcoin developers"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Original Bitcoin client",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Original_Bitcoin_client",
+        "type": "secondary"
+      },
+      {
+        "title": "Important milestones of the Bitcoin project",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Category:History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "first-bitcoin-difficulty-increase",
+    "date": "2009-12-30",
+    "precision": "day",
+    "title": "Mining difficulty rises for the first time",
+    "summary": "Bitcoin completed its first upward difficulty adjustment as more computing power joined the network.",
+    "details": "The protocol recalculates mining difficulty every 2,016 blocks to target an average ten-minute block interval. This adjustment moved difficulty above its original value of one.",
+    "whyItMatters": "It was the first live demonstration of Bitcoin automatically adapting issuance to changing hash power.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "protocol"
+    ],
+    "kind": "record",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "difficulty adjustment",
+      "hash rate",
+      "mining"
+    ],
+    "actors": [
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 32256",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/32256",
+        "type": "primary"
+      },
+      {
+        "title": "Important milestones of the Bitcoin project",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Category:History",
+        "type": "secondary"
+      }
+    ],
+    "blockHeight": 32256
+  },
+  {
+    "slug": "bitcoin-market-opens",
+    "date": "2010-02-06",
+    "precision": "day",
+    "title": "Bitcoin Market opens",
+    "summary": "Bitcoin Market launched as the first publicly announced marketplace dedicated to trading bitcoin for conventional currency.",
+    "details": "The service gave participants a standing venue for offers instead of arranging every exchange privately. Trading against U.S. dollars began during Bitcoin’s first period of market formation.",
+    "whyItMatters": "A dedicated exchange helped turn sporadic trades into a recognizable market.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "exchange",
+      "Bitcoin Market",
+      "trading"
+    ],
+    "actors": [
+      "Bitcoin Market"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-wiki-founded",
+    "date": "2010-04-14",
+    "precision": "day",
+    "title": "The Bitcoin Wiki is founded",
+    "summary": "Martti Malmi created a community wiki for Bitcoin documentation and historical records.",
+    "details": "The wiki collected technical explanations, service information, and records of early community activity. It later moved platforms and remains an important archive of Bitcoin’s formative years.",
+    "whyItMatters": "Shared documentation made the young project easier to understand and contribute to.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "adoption"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "documentation",
+      "wiki",
+      "community"
+    ],
+    "actors": [
+      "Martti Malmi"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-pizza-offer-posted",
+    "date": "2010-05-18",
+    "precision": "day",
+    "title": "Laszlo Hanyecz offers 10,000 BTC for pizza",
+    "summary": "Programmer and miner Laszlo Hanyecz posted an offer to pay 10,000 BTC for two delivered pizzas.",
+    "details": "Hanyecz asked another participant to arrange the purchase rather than accepting a gift card or making the order himself. The open forum thread documents the negotiation before the eventual purchase.",
+    "whyItMatters": "The offer created the setting for Bitcoin’s best-known early purchase of a physical good.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "commerce",
+      "Bitcoin Pizza Day"
+    ],
+    "actors": [
+      "Laszlo Hanyecz"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Pizza for bitcoins?",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=137.0",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-pizza-purchase",
+    "date": "2010-05-22",
+    "precision": "day",
+    "title": "10,000 BTC buys two pizzas",
+    "summary": "Jeremy Sturdivant arranged two pizzas for Laszlo Hanyecz in exchange for 10,000 BTC.",
+    "details": "The completion was confirmed in the original BitcoinTalk thread, with photographs of the pizzas. The payment became a cultural reference point for comparing Bitcoin’s early purchasing power with its later market value.",
+    "whyItMatters": "It is the first widely documented purchase of physical goods with bitcoin.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "origins"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "commerce",
+      "Bitcoin Pizza Day"
+    ],
+    "actors": [
+      "Laszlo Hanyecz",
+      "Jeremy Sturdivant"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Pizza for bitcoins?",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=137.0",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin transaction a1075d…",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/tx/a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d",
+        "type": "primary"
+      }
+    ],
+    "txid": "a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d"
+  },
+  {
+    "slug": "bitcoin-faucet-launched",
+    "date": "2010-06-01",
+    "precision": "month",
+    "title": "The Bitcoin Faucet gives coins away",
+    "summary": "Gavin Andresen set up a site that handed five bitcoin to anyone who asked, to get coins into circulation.",
+    "details": "Andresen funded the faucet himself on the reasoning that a currency nobody holds cannot become a currency. Tens of thousands of bitcoin were distributed before the giveaway was reduced and eventually stopped.",
+    "whyItMatters": "It is the first deliberate attempt to solve Bitcoin's distribution problem, and it made Andresen a central figure in the project.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "faucet",
+      "distribution",
+      "Gavin Andresen"
+    ],
+    "actors": [
+      "Gavin Andresen"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin Faucet",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Bitcoin_Faucet",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-version-0-3-released",
+    "date": "2010-07-07",
+    "precision": "day",
+    "title": "Bitcoin v0.3 is released",
+    "summary": "Bitcoin v0.3 delivered a faster client shortly before the project received its first large wave of public attention.",
+    "details": "The release improved performance and was announced to the growing user community. It was the version highlighted by Slashdot several days later.",
+    "whyItMatters": "The release prepared the software for a sharp increase in users and miners.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "release",
+      "Bitcoin 0.3",
+      "software"
+    ],
+    "actors": [
+      "Satoshi Nakamoto",
+      "Bitcoin developers"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin 0.3 released!",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=199.0",
+        "type": "primary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-featured-on-slashdot",
+    "date": "2010-07-11",
+    "precision": "day",
+    "title": "Slashdot introduces Bitcoin to a wider audience",
+    "summary": "A Slashdot story about Bitcoin v0.3 sent a large influx of new visitors to the project.",
+    "details": "The post described Bitcoin as a decentralized, anonymous digital currency based on proof of work. Downloads, forum activity, mining competition, and market interest rose sharply in the days that followed.",
+    "whyItMatters": "It was Bitcoin’s first major burst of attention from a broad technology audience.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Slashdot",
+      "media",
+      "community growth"
+    ],
+    "actors": [
+      "Slashdot",
+      "Bitcoin community"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin releases version 0.3",
+        "publisher": "Slashdot",
+        "url": "https://slashdot.org/story/10/07/11/1747245/bitcoin-releases-version-03",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "early-gpu-bitcoin-mining",
+    "date": "2010-07-18",
+    "precision": "day",
+    "title": "GPU mining begins to displace CPUs",
+    "summary": "The miner known as ArtForz began producing blocks with an OpenCL GPU setup during Bitcoin’s first mining-technology shift.",
+    "details": "Graphics processors could calculate Bitcoin’s SHA-256 proof of work far faster than general-purpose CPUs. The advantage began an escalating specialization of mining hardware and changed who could compete effectively.",
+    "whyItMatters": "GPU mining started Bitcoin’s long transition from hobbyist computation to a specialized industry.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "GPU",
+      "OpenCL",
+      "hash rate"
+    ],
+    "actors": [
+      "ArtForz",
+      "Bitcoin miners"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ],
+    "technicalNote": "GPUs parallelized SHA-256 hashing and rapidly outperformed CPU mining."
+  },
+  {
+    "slug": "mt-gox-bitcoin-exchange-launches",
+    "date": "2010-07-18",
+    "precision": "day",
+    "title": "Mt. Gox launches as a bitcoin exchange",
+    "summary": "Jed McCaleb opened Mt. Gox for bitcoin trading after repurposing a domain originally created for game-card exchange.",
+    "details": "The exchange provided an easier order-book market and soon became a central source of bitcoin liquidity and price discovery. Its later dominance also concentrated substantial ecosystem risk in one company.",
+    "whyItMatters": "Mt. Gox became the defining exchange of Bitcoin’s early market era.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "JP"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "exchange",
+      "trading"
+    ],
+    "actors": [
+      "Jed McCaleb",
+      "Mt. Gox"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "The rise and fall of Mt. Gox",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/2013/11/mtgox/",
+        "type": "secondary"
+      },
+      {
+        "title": "Mt. Gox",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Mt._Gox",
+        "type": "secondary"
+      },
+      {
+        "title": "mtgox.com in 2010",
+        "publisher": "Mt. Gox (archived)",
+        "url": "https://web.archive.org/web/20100801000000*/mtgox.com",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Jed McCaleb repurposed the mtgox.com domain, registered in 2007 for Magic: The Gathering Online card trading, and opened it as a bitcoin exchange on 18 July 2010."
+  },
+  {
+    "slug": "bitcoin-value-overflow-incident",
+    "date": "2010-08-15",
+    "precision": "day",
+    "title": "The value-overflow incident creates 184 billion BTC",
+    "summary": "A validation bug allowed one transaction in block 74,638 to create outputs totaling more than 184 billion bitcoin.",
+    "details": "Developers released corrected software within hours, and participants reorganized onto a chain that rejected the invalid transaction. The erroneous chain was overtaken after 53 blocks, eliminating the unintended coins from the accepted ledger.",
+    "whyItMatters": "It was Bitcoin’s most severe early consensus failure and a formative test of emergency coordination.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "protocol"
+    ],
+    "kind": "failure",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "CVE-2010-5139",
+      "overflow",
+      "chain reorganization"
+    ],
+    "actors": [
+      "Bitcoin developers",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "CVE-2010-5139",
+        "publisher": "National Vulnerability Database",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2010-5139",
+        "type": "primary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin block 74,638",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/74638",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The invalid transaction appeared at block 74,638; the repaired chain overtook it at height 74,691.",
+    "blockHeight": 74638
+  },
+  {
+    "slug": "first-split-mining-reward",
+    "date": "2010-09-14",
+    "precision": "day",
+    "title": "A block reward is split among miners",
+    "summary": "Block 79,764 distributed its generation reward across multiple outputs in an early demonstration of pooled payout mechanics.",
+    "details": "The coinbase transaction allocated the reward rather than paying a single mining address. Shared rewards helped miners smooth the highly variable income of finding whole blocks independently.",
+    "whyItMatters": "The block anticipated the pooled-mining economics that would soon dominate Bitcoin production.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "record",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "pooled mining",
+      "coinbase",
+      "reward sharing"
+    ],
+    "actors": [
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 79764",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block/00000000001b816df120f4bdf63efd5d986e80c4dbffcf6ad5e73fba0499926d",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 79,764",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/79764",
+        "type": "primary"
+      }
+    ],
+    "blockHeight": 79764
+  },
+  {
+    "slug": "first-public-opencl-miner",
+    "date": "2010-10-01",
+    "precision": "day",
+    "title": "A public OpenCL miner is released",
+    "summary": "An openly available OpenCL miner brought GPU acceleration to a much wider group of Bitcoin miners.",
+    "details": "Earlier GPU operations had been private or narrowly distributed. Public code lowered the barrier to using graphics cards and accelerated the network-wide move away from CPUs.",
+    "whyItMatters": "Widely accessible GPU software rapidly increased mining competition and hash rate.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "OpenCL",
+      "GPU",
+      "open source"
+    ],
+    "actors": [
+      "m0mchil",
+      "Bitcoin miners"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "OpenCL miner",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=133.0",
+        "type": "primary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-market-cap-one-million",
+    "date": "2010-11-06",
+    "precision": "day",
+    "title": "Bitcoin’s quoted market value reaches $1 million",
+    "summary": "Bitcoin’s estimated market capitalization passed $1 million as exchange quotes moved above $0.50 per BTC.",
+    "details": "The figure multiplied the circulating supply by thin exchange prices and should be read as a market indicator, not realizable liquidity. Even so, it marked a new scale for the small experimental economy.",
+    "whyItMatters": "The milestone signaled that Bitcoin was becoming an economically meaningful traded asset.",
+    "category": "finance",
+    "categories": [
+      "finance"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "market capitalization",
+      "price",
+      "milestone"
+    ],
+    "actors": [
+      "Bitcoin traders"
+    ],
+    "evidence": "estimated",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "satoshi-last-public-forum-post",
+    "date": "2010-12-12",
+    "precision": "day",
+    "title": "Satoshi makes a final known public forum post",
+    "summary": "Satoshi Nakamoto posted a technical note on denial-of-service safeguards and then stopped posting publicly.",
+    "details": "Development responsibilities had already begun spreading among other contributors. Nakamoto continued limited private correspondence for several months, so this was a public departure rather than the final verified communication.",
+    "whyItMatters": "The post marks the visible end of Bitcoin’s founder-led public development period.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Satoshi Nakamoto",
+      "BitcoinTalk",
+      "departure"
+    ],
+    "actors": [
+      "Satoshi Nakamoto"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Re: DoS",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=2228.msg29479#msg29479",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "slush-pool-first-block",
+    "date": "2010-12-16",
+    "precision": "day",
+    "title": "Slush’s Pool mines its first block",
+    "summary": "Bitcoin Pooled Mining, later known as Slush Pool, found its first mainnet block using cooperative hash power.",
+    "details": "The pool distributed work and paid miners in proportion to contributed computation. This reduced income variance for participants and helped establish the pool model used throughout industrial mining.",
+    "whyItMatters": "It made pooled mining a durable part of Bitcoin’s economic structure.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "CZ"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Slush Pool",
+      "mining pool",
+      "payouts"
+    ],
+    "actors": [
+      "Marek Palatinus",
+      "Slush Pool",
+      "Bitcoin miners"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "The first mining pool",
+        "publisher": "Braiins",
+        "url": "https://braiins.com/blog/bitcoin-mining-pools-luck-shares-estimated-hashrate",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-dollar-parity",
+    "date": "2011-02-09",
+    "precision": "day",
+    "title": "Bitcoin reaches U.S. dollar parity",
+    "summary": "One bitcoin traded for one U.S. dollar on Mt. Gox for the first time.",
+    "details": "The quote was a market milestone rather than a change to the protocol or a guarantee of sustained value. News of parity nevertheless brought a surge of attention and traffic to Bitcoin websites.",
+    "whyItMatters": "Dollar parity gave a global audience an intuitive signal that the experiment had acquired market value.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "dollar parity",
+      "price",
+      "Mt. Gox"
+    ],
+    "actors": [
+      "Mt. Gox",
+      "Bitcoin traders"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Online-only currency Bitcoin reaches dollar parity",
+        "publisher": "Slashdot",
+        "url": "https://news.slashdot.org/story/11/02/10/189246/online-only-currency-bitcoin-reaches-dollar-parity",
+        "type": "secondary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "mt-gox-sold-to-mark-karpeles",
+    "date": "2011-03-06",
+    "precision": "day",
+    "title": "Mark Karpelès takes control of Mt. Gox",
+    "summary": "Jed McCaleb sold the Mt. Gox exchange to Mark Karpelès as trading activity expanded.",
+    "details": "Karpelès moved the company’s operations to Japan and oversaw its growth into Bitcoin’s dominant exchange. The transfer placed a central piece of market infrastructure under new ownership before the platform’s later crises.",
+    "whyItMatters": "The ownership change shaped the exchange that would dominate Bitcoin’s early price discovery.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "JP"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "acquisition",
+      "exchange"
+    ],
+    "actors": [
+      "Jed McCaleb",
+      "Mark Karpelès",
+      "Mt. Gox"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "The rise and fall of Mt. Gox",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/2013/11/mtgox/",
+        "type": "secondary"
+      }
+    ],
+    "technicalNote": "McCaleb announced the ownership transfer on the Bitcoin forum on 6 March 2011; Karpelès published his own announcement on 16 March."
+  },
+  {
+    "slug": "weusecoins-video-released",
+    "date": "2011-03-22",
+    "precision": "day",
+    "title": "“What is Bitcoin?” brings a simple explanation",
+    "summary": "WeUseCoins released an animated explainer that introduced Bitcoin to millions of viewers.",
+    "details": "The video translated peer-to-peer money, mining, and limited supply into accessible language. It became one of the most widely circulated introductions to Bitcoin during the early adoption period.",
+    "whyItMatters": "Clear public education helped Bitcoin reach people beyond cryptography and open-source circles.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "education",
+      "video",
+      "WeUseCoins"
+    ],
+    "actors": [
+      "WeUseCoins"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "What is Bitcoin?",
+        "publisher": "WeUseCoins",
+        "url": "https://www.youtube.com/watch?v=Um63OQz3bjo",
+        "type": "primary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "time-magazine-covers-bitcoin",
+    "date": "2011-04-16",
+    "precision": "day",
+    "title": "TIME publishes an early mainstream Bitcoin profile",
+    "summary": "TIME examined Bitcoin as an online cash system that might challenge established payment and monetary institutions.",
+    "details": "The article introduced a broad readership to Bitcoin’s pseudonymous creator and decentralized issuance. Its framing also brought political and economic questions about the project into mainstream coverage.",
+    "whyItMatters": "The profile marked Bitcoin’s arrival in a major general-interest publication.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "policy"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "TIME",
+      "media",
+      "public awareness"
+    ],
+    "actors": [
+      "TIME"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Online cash Bitcoin could challenge governments, banks",
+        "publisher": "TIME",
+        "url": "https://techland.time.com/2011/04/16/online-cash-bitcoin-could-challenge-governments/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "satoshi-final-known-email",
+    "date": "2011-04-26",
+    "precision": "day",
+    "title": "Satoshi sends a final known verified email",
+    "summary": "Satoshi Nakamoto sent Gavin Andresen a final known message emphasizing the project and its contributors rather than the founder.",
+    "details": "The email followed an earlier message to Mike Hearn stating that Nakamoto had moved on to other things. No later communication has been broadly verified as authentic.",
+    "whyItMatters": "Bitcoin continued without its creator’s active leadership, testing the project’s decentralized character.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Satoshi Nakamoto",
+      "Gavin Andresen",
+      "departure"
+    ],
+    "actors": [
+      "Satoshi Nakamoto",
+      "Gavin Andresen",
+      "Mike Hearn"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Re: alert key (final Satoshi email)",
+        "publisher": "Satoshi Archive",
+        "url": "https://satoshi-archive.org/",
+        "type": "primary"
+      },
+      {
+        "title": "The Book of Satoshi",
+        "publisher": "Phil Champagne",
+        "url": "https://dplusplus.me/Book_of_Satoshi.pdf",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitpay-founded",
+    "date": "2011-05-01",
+    "precision": "month",
+    "title": "BitPay makes bitcoin spendable at merchants",
+    "summary": "The first significant bitcoin payment processor launched, settling merchants in local currency.",
+    "details": "By taking the exchange-rate risk itself, BitPay let a shop accept bitcoin without ever holding it. The model became the template for merchant acceptance and for the criticism that such acceptance is nominal.",
+    "whyItMatters": "Almost every 'company now accepts bitcoin' announcement of the following decade ran through a processor built on this pattern.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "adoption"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "BitPay",
+      "payments",
+      "merchants"
+    ],
+    "actors": [
+      "BitPay",
+      "Tony Gallippi",
+      "Stephen Pair"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "BitPay",
+        "publisher": "BitPay",
+        "url": "https://bitpay.com/about/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "gawker-silk-road-bitcoin-story",
+    "date": "2011-06-01",
+    "precision": "day",
+    "title": "Silk Road coverage links Bitcoin to a darknet market",
+    "summary": "A widely read Gawker article described Silk Road and its use of bitcoin for transactions.",
+    "details": "The story sharply increased awareness of both the market and Bitcoin. It also fixed a lasting association between pseudonymous digital payments, illicit commerce, and regulatory scrutiny.",
+    "whyItMatters": "Silk Road became an early real-world use case and a central source of reputational and legal risk for Bitcoin.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "crisis",
+      "policy"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Silk Road",
+      "darknet",
+      "media"
+    ],
+    "actors": [
+      "Silk Road",
+      "Gawker"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "The underground website where you can buy any drug imaginable",
+        "publisher": "Gawker",
+        "url": "https://web.archive.org/web/20110603015735/http://gawker.com:80/5805928/the-underground-website-where-you-can-buy-any-drug-imaginable",
+        "type": "primary"
+      },
+      {
+        "title": "Traveling the Silk Road",
+        "publisher": "Carnegie Mellon University",
+        "url": "https://arxiv.org/abs/1207.7139",
+        "type": "secondary"
+      },
+      {
+        "title": "Silk Road (marketplace)",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Silk_Road",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-2011-market-peak",
+    "date": "2011-06-08",
+    "precision": "day",
+    "title": "Bitcoin’s first major market bubble peaks",
+    "summary": "The Mt. Gox price reached about $31.91 before falling steeply over the following days and months.",
+    "details": "The move followed rapid growth in attention, exchange participation, and speculative demand. Thin liquidity and immature infrastructure magnified both the advance and the decline.",
+    "whyItMatters": "The cycle established the boom-and-bust pattern that would repeatedly shape Bitcoin’s public history.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "crisis"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "bubble",
+      "price",
+      "Mt. Gox"
+    ],
+    "actors": [
+      "Mt. Gox",
+      "Bitcoin traders"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "allinvain-wallet-theft",
+    "date": "2011-06-13",
+    "precision": "day",
+    "title": "A user reports the theft of 25,000 BTC",
+    "summary": "BitcoinTalk user allinvain reported that malware had stolen 25,000 BTC from an unencrypted wallet file.",
+    "details": "The loss was one of the first large personal bitcoin thefts to receive broad attention. It showed that the protocol’s settlement assurances did not protect inadequately secured private keys on users’ computers.",
+    "whyItMatters": "The incident made wallet security and irreversible-loss risk impossible for the community to ignore.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "wallet theft",
+      "malware",
+      "private keys"
+    ],
+    "actors": [
+      "allinvain"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "I just got hacked — any help is welcome",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=16457.0",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "wikileaks-accepts-bitcoin",
+    "date": "2011-06-14",
+    "precision": "day",
+    "title": "WikiLeaks turns to bitcoin under a payment blockade",
+    "summary": "WikiLeaks began accepting bitcoin donations after card networks and PayPal cut off its funding.",
+    "details": "The organisation had been unable to receive most conventional payments since late 2010. Nakamoto had argued months earlier that the project was too small to withstand the attention such a fight would bring.",
+    "whyItMatters": "It was the first widely visible case of bitcoin being used precisely because conventional payment rails had been closed.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "policy"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "WikiLeaks",
+      "censorship resistance",
+      "donations"
+    ],
+    "actors": [
+      "WikiLeaks"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "WikiLeaks donation channels",
+        "publisher": "WikiLeaks",
+        "url": "https://wikileaks.org/wiki/WikiLeaks:Donate",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "ukraine-crypto-donations-surge",
+      "canada-emergencies-act-account-freezes"
+    ]
+  },
+  {
+    "slug": "mt-gox-2011-security-breach",
+    "date": "2011-06-19",
+    "precision": "day",
+    "title": "Mt. Gox suffers a major security breach",
+    "summary": "A compromised account enabled fraudulent trades that briefly drove Mt. Gox’s displayed bitcoin price to one cent.",
+    "details": "The exchange halted trading and said it would reverse the affected trades. A leaked user database exposed usernames, email addresses, and weak password hashes, leading to losses on other services where credentials were reused.",
+    "whyItMatters": "The breach exposed the systemic risk of insecure, centralized market infrastructure.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "JP"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "exchange hack",
+      "credential reuse"
+    ],
+    "actors": [
+      "Mt. Gox"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin prices plummet on hacked exchange",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/2011/06/gox/",
+        "type": "secondary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "eff-suspends-bitcoin-donations",
+    "date": "2011-06-20",
+    "precision": "day",
+    "title": "EFF suspends Bitcoin donations",
+    "summary": "The Electronic Frontier Foundation stopped accepting bitcoin while citing legal uncertainty and concern about implied endorsement.",
+    "details": "EFF had been among the most prominent nonprofit organizations to accept the currency. It later resumed Bitcoin donations in 2013 through a payment intermediary.",
+    "whyItMatters": "The decision illustrated how unclear legal treatment could slow institutional adoption even without an explicit ban.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "EFF",
+      "donations",
+      "legal uncertainty"
+    ],
+    "actors": [
+      "Electronic Frontier Foundation"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Thank you, Bitcoin community",
+        "publisher": "Electronic Frontier Foundation",
+        "url": "https://www.eff.org/deeplinks/2013/05/thank-you-bitcoin-community",
+        "type": "primary"
+      },
+      {
+        "title": "EFF backs away from Bitcoin",
+        "publisher": "The Register",
+        "url": "https://www.theregister.com/2011/06/22/eff_backs_away_from_bitcoin/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "room77-accepts-bitcoin",
+    "date": "2011-07-26",
+    "precision": "day",
+    "title": "Room 77 begins accepting bitcoin in person",
+    "summary": "Berlin bar Room 77 became an early brick-and-mortar business to accept bitcoin directly.",
+    "details": "Customers could pay at a physical venue rather than through an online service. The bar became a gathering place for Berlin’s Bitcoin community and a durable symbol of local merchant adoption.",
+    "whyItMatters": "Room 77 demonstrated Bitcoin payments in an everyday face-to-face retail setting.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "DE"
+      }
+    ],
+    "tags": [
+      "merchant",
+      "Berlin",
+      "brick-and-mortar"
+    ],
+    "actors": [
+      "Room 77",
+      "Joerg Platzer"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      },
+      {
+        "title": "Berlin bar that accepted Bitcoin closes",
+        "publisher": "Reuters",
+        "url": "https://www.reuters.com/article/us-bitcoin-germany-bar-idUSKBN26Y1T9",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bip-process-established",
+    "date": "2011-08-19",
+    "precision": "day",
+    "title": "The BIP process gives Bitcoin a way to change",
+    "summary": "BIP 1 defined how proposals to alter Bitcoin would be written, discussed and recorded.",
+    "details": "Modelled on Python's enhancement proposals, it established that changes are documented in public before they are deployed and that no one holds formal authority to approve them. The absence of a decider was the point.",
+    "whyItMatters": "Every consensus change since has been argued through this process, including the ones that split the network.",
+    "category": "protocol",
+    "categories": [
+      "protocol"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP",
+      "governance",
+      "process"
+    ],
+    "actors": [
+      "Amir Taaki",
+      "Bitcoin developers"
+    ],
+    "evidence": "documented",
+    "bip": 1,
+    "sources": [
+      {
+        "title": "BIP 1: BIP Purpose and Guidelines",
+        "publisher": "Bitcoin BIPs",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0001.mediawiki",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "first-bitcoin-conference-new-york",
+    "date": "2011-08-20",
+    "precision": "day",
+    "title": "The first major Bitcoin conference convenes",
+    "summary": "Developers, entrepreneurs, miners, and users gathered in New York for the Bitcoin Conference and World Expo.",
+    "details": "The event moved relationships formed online into an in-person forum for technical and commercial discussion. It reflected a community large enough to organize institutions, companies, and public events around Bitcoin.",
+    "whyItMatters": "The conference signaled that Bitcoin was becoming an organized international movement rather than only a software experiment.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "conference",
+      "New York",
+      "community"
+    ],
+    "actors": [
+      "Bitcoin community"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "p2pool-first-mainnet-block",
+    "date": "2011-08-23",
+    "precision": "day",
+    "title": "P2Pool mines its first mainnet block",
+    "summary": "P2Pool found block 142,312 using a decentralized peer-to-peer mining-pool design.",
+    "details": "Unlike conventional pools, P2Pool coordinated shares through a separate sharechain without a central operator holding miner payouts. The model sought to preserve the smoother income of pooling while reducing operator control.",
+    "whyItMatters": "P2Pool demonstrated a practical attempt to decentralize mining coordination itself.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "P2Pool",
+      "decentralization",
+      "mining pool"
+    ],
+    "actors": [
+      "Forrest Voight",
+      "P2Pool",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 142312",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/142312",
+        "type": "primary"
+      },
+      {
+        "title": "History",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/History",
+        "type": "secondary"
+      }
+    ],
+    "blockHeight": 142312
+  },
+  {
+    "slug": "bitcoin-qt-version-0-5-released",
+    "date": "2011-11-21",
+    "precision": "day",
+    "title": "Bitcoin-Qt v0.5 introduces a new desktop interface",
+    "summary": "Bitcoin v0.5 replaced the original wxWidgets interface with a Qt-based desktop application.",
+    "details": "The redesigned client became known as Bitcoin-Qt and provided a more maintainable cross-platform user interface. Its architecture formed the desktop front end later distributed under the Bitcoin Core name.",
+    "whyItMatters": "The Qt client established the recognizable reference-wallet interface used through Bitcoin’s next growth phase.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "protocol"
+    ],
+    "kind": "release",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin-Qt",
+      "wallet",
+      "desktop"
+    ],
+    "actors": [
+      "Bitcoin developers"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin version history",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/version-history",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin Core version history",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Bitcoin_Core",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bip32-hierarchical-deterministic-wallets",
+    "date": "2012-02-11",
+    "precision": "day",
+    "title": "Deterministic wallets replace the key pile",
+    "summary": "BIP 32 let an entire wallet's keys be derived from a single seed value.",
+    "details": "Before it, a wallet was an unstructured collection of private keys that had to be backed up again every time it generated a new one. Derivation also allowed public addresses to be produced by a system that cannot spend from them.",
+    "whyItMatters": "It made self-custody recoverable from one secret, which is the precondition for ordinary people holding their own coins.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP 32",
+      "wallets",
+      "self-custody"
+    ],
+    "actors": [
+      "Pieter Wuille"
+    ],
+    "evidence": "documented",
+    "bip": 32,
+    "sources": [
+      {
+        "title": "BIP 32: Hierarchical Deterministic Wallets",
+        "publisher": "Bitcoin BIPs",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "bip39-mnemonic-seed-phrases"
+    ]
+  },
+  {
+    "slug": "linode-bitcoin-theft",
+    "date": "2012-03-02",
+    "precision": "day",
+    "title": "A Linode breach exposes hosted bitcoin wallets",
+    "summary": "An attacker compromised Linode infrastructure and stole tens of thousands of bitcoin from services hosted there.",
+    "details": "Bitcoinica reported losing 43,554 BTC, while Slush and the Bitcoin Faucet also reported losses. The Bitcoin network itself continued operating; the failure occurred in externally hosted wallet infrastructure.",
+    "whyItMatters": "The incident showed how shared hosting and hot-wallet custody could create concentrated risks outside the protocol.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Linode",
+      "hot wallet",
+      "Bitcoinica"
+    ],
+    "actors": [
+      "Linode",
+      "Bitcoinica",
+      "Slush",
+      "Bitcoin Faucet"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoinica lost 43,554 BTC from Linode compromise",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=66979.0",
+        "type": "primary"
+      },
+      {
+        "title": "History of Bitcoin hacks",
+        "publisher": "Unchained",
+        "url": "https://www.unchained.com/resources/hacks",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "p2sh-bip16-activates",
+    "date": "2012-04-01",
+    "precision": "day",
+    "title": "Pay-to-script-hash activates",
+    "summary": "Bitcoin activated BIP 16, allowing payments to a script hash rather than exposing the full spending conditions in advance.",
+    "details": "P2SH made complex conditions such as multisignature wallets easier for senders to use. It shifted the burden of supplying the redeem script to the party spending the output.",
+    "whyItMatters": "P2SH made safer shared custody and more expressive payment policies practical with familiar-looking addresses.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "P2SH",
+      "multisig",
+      "soft fork"
+    ],
+    "actors": [
+      "Gavin Andresen",
+      "Bitcoin developers",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "BIP 16: Pay to Script Hash",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/developer-guide#p2sh-scripts",
+        "type": "primary"
+      },
+      {
+        "title": "BIP 16 specification",
+        "publisher": "GitHub — bitcoin/bips",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "P2SH outputs use OP_HASH160 <20-byte script hash> OP_EQUAL and were deployed as a soft fork.",
+    "bip": 16
+  },
+  {
+    "slug": "bitcoinica-may-2012-hack",
+    "date": "2012-05-11",
+    "precision": "day",
+    "title": "Bitcoinica is hacked again",
+    "summary": "Attackers breached Bitcoinica’s production servers and removed 18,547 BTC from its online wallet.",
+    "details": "The leveraged trading service halted operations and said legitimate balances would be honored. Coming shortly after the Linode loss, the breach deepened concern about the security and governance of custodial exchanges.",
+    "whyItMatters": "Repeated losses at one platform highlighted the fragility of early custodial financial services.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoinica",
+      "exchange hack",
+      "custody"
+    ],
+    "actors": [
+      "Bitcoinica"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoins worth $87,000 plundered in brazen server breach",
+        "publisher": "Ars Technica",
+        "url": "https://arstechnica.com/information-technology/2012/05/bitcoins-worth-87000-plundered/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "coinbase-founded",
+    "date": "2012-06-01",
+    "precision": "month",
+    "title": "Coinbase is founded",
+    "summary": "A Y Combinator-backed startup set out to make buying bitcoin as simple as using a consumer web app.",
+    "details": "The company took the position that regulatory compliance was a feature rather than a compromise, a stance that separated it from most exchanges of the era. It would later run a U.S. exchange, list on Nasdaq, and be sued by the SEC.",
+    "whyItMatters": "Coinbase became the main route by which ordinary Americans acquired bitcoin, and the main test case for how U.S. law would treat that.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Coinbase",
+      "exchange",
+      "startup"
+    ],
+    "actors": [
+      "Coinbase",
+      "Brian Armstrong",
+      "Fred Ehrsam"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Coinbase — About",
+        "publisher": "Coinbase",
+        "url": "https://www.coinbase.com/about",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "coinbase-exchange-launches",
+      "coinbase-direct-listing",
+      "sec-sues-binance-and-coinbase"
+    ]
+  },
+  {
+    "slug": "bitcoin-savings-and-trust-closes",
+    "date": "2012-08-17",
+    "precision": "day",
+    "title": "Bitcoin Savings and Trust closes",
+    "summary": "Trendon Shavers announced the closure of Bitcoin Savings and Trust after promising unusually high bitcoin-denominated returns.",
+    "details": "The operation had collected at least 700,000 BTC from investors and used new deposits to fund earlier obligations. The U.S. Securities and Exchange Commission later charged it as a Ponzi scheme and won a federal judgment.",
+    "whyItMatters": "The collapse became Bitcoin’s first major investment-fraud case and a precedent for securities enforcement.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "finance",
+      "policy"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Savings and Trust",
+      "Ponzi scheme",
+      "securities"
+    ],
+    "actors": [
+      "Trendon Shavers",
+      "Bitcoin Savings and Trust",
+      "U.S. SEC"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "SEC charges Texas man with running Bitcoin-denominated Ponzi scheme",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/newsroom/press-releases/2013-132",
+        "type": "primary"
+      },
+      {
+        "title": "Trendon T. Shavers and Bitcoin Savings and Trust",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/enforcement-litigation/litigation-releases/lr-23090",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-foundation-formed",
+    "date": "2012-09-27",
+    "precision": "day",
+    "title": "The Bitcoin Foundation is formed",
+    "summary": "Industry participants launched the Bitcoin Foundation to support development, advocacy, and adoption.",
+    "details": "The organization was modeled partly on open-source foundations and presented a named institution to fund developers and engage policymakers. Its prominence later declined amid governance and financial controversies.",
+    "whyItMatters": "The foundation was Bitcoin’s first major attempt at formal ecosystem representation and developer funding.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "policy"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Foundation",
+      "governance",
+      "developer funding"
+    ],
+    "actors": [
+      "Bitcoin Foundation",
+      "Gavin Andresen",
+      "Peter Vessenes",
+      "Mark Karpelès",
+      "Charlie Shrem"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "The rise and fall of the Bitcoin Foundation",
+        "publisher": "Bitcoin Foundation",
+        "url": "https://bitcoinfoundation.org/about/",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin Foundation hopes to revive reputation of online currency",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2012/oct/03/bitcoin-foundation-virtual-currency",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "ecb-virtual-currency-schemes-report",
+    "date": "2012-10-01",
+    "precision": "month",
+    "title": "The ECB publishes “Virtual Currency Schemes”",
+    "summary": "The European Central Bank issued an early central-bank study of Bitcoin and other virtual-currency systems.",
+    "details": "The report compared Bitcoin with centrally administered virtual currencies and examined payment, legal, and monetary risks. It concluded that such schemes were small but warranted continued monitoring.",
+    "whyItMatters": "The report marked the beginning of sustained central-bank analysis of Bitcoin.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "EU"
+      }
+    ],
+    "tags": [
+      "ECB",
+      "central bank",
+      "regulation"
+    ],
+    "actors": [
+      "European Central Bank"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Virtual Currency Schemes",
+        "publisher": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/pub/pdf/other/virtualcurrencyschemes201210en.pdf",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "wordpress-accepts-bitcoin",
+    "date": "2012-11-15",
+    "precision": "day",
+    "title": "WordPress.com accepts bitcoin",
+    "summary": "WordPress.com added bitcoin as a payment option for upgrades through BitPay.",
+    "details": "The company cited payment restrictions that prevented some users from accessing its services through traditional networks. Bitcoin offered a border-spanning alternative without requiring a conventional card account.",
+    "whyItMatters": "A major web platform framed Bitcoin as a practical tool for global payment access.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "WordPress",
+      "merchant",
+      "BitPay"
+    ],
+    "actors": [
+      "WordPress.com",
+      "BitPay"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Pay another way: Bitcoin",
+        "publisher": "WordPress.com",
+        "url": "https://wordpress.com/blog/2012/11/15/pay-another-way-bitcoin/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "first-bitcoin-halving",
+    "date": "2012-11-28",
+    "precision": "day",
+    "title": "Bitcoin’s first halving",
+    "summary": "At block 210,000, Bitcoin’s block subsidy fell from 50 BTC to 25 BTC.",
+    "details": "The change occurred automatically under the issuance schedule encoded in the protocol. From that block onward, miners could create half as many new bitcoins per block before fees.",
+    "whyItMatters": "The first halving demonstrated Bitcoin’s predetermined and credibly enforced monetary schedule.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "protocol",
+      "finance"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "halving",
+      "issuance",
+      "block subsidy"
+    ],
+    "actors": [
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 210000",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/210000",
+        "type": "primary"
+      },
+      {
+        "title": "Controlled supply",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Controlled_supply",
+        "type": "secondary"
+      }
+    ],
+    "technicalNote": "The subsidy interval is 210,000 blocks; the first post-halving coinbase subsidy was 25 BTC.",
+    "blockHeight": 210000
+  },
+  {
+    "slug": "first-bitcoin-asics-ship",
+    "date": "2013-01-01",
+    "precision": "month",
+    "title": "The first mining ASICs ship",
+    "summary": "Avalon delivered the first purpose-built Bitcoin mining chips to customers.",
+    "details": "An application-specific integrated circuit can do nothing but compute Bitcoin's hash function, and does so at a rate no general-purpose hardware can approach. Within a year, mining with anything else had become pointless.",
+    "whyItMatters": "It closed off casual mining for good and turned hash rate into an industrial capital expense.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "ASIC",
+      "Avalon",
+      "mining hardware"
+    ],
+    "actors": [
+      "Avalon",
+      "Bitcoin miners"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "ASIC",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/ASIC",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "early-gpu-bitcoin-mining",
+      "ghash-io-crosses-half-hashrate"
+    ]
+  },
+  {
+    "slug": "bitcoin-qt-version-0-8-released",
+    "date": "2013-02-19",
+    "precision": "day",
+    "title": "Bitcoin-Qt v0.8 is released",
+    "summary": "Bitcoin-Qt v0.8 adopted LevelDB and substantially accelerated initial blockchain synchronization.",
+    "details": "The database change made running a new full node more practical as the chain grew. It also introduced an unforeseen compatibility boundary with older Berkeley DB nodes that surfaced weeks later.",
+    "whyItMatters": "The release improved full-node performance while setting the stage for Bitcoin’s most important accidental chain split.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin-Qt",
+      "LevelDB",
+      "release"
+    ],
+    "actors": [
+      "Bitcoin developers"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin-Qt version 0.8.0 released",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/release/v0.8.0",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Version 0.8 replaced Berkeley DB with LevelDB for the block index and chainstate."
+  },
+  {
+    "slug": "march-2013-chain-split",
+    "date": "2013-03-11",
+    "precision": "day",
+    "title": "An accidental chain split is resolved",
+    "summary": "A large block accepted by Bitcoin 0.8 nodes was rejected by many older nodes, splitting the network into two chains.",
+    "details": "Developers and major mining pools coordinated a temporary return to version 0.7 rules so the older-compatible chain became dominant. Trading and some payment processing paused while the network converged.",
+    "whyItMatters": "The incident exposed hidden consensus dependencies and demonstrated both the power and limits of emergency coordination.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "protocol",
+      "mining"
+    ],
+    "kind": "fork",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "chain split",
+      "consensus",
+      "Berkeley DB"
+    ],
+    "actors": [
+      "Bitcoin developers",
+      "Bitcoin miners",
+      "Mt. Gox"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "11/12 March 2013 Chain Fork Information",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/alert/2013-03-11-chain-fork",
+        "type": "primary"
+      },
+      {
+        "title": "BIP 50: March 2013 Chain Fork Post-Mortem",
+        "publisher": "GitHub — bitcoin/bips",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0050.mediawiki",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 225,430",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/225430",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The incompatibility appeared at block 225,430 when a Berkeley DB lock limit caused older nodes to reject a block accepted by 0.8 nodes.",
+    "blockHeight": 225430,
+    "bip": 50
+  },
+  {
+    "slug": "fincen-virtual-currency-guidance",
+    "date": "2013-03-18",
+    "precision": "day",
+    "title": "FinCEN issues virtual-currency guidance",
+    "summary": "The U.S. Financial Crimes Enforcement Network distinguished ordinary users from administrators and exchangers under money-services rules.",
+    "details": "The guidance said a user spending convertible virtual currency was not a money-services business solely for that activity. Administrators and exchangers could be money transmitters subject to registration, reporting, and anti-money-laundering obligations.",
+    "whyItMatters": "It established the first major U.S. federal compliance framework applied directly to Bitcoin businesses.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "infrastructure"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "FinCEN",
+      "money transmitter",
+      "AML"
+    ],
+    "actors": [
+      "Financial Crimes Enforcement Network"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Application of FinCEN’s Regulations to Persons Administering, Exchanging, or Using Virtual Currencies",
+        "publisher": "FinCEN",
+        "url": "https://www.fincen.gov/resources/statutes-regulations/guidance/application-fincens-regulations-persons-administering",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bip34-block-height-activation",
+    "date": "2013-03-24",
+    "precision": "day",
+    "title": "BIP 34 activates at block 227,931",
+    "summary": "Bitcoin began requiring version 2 blocks to place the block height in the coinbase transaction.",
+    "details": "Embedding height in the coinbase made every block’s first transaction structurally unique and simplified certain validation behavior. The change used miner version signaling and was deployed as a backward-compatible soft fork.",
+    "whyItMatters": "BIP 34 established a template for coordinating later miner-signaled consensus upgrades.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "mining"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP 34",
+      "coinbase",
+      "soft fork"
+    ],
+    "actors": [
+      "Gavin Andresen",
+      "Bitcoin developers",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "BIP 34: Block v2, Height in Coinbase",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bip/34/",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 227931",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/227931",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "BIP 34 requires the block height as the first item in the coinbase transaction scriptSig.",
+    "blockHeight": 227931,
+    "bip": 34
+  },
+  {
+    "slug": "bitcoin-market-cap-one-billion",
+    "date": "2013-03-28",
+    "precision": "day",
+    "title": "Bitcoin’s estimated market value reaches $1 billion",
+    "summary": "Bitcoin’s circulating supply multiplied by prevailing exchange prices passed an estimated $1 billion.",
+    "details": "The figure arrived during a rapid rise in price and public attention. Market capitalization did not represent immediately available liquidity, especially across the era’s thin and fragmented exchanges.",
+    "whyItMatters": "The milestone moved Bitcoin from a niche experiment into a scale noticed by global financial media.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "market capitalization",
+      "price",
+      "milestone"
+    ],
+    "actors": [
+      "Bitcoin traders"
+    ],
+    "evidence": "estimated",
+    "sources": [
+      {
+        "title": "Bitcoin hits a $1 billion valuation",
+        "publisher": "IEEE Spectrum",
+        "url": "https://spectrum.ieee.org/bitcoin-hits-1billion",
+        "type": "secondary"
+      },
+      {
+        "title": "Important milestones of the Bitcoin project",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Category:History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-price-reaches-100-dollars",
+    "date": "2013-04-01",
+    "precision": "day",
+    "title": "Bitcoin trades above $100",
+    "summary": "Bitcoin’s quoted price exceeded $100 on leading exchanges for the first time.",
+    "details": "The threshold came amid intense speculative demand and growing media coverage. Prices differed among exchanges, and available liquidity remained limited relative to later markets.",
+    "whyItMatters": "Crossing three digits made Bitcoin’s appreciation visible to a much broader public.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "price",
+      "$100",
+      "market"
+    ],
+    "actors": [
+      "Bitcoin traders",
+      "Mt. Gox"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin worth almost as much as gold",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2013/apr/03/bitcoin-reaches-record-dollar-high",
+        "type": "secondary"
+      },
+      {
+        "title": "Important milestones of the Bitcoin project",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Category:History",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "april-2013-bitcoin-market-crash",
+    "date": "2013-04-10",
+    "precision": "day",
+    "title": "A rapid rally ends in a sharp exchange crash",
+    "summary": "Bitcoin’s price reversed violently after reaching roughly $266 on Mt. Gox during a burst of speculative demand.",
+    "details": "Mt. Gox struggled with heavy traffic and temporarily halted trading while the quoted price fell sharply. The episode combined market leverage, thin liquidity, and unreliable exchange infrastructure rather than a failure of Bitcoin’s consensus rules.",
+    "whyItMatters": "The crash showed how centralized exchange capacity could amplify Bitcoin market volatility.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "price crash",
+      "Mt. Gox",
+      "volatility"
+    ],
+    "actors": [
+      "Mt. Gox",
+      "Bitcoin traders"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin exchange Mt. Gox halts trading after price crash",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/2013/04/bitcoin-exchange-halts-trading/",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "us-seizes-mt-gox-payment-accounts",
+    "date": "2013-05-14",
+    "precision": "day",
+    "title": "U.S. authorities seize Mt. Gox payment accounts",
+    "summary": "U.S. law enforcement seized Dwolla-linked accounts used by Mt. Gox after alleging an unlicensed money-transmission violation.",
+    "details": "The action disrupted an important route for U.S. dollar deposits and withdrawals. It followed the new FinCEN framework and demonstrated that exchange access to banking and payment systems depended on regulatory compliance.",
+    "whyItMatters": "The seizure was an early, concrete enforcement action against Bitcoin’s largest market intermediary.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance",
+      "infrastructure"
+    ],
+    "kind": "enforcement",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "JP"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "DHS",
+      "money transmission"
+    ],
+    "actors": [
+      "U.S. Department of Homeland Security",
+      "Mt. Gox",
+      "Dwolla"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "US authorities seize accounts of major Bitcoin operator",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2013/may/15/us-authorities-seize-accounts-bitcoin-mt-gox",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "sec-v-shavers-bitcoin-investments-ruling",
+    "date": "2013-08-06",
+    "precision": "day",
+    "title": "A U.S. court treats bitcoin investments as securities",
+    "summary": "A federal judge held that bitcoin could be used as money and that Bitcoin Savings and Trust interests could fall under securities law.",
+    "details": "The ruling rejected the argument that the court lacked jurisdiction because transactions were denominated in bitcoin. It did not declare every bitcoin or bitcoin transaction a security; it addressed the investment contracts offered in the Shavers scheme.",
+    "whyItMatters": "The decision established that familiar investor-protection law could apply to bitcoin-denominated schemes.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance",
+      "crisis"
+    ],
+    "kind": "ruling",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "SEC",
+      "securities",
+      "Shavers"
+    ],
+    "actors": [
+      "U.S. District Court for the Eastern District of Texas",
+      "U.S. SEC",
+      "Trendon Shavers"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "SEC v. Shavers, Memorandum Opinion Regarding Subject Matter Jurisdiction",
+        "publisher": "Justia",
+        "url": "https://law.justia.com/cases/federal/district-courts/texas/txedce/4:2013cv00416/146063/23/",
+        "type": "primary"
+      },
+      {
+        "title": "SEC charges Texas man with running Bitcoin-denominated Ponzi scheme",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/newsroom/press-releases/2013-132",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "germany-bitcoin-unit-of-account",
+    "date": "2013-08-19",
+    "precision": "day",
+    "title": "Germany recognizes bitcoin as a unit of account",
+    "summary": "Germany’s finance ministry described bitcoin as a private unit of account and financial instrument for regulatory purposes.",
+    "details": "The classification allowed private use while bringing certain commercial activities under financial supervision and taxation. It did not make bitcoin legal tender or official currency.",
+    "whyItMatters": "Germany provided one of the earliest explicit national legal classifications of Bitcoin.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "DE"
+      },
+      {
+        "country": "EU"
+      }
+    ],
+    "tags": [
+      "Germany",
+      "unit of account",
+      "regulation"
+    ],
+    "actors": [
+      "German Federal Ministry of Finance"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin now ‘unit of account’ in Germany",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2013/aug/19/bitcoin-unit-of-account-germany",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bip39-mnemonic-seed-phrases",
+    "date": "2013-09-10",
+    "precision": "day",
+    "title": "Seed phrases turn a wallet into twelve words",
+    "summary": "BIP 39 encoded a wallet's master secret as an ordered list of common words.",
+    "details": "The word list was chosen so that entries remain distinguishable when handwritten and can be identified from their first four letters, with a checksum catching most transcription errors. It became near-universal across wallets despite never being a consensus rule.",
+    "whyItMatters": "It is the reason self-custody backup is a sentence on paper rather than a file nobody remembers to copy.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP 39",
+      "seed phrase",
+      "self-custody"
+    ],
+    "actors": [
+      "Marek Palatinus",
+      "Pavol Rusnak",
+      "Bitcoin developers"
+    ],
+    "evidence": "documented",
+    "bip": 39,
+    "sources": [
+      {
+        "title": "BIP 39: Mnemonic code for generating deterministic keys",
+        "publisher": "Bitcoin BIPs",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "bip32-hierarchical-deterministic-wallets"
+    ]
+  },
+  {
+    "slug": "grayscale-bitcoin-trust-launched",
+    "date": "2013-09-25",
+    "precision": "day",
+    "title": "Grayscale opens a bitcoin trust for institutions",
+    "summary": "A private placement began offering exposure to bitcoin through a conventional securities wrapper.",
+    "details": "Shares later quoted over the counter let funds and retirement accounts hold bitcoin exposure without touching keys or exchanges. Because shares could not be redeemed, the price detached from the underlying holdings for years at a time.",
+    "whyItMatters": "It was the only institutional access route in the United States for a decade, and its fight to convert into an ETF eventually forced the SEC's hand.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Grayscale",
+      "GBTC",
+      "institutional"
+    ],
+    "actors": [
+      "Grayscale Investments",
+      "Digital Currency Group"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Grayscale Bitcoin Trust",
+        "publisher": "Grayscale Investments",
+        "url": "https://www.grayscale.com/funds/grayscale-bitcoin-trust",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "grayscale-wins-sec-appeal",
+      "us-spot-bitcoin-etps-approved"
+    ]
+  },
+  {
+    "slug": "silk-road-seized",
+    "date": "2013-10-02",
+    "precision": "day",
+    "title": "U.S. authorities seize Silk Road",
+    "summary": "Federal agents shut down the Silk Road marketplace and arrested alleged operator Ross Ulbricht.",
+    "details": "The case included the seizure of the site and large quantities of bitcoin tied to its operations and Ulbricht’s devices. Bitcoin continued functioning, while law enforcement demonstrated that darknet activity and blockchain-linked assets were not beyond investigation.",
+    "whyItMatters": "The shutdown ended Bitcoin’s most notorious early marketplace and began landmark cryptocurrency forfeiture cases.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "policy",
+      "adoption"
+    ],
+    "kind": "enforcement",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Silk Road",
+      "FBI",
+      "seizure"
+    ],
+    "actors": [
+      "Ross Ulbricht",
+      "Silk Road",
+      "Federal Bureau of Investigation",
+      "U.S. Department of Justice"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Manhattan U.S. Attorney announces seizure of additional bitcoins belonging to alleged Silk Road operator",
+        "publisher": "U.S. Department of Justice",
+        "url": "https://www.justice.gov/usao-sdny/pr/manhattan-us-attorney-announces-seizure-additional-28-million-worth-bitcoins-belonging",
+        "type": "primary"
+      },
+      {
+        "title": "Ross Ulbricht, aka Dread Pirate Roberts, Sentenced in Manhattan Federal Court",
+        "publisher": "Federal Bureau of Investigation",
+        "url": "https://www.fbi.gov/news/stories/ross-ulbricht-aka-dread-pirate-roberts-sentenced-to-life-in-federal-prison",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "first-public-bitcoin-atm",
+    "date": "2013-10-29",
+    "precision": "day",
+    "title": "The first public Bitcoin ATM goes live",
+    "summary": "A Robocoin kiosk opened at a Vancouver coffee shop, allowing customers to buy and sell bitcoin for cash.",
+    "details": "The machine connected identity checks, fiat handling, and exchange liquidity in a physical location. Its launch offered a visible, familiar on-ramp for people without prior exchange accounts.",
+    "whyItMatters": "The ATM brought Bitcoin access into a recognizable piece of everyday financial infrastructure.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "adoption"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "CA"
+      }
+    ],
+    "tags": [
+      "ATM",
+      "Vancouver",
+      "cash"
+    ],
+    "actors": [
+      "Robocoin",
+      "Bitcoiniacs",
+      "Waves Coffee House"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Vancouver officially home to the world’s first Bitcoin ATM",
+        "publisher": "CityNews Vancouver",
+        "url": "https://vancouver.citynews.ca/2013/10/29/vancouver-officially-home-to-the-worlds-first-bitcoin-atm/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "us-senate-virtual-currency-hearings",
+    "date": "2013-11-18",
+    "precision": "day",
+    "title": "The U.S. Senate holds landmark Bitcoin hearings",
+    "summary": "Senators, regulators, law-enforcement officials, and industry witnesses examined the risks and potential of virtual currencies.",
+    "details": "The first hearing, titled “Beyond Silk Road,” considered illicit finance alongside legitimate innovation. A second Senate hearing followed on November 19, placing Bitcoin within broader financial-policy debate.",
+    "whyItMatters": "The hearings signaled that U.S. policy discussion had moved from dismissal toward formal engagement.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance",
+      "adoption"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "U.S. Senate",
+      "hearing",
+      "regulation"
+    ],
+    "actors": [
+      "U.S. Senate",
+      "FinCEN",
+      "U.S. Department of Justice",
+      "Bitcoin industry"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Beyond Silk Road: Potential Risks, Threats, and Promises of Virtual Currencies",
+        "publisher": "U.S. Government Publishing Office",
+        "url": "https://www.govinfo.gov/content/pkg/CHRG-113shrg86636/pdf/CHRG-113shrg86636.pdf",
+        "type": "primary"
+      },
+      {
+        "title": "The Present and Future Impact of Virtual Currency",
+        "publisher": "U.S. Congress",
+        "url": "https://www.congress.gov/113/chrg/CHRG-113shrg87095/CHRG-113shrg87095.pdf",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-price-reaches-1000-dollars",
+    "date": "2013-11-28",
+    "precision": "day",
+    "title": "Bitcoin trades above $1,000",
+    "summary": "Bitcoin’s quoted price crossed $1,000 on Mt. Gox during a rapid global market expansion.",
+    "details": "Demand from China and growing international coverage contributed to the rise, while prices varied significantly among exchanges. The market remained highly volatile and retreated after its late-year peak.",
+    "whyItMatters": "The four-digit price made Bitcoin a major global financial story.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      },
+      {
+        "country": "CN"
+      }
+    ],
+    "tags": [
+      "price",
+      "$1,000",
+      "Mt. Gox"
+    ],
+    "actors": [
+      "Bitcoin traders",
+      "Mt. Gox"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Bitcoin price reaches $1,000",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2013/nov/27/bitcoin-price-reaches-1000-dollar-mark",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin reference rate (PriceUSD)",
+        "publisher": "Coin Metrics",
+        "url": "https://docs.coinmetrics.io/api/v4/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "china-bitcoin-risk-notice",
+    "date": "2013-12-05",
+    "precision": "day",
+    "title": "China restricts financial institutions from Bitcoin business",
+    "summary": "Chinese authorities classified bitcoin as a virtual commodity and barred financial and payment institutions from providing Bitcoin-related services.",
+    "details": "The notice said individuals could participate at their own risk while denying bitcoin the legal status of currency. It imposed registration, anti-money-laundering, and risk-warning expectations on related internet services.",
+    "whyItMatters": "The notice was the first major national restriction to reshape a large Bitcoin market.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "CN"
+      }
+    ],
+    "tags": [
+      "China",
+      "PBOC",
+      "financial institutions"
+    ],
+    "actors": [
+      "People’s Bank of China",
+      "Chinese financial regulators"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Notice on Guarding Against the Risks of Bitcoin",
+        "publisher": "Ministry of Industry and Information Technology of China",
+        "url": "https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2013/art_d7241872221f43708e47fd30ac30eac0.html",
+        "type": "primary"
+      },
+      {
+        "title": "China: Central Bank and Others Issue Notice on Bitcoin Risks",
+        "publisher": "Library of Congress",
+        "url": "https://www.loc.gov/item/global-legal-monitor/2013-12-20/china-central-bank-and-others-issue-notice-on-bitcoin-risks/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "hodl-post-written",
+    "date": "2013-12-18",
+    "precision": "day",
+    "title": "“I AM HODLING”",
+    "summary": "A forum user posted a misspelled, half-drunk defence of refusing to sell during a crash.",
+    "details": "The post argued that the writer was a bad trader and that people who sell in a panic mostly lose to those who do not. The typo in its title became the community's shorthand for holding through volatility.",
+    "whyItMatters": "It is the most durable piece of Bitcoin folk culture, and it encodes a real claim about who survives the cycles.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "finance"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "HODL",
+      "culture",
+      "volatility"
+    ],
+    "actors": [
+      "GameKyuubi"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "I AM HODLING",
+        "publisher": "BitcoinTalk",
+        "url": "https://bitcointalk.org/index.php?topic=375643.0",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "btc-china-halts-yuan-deposits",
+    "date": "2013-12-18",
+    "precision": "day",
+    "title": "BTC China halts new yuan deposits",
+    "summary": "BTC China stopped accepting renminbi deposits after payment processors withdrew support under regulatory pressure.",
+    "details": "The exchange had recently become one of the world’s largest by reported volume. Its loss of fiat funding access contributed to a sharp market decline and showed how intermediaries remained dependent on domestic payment rails.",
+    "whyItMatters": "The event demonstrated that states could constrain Bitcoin markets by regulating their fiat gateways.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "CN"
+      }
+    ],
+    "tags": [
+      "BTC China",
+      "yuan",
+      "exchange"
+    ],
+    "actors": [
+      "BTC China",
+      "Chinese payment processors",
+      "People’s Bank of China"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin plummets as China’s largest exchange blocks new deposits",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2013/dec/18/bitcoin-plummets-china-payment-processors-digital-cryptocurrency",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin in China",
+        "publisher": "U.S.-China Economic and Security Review Commission",
+        "url": "https://www.govinfo.gov/content/pkg/GOVPUB-Y3_2_C44-PURL-gpo172081/pdf/GOVPUB-Y3_2_C44-PURL-gpo172081.pdf",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "overstock-accepts-bitcoin",
+    "date": "2014-01-09",
+    "precision": "day",
+    "title": "Overstock.com begins accepting bitcoin",
+    "summary": "Overstock.com became the first major online retailer to accept bitcoin across its U.S. catalog.",
+    "details": "Coinbase processed the payments, converting bitcoin so the retailer did not need to bear all exchange-rate risk. The launch produced more than $100,000 in reported sales during its first day.",
+    "whyItMatters": "The integration moved Bitcoin merchant adoption from small businesses to a nationally recognized retailer.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Overstock",
+      "merchant",
+      "Coinbase"
+    ],
+    "actors": [
+      "Overstock.com",
+      "Coinbase",
+      "Patrick Byrne"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Overstock.com first online retailer to accept Bitcoin",
+        "publisher": "Overstock.com",
+        "url": "https://investors.beyond.com/news-events/press-releases/news-details/2014/Overstock.com-First-Online-Retailer-to-Accept-Bitcoin-01-09-2014/default.aspx",
+        "type": "primary"
+      },
+      {
+        "title": "Coinbase and Overstock.com announce largest Bitcoin merchant integration to date",
+        "publisher": "Coinbase",
+        "url": "https://www.coinbase.com/blog/coinbase-and-overstock-com-announce-largest-bitcoin-merchant-integration-to",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "charlie-shrem-charged",
+    "date": "2014-01-27",
+    "precision": "day",
+    "title": "BitInstant CEO Charlie Shrem is charged",
+    "summary": "U.S. prosecutors charged Charlie Shrem and Robert Faiella over an alleged scheme to transmit bitcoin to Silk Road customers.",
+    "details": "The complaint accused Shrem of operating and aiding unlicensed money transmission and failing required anti-money-laundering controls. Shrem later pleaded guilty to aiding and abetting unlicensed money transmission.",
+    "whyItMatters": "The case brought criminal compliance risk directly to a prominent early Bitcoin executive and company.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "enforcement",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "BitInstant",
+      "money laundering",
+      "Silk Road"
+    ],
+    "actors": [
+      "Charlie Shrem",
+      "Robert Faiella",
+      "BitInstant",
+      "U.S. Department of Justice"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Manhattan U.S. Attorney announces charges against Bitcoin exchangers",
+        "publisher": "U.S. Department of Justice",
+        "url": "https://www.justice.gov/archive/usao/nys/pressreleases/January14/SchremFaiellaChargesPR.php",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "mt-gox-halts-bitcoin-withdrawals",
+    "date": "2014-02-07",
+    "precision": "day",
+    "title": "Mt. Gox halts bitcoin withdrawals",
+    "summary": "Mt. Gox suspended bitcoin withdrawals while citing technical problems and transaction malleability.",
+    "details": "Customers had already reported long delays in withdrawing funds, and the suspension intensified fears about the exchange’s solvency. Other developers disputed Mt. Gox’s implication that the underlying protocol flaw alone explained its losses.",
+    "whyItMatters": "The halt began the public final phase of the largest early Bitcoin exchange’s collapse.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "JP"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "withdrawals",
+      "transaction malleability"
+    ],
+    "actors": [
+      "Mt. Gox",
+      "Mark Karpelès"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin value nosedives as exchange stops withdrawals",
+        "publisher": "TIME",
+        "url": "https://time.com/5439/bitcoin-mt-gox-price-nosedives/",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin transaction malleability and MtGox",
+        "publisher": "arXiv",
+        "url": "https://arxiv.org/abs/1403.6676",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "mt-gox-files-for-bankruptcy",
+    "date": "2014-02-28",
+    "precision": "day",
+    "title": "Mt. Gox files for bankruptcy protection",
+    "summary": "Mt. Gox sought bankruptcy protection in Japan after reporting that approximately 850,000 BTC were missing.",
+    "details": "The total initially included about 750,000 customer bitcoins and 100,000 company bitcoins; 200,000 BTC were later reported found in an old wallet. Creditors entered a long rehabilitation process, while research challenged the company’s original explanation of widespread transaction-malleability theft.",
+    "whyItMatters": "The collapse destroyed the dominant early exchange and became Bitcoin’s defining custody failure.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "JP"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Mt. Gox",
+      "bankruptcy",
+      "custody"
+    ],
+    "actors": [
+      "Mt. Gox",
+      "Mark Karpelès",
+      "Mt. Gox creditors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Big Bitcoin exchange files for bankruptcy",
+        "publisher": "TIME",
+        "url": "https://time.com/10657/mt-gox-bitcoin-bankruptcy/",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin transaction malleability and MtGox",
+        "publisher": "arXiv",
+        "url": "https://arxiv.org/abs/1403.6676",
+        "type": "secondary"
+      },
+      {
+        "title": "Mt. Gox civil rehabilitation announcements",
+        "publisher": "Mt. Gox Rehabilitation Trustee",
+        "url": "https://www.mtgox.com/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-core-version-0-9-released",
+    "date": "2014-03-19",
+    "precision": "day",
+    "title": "Bitcoin Core v0.9.0 is released",
+    "summary": "The reference implementation adopted the “Bitcoin Core” name and added significant transaction, wallet, and network improvements.",
+    "details": "The release introduced coin control, a lower default transaction fee, and a standard OP_RETURN data carrier. Renaming the software helped distinguish the implementation maintained by developers from the Bitcoin network and asset.",
+    "whyItMatters": "The new name clarified that no single software project or team was identical to Bitcoin itself.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Core",
+      "release",
+      "OP_RETURN"
+    ],
+    "actors": [
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin Core version 0.9.0 released",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/release/v0.9.0",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Version 0.9.0 standardized limited OP_RETURN relay and introduced the Bitcoin Core project name."
+  },
+  {
+    "slug": "irs-treats-bitcoin-as-property",
+    "date": "2014-03-25",
+    "precision": "day",
+    "title": "The IRS treats virtual currency as property",
+    "summary": "The U.S. Internal Revenue Service said convertible virtual currency would be treated as property for federal tax purposes.",
+    "details": "The guidance applied general property-tax principles to payments, mining income, wages, and capital gains or losses. It rejected treating bitcoin as foreign currency for federal tax calculations.",
+    "whyItMatters": "The notice set the basic U.S. tax treatment that would shape recordkeeping for Bitcoin users and businesses.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "IRS",
+      "tax",
+      "property"
+    ],
+    "actors": [
+      "U.S. Internal Revenue Service"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Notice 2014-21",
+        "publisher": "U.S. Internal Revenue Service",
+        "url": "https://www.irs.gov/pub/irs-drop/n-14-21.pdf",
+        "type": "primary"
+      },
+      {
+        "title": "IRS Virtual Currency Guidance",
+        "publisher": "Internal Revenue Service",
+        "url": "https://www.irs.gov/newsroom/irs-virtual-currency-guidance",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "ghash-io-crosses-half-hashrate",
+    "date": "2014-06-13",
+    "precision": "day",
+    "title": "GHash.io briefly exceeds half of observed hash rate",
+    "summary": "The GHash.io mining pool produced more than half of Bitcoin’s blocks over a short observation window.",
+    "details": "No successful majority attack was reported, and the pool later said it would limit its share. The episode showed that voluntary pool concentration could approach the security threshold Bitcoin’s design assumes no hostile party controls.",
+    "whyItMatters": "It triggered a lasting debate about mining-pool centralization and network security.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "crisis"
+    ],
+    "kind": "record",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "GHash.io",
+      "51 percent",
+      "mining pool"
+    ],
+    "actors": [
+      "GHash.io",
+      "Bitcoin miners"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Ghash.io hits 50% of the Bitcoin compute power",
+        "publisher": "Cryptography Mailing List archive",
+        "url": "https://marc.info/?l=cryptography&m=140269590926467&w=2",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin currency could have been destroyed by 51% attack",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2014/jun/16/bitcoin-currency-destroyed-51-attack-ghash-io",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "us-marshals-first-bitcoin-auction",
+    "date": "2014-06-27",
+    "precision": "day",
+    "title": "U.S. Marshals hold the first major government bitcoin auction",
+    "summary": "The U.S. Marshals Service auctioned roughly 29,656 BTC seized from Silk Road’s servers.",
+    "details": "Venture capitalist Tim Draper won all ten lots in the sealed-bid sale. Rather than attempting to destroy or ignore the asset, the government transferred seized bitcoin through a conventional disposal process.",
+    "whyItMatters": "The auction gave Bitcoin an unusual form of institutional recognition as saleable seized property.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "policy"
+    ],
+    "kind": "enforcement",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "USMS",
+      "auction",
+      "Silk Road"
+    ],
+    "actors": [
+      "U.S. Marshals Service",
+      "Tim Draper"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "USMS Silk Road Bitcoin auction results",
+        "publisher": "MuckRock",
+        "url": "https://www.muckrock.com/foi/united-states-of-america-10/usms-silk-road-bitcoin-auction-results-12405/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "new-york-proposes-bitlicense",
+    "date": "2014-07-17",
+    "precision": "day",
+    "title": "New York proposes the BitLicense framework",
+    "summary": "The New York Department of Financial Services published proposed licensing rules tailored to virtual-currency businesses.",
+    "details": "The draft addressed custody, capital, cybersecurity, anti-money-laundering controls, consumer disclosures, and recordkeeping. It drew extensive public comment from companies, developers, civil-liberties groups, and users.",
+    "whyItMatters": "BitLicense became the most influential early U.S. state-level framework for cryptocurrency businesses.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "infrastructure"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US",
+        "subdivision": "US-NY"
+      }
+    ],
+    "tags": [
+      "BitLicense",
+      "NYDFS",
+      "licensing"
+    ],
+    "actors": [
+      "New York State Department of Financial Services",
+      "Benjamin Lawsky"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "DFS releases proposed BitLicense regulatory framework",
+        "publisher": "New York State Department of Financial Services",
+        "url": "https://www.dfs.ny.gov/reports_and_publications/press_releases/pr1407171",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "dell-accepts-bitcoin",
+    "date": "2014-07-18",
+    "precision": "day",
+    "title": "Dell accepts bitcoin for U.S. online purchases",
+    "summary": "Dell added bitcoin checkout through Coinbase for products sold on Dell.com in the United States.",
+    "details": "At the time, Dell was among the largest e-commerce companies to integrate the payment method. The implementation converted customer payments and illustrated payment processors’ role in shielding merchants from volatility.",
+    "whyItMatters": "The move extended Bitcoin acceptance into mainstream computer hardware retail.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Dell",
+      "merchant",
+      "Coinbase"
+    ],
+    "actors": [
+      "Dell",
+      "Coinbase"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Dell now accepts Bitcoin for all online U.S. purchases",
+        "publisher": "TechCrunch",
+        "url": "https://techcrunch.com/2014/07/18/dell-now-accepts-bitcoin-for-all-online-u-s-purchases/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "hal-finney-dies",
+    "date": "2014-08-28",
+    "precision": "day",
+    "title": "Hal Finney dies",
+    "summary": "The cryptographer who received the first bitcoin transaction died of ALS at 58.",
+    "details": "Finney had built RPOW before Bitcoin existed, ran the second node, and kept contributing from a wheelchair using eye-tracking software after losing the use of his hands. He wrote about Bitcoin's prospects with more caution than most of its advocates.",
+    "whyItMatters": "The person best placed to have been Satoshi, and repeatedly accused of it, spent his last years openly explaining why he was not.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Hal Finney",
+      "cryptography",
+      "ALS"
+    ],
+    "actors": [
+      "Hal Finney"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin's Earliest Adopter Is Cryonically Freezing His Body to See the Future",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/2014/08/hal-finney/",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "first-person-to-person-bitcoin-transaction",
+      "hal-finney-running-bitcoin",
+      "rpow-reusable-proofs-of-work"
+    ]
+  },
+  {
+    "slug": "tether-launched",
+    "date": "2014-11-01",
+    "precision": "month",
+    "title": "Tether issues a dollar-denominated token",
+    "summary": "A token claiming one-to-one backing by U.S. dollars launched, initially under the name Realcoin.",
+    "details": "Traders gained a way to hold dollar exposure on exchanges that had no banking relationships, which is much of why offshore crypto markets could function at all. The composition and sufficiency of its reserves were disputed for years and drew regulatory settlements in 2021.",
+    "whyItMatters": "Most bitcoin trading volume is denominated against this token, so its solvency became a systemic question for bitcoin's price.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Tether",
+      "stablecoin",
+      "market structure"
+    ],
+    "actors": [
+      "Tether"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Tether — About",
+        "publisher": "Tether",
+        "url": "https://tether.to/en/about-us/",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "terra-collapse"
+    ]
+  },
+  {
+    "slug": "blockstream-founded",
+    "date": "2014-11-17",
+    "precision": "day",
+    "title": "Blockstream is founded",
+    "summary": "A company formed to fund Bitcoin protocol engineering, employing several of its most active contributors.",
+    "details": "It proposed sidechains as a way to add features without changing Bitcoin's consensus rules, and later shipped the Liquid network and Lightning software. Its payroll overlapping with Bitcoin Core's contributor list became a standing accusation during the scaling dispute.",
+    "whyItMatters": "It made protocol development a funded profession, and made the question of who pays the developers a permanent political issue.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "protocol"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Blockstream",
+      "sidechains",
+      "development funding"
+    ],
+    "actors": [
+      "Blockstream",
+      "Adam Back",
+      "Pieter Wuille"
+    ],
+    "evidence": "well-supported",
+    "sources": [
+      {
+        "title": "Blockstream — About",
+        "publisher": "Blockstream",
+        "url": "https://blockstream.com/about/",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "liquid-sidechain-launch",
+      "bitcoin-xt-block-size-release"
+    ]
+  },
+  {
+    "slug": "microsoft-accepts-bitcoin",
+    "date": "2014-12-11",
+    "precision": "day",
+    "title": "Microsoft accepts bitcoin for digital purchases",
+    "summary": "Microsoft allowed U.S. customers to fund accounts with bitcoin for selected Windows and Xbox content.",
+    "details": "BitPay converted the payments, and balances could be used for digital goods rather than withdrawn as cash. The limited integration still made Microsoft one of the most prominent technology companies to support Bitcoin payments.",
+    "whyItMatters": "Microsoft’s participation capped a year of high-profile merchant adoption.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Microsoft",
+      "Xbox",
+      "BitPay"
+    ],
+    "actors": [
+      "Microsoft",
+      "BitPay"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Microsoft now accepts Bitcoin for some digital purchases",
+        "publisher": "Microsoft News",
+        "url": "https://news.microsoft.com/2014/12/11/microsoft-now-accepts-bitcoin-for-some-digital-purchases/",
+        "type": "primary"
+      },
+      {
+        "title": "You can now buy Xbox games with Bitcoin",
+        "publisher": "TIME",
+        "url": "https://time.com/3629798/microsoft-xbox-bitcoin-windows/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bitstamp-2015-security-breach",
+    "date": "2015-01-04",
+    "precision": "day",
+    "title": "Bitstamp loses about 19,000 BTC from a hot wallet",
+    "summary": "A security breach compromised a Bitstamp operational wallet and led the exchange to suspend service.",
+    "details": "Bitstamp said customer balances would be honored because most reserves remained in cold storage. It rebuilt its environment on new infrastructure and reopened after several days.",
+    "whyItMatters": "The response illustrated both the danger of hot wallets and the protective value of segregated cold storage.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "EU"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitstamp",
+      "exchange hack",
+      "hot wallet"
+    ],
+    "actors": [
+      "Bitstamp"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Relaunch FAQ",
+        "publisher": "Bitstamp",
+        "url": "https://blog.bitstamp.net/post/relaunch-faq/",
+        "type": "primary"
+      },
+      {
+        "title": "Hackers steal $5 million from Bitcoin exchange",
+        "publisher": "TIME",
+        "url": "https://time.com/3656393/bitcoin-bitstamp-hack-5-million/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "coinbase-exchange-launches",
+    "date": "2015-01-26",
+    "precision": "day",
+    "title": "Coinbase launches a U.S. bitcoin exchange",
+    "summary": "Coinbase opened an order-book exchange for professional bitcoin trading in parts of the United States.",
+    "details": "The company emphasized banking relationships, security, and state regulatory coverage. The launch reflected a shift from informal early markets toward venture-backed, compliance-oriented infrastructure.",
+    "whyItMatters": "Coinbase Exchange became a foundation for one of the largest regulated U.S. cryptocurrency markets.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Coinbase",
+      "exchange",
+      "institutional"
+    ],
+    "actors": [
+      "Coinbase"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Coinbase launches first regulated Bitcoin exchange in the U.S.",
+        "publisher": "Coinbase",
+        "url": "https://www.coinbase.com/blog/coinbase-launches-first-regulated-bitcoin-exchange-in-the-u-s",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-core-version-0-10-released",
+    "date": "2015-02-16",
+    "precision": "day",
+    "title": "Bitcoin Core v0.10.0 is released",
+    "summary": "Bitcoin Core v0.10.0 improved synchronization, fee estimation, transaction handling, and developer interfaces.",
+    "details": "Headers-first synchronization allowed nodes to download the chain more efficiently and from multiple peers. The release also introduced a new fee estimator and watch-only wallet support.",
+    "whyItMatters": "The release made operating and integrating a full node faster and more practical as Bitcoin scaled.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Core",
+      "release",
+      "headers-first sync"
+    ],
+    "actors": [
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin Core version 0.10.0 released",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/release/v0.10.0",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Headers-first synchronization separated header validation from full block download and supported parallel block fetching."
+  },
+  {
+    "slug": "lightning-network-paper",
+    "date": "2015-02-28",
+    "precision": "day",
+    "title": "The Lightning Network paper proposes payments off-chain",
+    "summary": "Joseph Poon and Thaddeus Dryja described how to move bitcoin payments off the blockchain without trusting a custodian.",
+    "details": "Two parties open a channel with an on-chain transaction, then exchange signed updates that either could publish to settle, so only the opening and closing touch the chain. Payments route across connected channels, letting people transact who never opened one together.",
+    "whyItMatters": "It reframed the scaling argument: capacity could come from a layer above the chain rather than from larger blocks.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "adoption"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Lightning Network",
+      "payment channels",
+      "scaling"
+    ],
+    "actors": [
+      "Joseph Poon",
+      "Thaddeus Dryja"
+    ],
+    "evidence": "documented",
+    "technicalNote": "The design depends on relative timelocks, which Bitcoin gained when BIPs 68, 112 and 113 activated in July 2016.",
+    "sources": [
+      {
+        "title": "The Bitcoin Lightning Network: Scalable Off-Chain Instant Payments",
+        "publisher": "Lightning Network",
+        "url": "https://lightning.network/lightning-network-paper.pdf",
+        "type": "primary"
+      },
+      {
+        "title": "Lightning Network",
+        "publisher": "Lightning Network",
+        "url": "https://lightning.network/",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "csv-soft-fork-activates",
+      "lnd-first-mainnet-beta"
+    ]
+  },
+  {
+    "slug": "itbit-new-york-trust-charter",
+    "date": "2015-05-07",
+    "precision": "day",
+    "title": "itBit receives a New York trust charter",
+    "summary": "New York regulators granted itBit the first state banking-law charter issued to a virtual-currency company.",
+    "details": "The limited-purpose trust charter subjected the exchange to capital, consumer-protection, cybersecurity, and anti-money-laundering supervision. It provided a regulated route for both individual and institutional trading.",
+    "whyItMatters": "The charter demonstrated that a Bitcoin exchange could operate inside a traditional prudential-supervision framework.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US",
+        "subdivision": "US-NY"
+      }
+    ],
+    "tags": [
+      "itBit",
+      "trust charter",
+      "NYDFS"
+    ],
+    "actors": [
+      "itBit",
+      "New York State Department of Financial Services"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "NYDFS grants first charter to a New York virtual currency company",
+        "publisher": "New York State Department of Financial Services",
+        "url": "https://www.dfs.ny.gov/reports_and_publications/press_releases/pr1505071",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "new-york-final-bitlicense",
+    "date": "2015-06-03",
+    "precision": "day",
+    "title": "New York announces the final BitLicense rules",
+    "summary": "The New York Department of Financial Services issued its final regulatory framework for virtual-currency businesses.",
+    "details": "The rules required licenses for covered custody, exchange, and transmission activities and imposed compliance, capital, recordkeeping, and cybersecurity duties. The regulation took effect on June 24, prompting some firms to apply and others to stop serving New York.",
+    "whyItMatters": "BitLicense became an influential and contested model for regulating cryptocurrency intermediaries.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "infrastructure"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "US",
+        "subdivision": "US-NY"
+      }
+    ],
+    "tags": [
+      "BitLicense",
+      "NYDFS",
+      "compliance"
+    ],
+    "actors": [
+      "New York State Department of Financial Services",
+      "Benjamin Lawsky"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Virtual Currency Business Licensing",
+        "publisher": "New York State Department of Financial Services",
+        "url": "https://www.dfs.ny.gov/virtual_currency_businesses",
+        "type": "primary"
+      },
+      {
+        "title": "New York releases final BitLicense",
+        "publisher": "CoinDesk",
+        "url": "https://www.coindesk.com/markets/2015/06/03/new-york-releases-final-bitlicense",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "bip66-activation-chain-split",
+    "date": "2015-07-04",
+    "precision": "day",
+    "title": "BIP 66 activates and exposes false signaling",
+    "summary": "Bitcoin began enforcing strict DER signatures, after which miners building without full validation produced short invalid chains.",
+    "details": "Some miners had signaled readiness for the soft fork while continuing to mine on headers from other pools without validating the underlying blocks. A six-block invalid branch and a later three-block branch were overtaken by the valid chain.",
+    "whyItMatters": "The incident showed that miner signaling is unsafe when operators do not independently validate consensus rules.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "mining",
+      "crisis"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP 66",
+      "soft fork",
+      "SPV mining"
+    ],
+    "actors": [
+      "Pieter Wuille",
+      "Bitcoin miners",
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "BIP 66: Strict DER signatures",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bip/66/",
+        "type": "primary"
+      },
+      {
+        "title": "A complete history of Bitcoin’s consensus forks",
+        "publisher": "BitMEX Research",
+        "url": "https://www.bitmex.com/blog/a-complete-history-of-bitcoins-consensus-forks-2022-update",
+        "type": "secondary"
+      }
+    ],
+    "technicalNote": "BIP 66 tightened signature encoding as a soft fork and indirectly removed a consensus inconsistency in OpenSSL parsing.",
+    "bip": 66
+  },
+  {
+    "slug": "bitcoin-xt-block-size-release",
+    "date": "2015-08-15",
+    "precision": "day",
+    "title": "Bitcoin XT brings the block-size dispute into production software",
+    "summary": "Mike Hearn released Bitcoin XT with BIP 101 support for a miner-activated increase to Bitcoin’s block-size limit.",
+    "details": "Gavin Andresen supported the proposal, while many developers and users opposed its activation mechanism, growth schedule, or governance implications. XT did not reach its activation threshold, but the dispute intensified into a multi-year debate over scaling and decision-making.",
+    "whyItMatters": "The release began the visible phase of Bitcoin’s block-size conflict and competing-client politics.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin XT",
+      "block size",
+      "scaling"
+    ],
+    "actors": [
+      "Mike Hearn",
+      "Gavin Andresen",
+      "Bitcoin developers",
+      "Bitcoin users"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "BIP 101: Increase maximum block size",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bip/101/",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin’s forked: chief scientist launches alternative proposal",
+        "publisher": "The Guardian",
+        "url": "https://www.theguardian.com/technology/2015/aug/17/bitcoin-xt-alternative-cryptocurrency-chief-scientist",
+        "type": "secondary"
+      }
+    ],
+    "bip": 101
+  },
+  {
+    "slug": "cftc-bitcoin-commodity-coinflip",
+    "date": "2015-09-17",
+    "precision": "day",
+    "title": "The CFTC classifies bitcoin as a commodity",
+    "summary": "In an enforcement order against Coinflip, the U.S. Commodity Futures Trading Commission held that bitcoin and other virtual currencies are commodities.",
+    "details": "Coinflip had operated an unregistered platform for bitcoin options. The order placed derivatives based on virtual currencies within the CFTC’s Commodity Exchange Act authority.",
+    "whyItMatters": "The decision established the main U.S. federal classification governing Bitcoin derivatives markets.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "CFTC",
+      "commodity",
+      "derivatives"
+    ],
+    "actors": [
+      "U.S. Commodity Futures Trading Commission",
+      "Coinflip",
+      "Francisco Riordan"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "CFTC orders Bitcoin options platform operator to cease illegal activity",
+        "publisher": "U.S. Commodity Futures Trading Commission",
+        "url": "https://www.cftc.gov/PressRoom/PressReleases/7231-15",
+        "type": "primary"
+      },
+      {
+        "title": "Order: Coinflip, Inc.",
+        "publisher": "U.S. Commodity Futures Trading Commission",
+        "url": "https://www.cftc.gov/sites/default/files/idc/groups/public/%40lrenforcementactions/documents/legalpleading/enfcoinfliprorder09172015.pdf",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "gemini-opens-for-trading",
+    "date": "2015-10-08",
+    "precision": "day",
+    "title": "Gemini opens for bitcoin trading",
+    "summary": "Gemini began trading as a New York-chartered exchange serving individual and institutional customers.",
+    "details": "The exchange emphasized licensing, custody controls, security, and compliance as core product features. Its trust-company structure reflected increasing institutionalization of U.S. Bitcoin market infrastructure.",
+    "whyItMatters": "Gemini expanded the market for regulated, institution-oriented bitcoin trading and custody.",
+    "category": "infrastructure",
+    "categories": [
+      "infrastructure",
+      "finance",
+      "policy"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US",
+        "subdivision": "US-NY"
+      }
+    ],
+    "tags": [
+      "Gemini",
+      "exchange",
+      "trust company"
+    ],
+    "actors": [
+      "Gemini",
+      "Cameron Winklevoss",
+      "Tyler Winklevoss",
+      "New York State Department of Financial Services"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "And we’re live!",
+        "publisher": "Gemini",
+        "url": "https://www.gemini.com/blog/and-were-live",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "eu-bitcoin-vat-exemption",
+    "date": "2015-10-22",
+    "precision": "day",
+    "title": "EU court exempts bitcoin exchange from VAT",
+    "summary": "The Court of Justice of the European Union ruled that exchanging bitcoin and traditional currencies is exempt from value-added tax.",
+    "details": "The Hedqvist judgment treated the exchange service under the VAT exemption for transactions involving currency and similar payment instruments. It did not make bitcoin legal tender or remove other taxes and regulatory duties.",
+    "whyItMatters": "The ruling gave Bitcoin exchanges consistent tax treatment across the European Union.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance",
+      "adoption"
+    ],
+    "kind": "ruling",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "EU"
+      },
+      {
+        "country": "SE"
+      }
+    ],
+    "tags": [
+      "VAT",
+      "CJEU",
+      "Hedqvist"
+    ],
+    "actors": [
+      "Court of Justice of the European Union",
+      "David Hedqvist",
+      "Skatteverket"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Skatteverket v David Hedqvist, Case C-264/14",
+        "publisher": "EUR-Lex",
+        "url": "https://eur-lex.europa.eu/legal-content/en/ALL/?uri=CELEX%3A62014CJ0264",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "hong-kong-scaling-agreement",
+    "date": "2016-02-21",
+    "precision": "day",
+    "title": "The Hong Kong agreement tries to settle the block-size fight",
+    "summary": "Developers and mining companies signed a statement pairing Segregated Witness with a later block-size increase.",
+    "details": "The signing developers committed to writing a hard-fork proposal, and the miners committed to running only Bitcoin Core-compatible software in the meantime. Each side later said the other had broken it.",
+    "whyItMatters": "Its collapse hardened both camps and made the 2017 split far harder to avoid.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "mining"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "HK"
+      }
+    ],
+    "tags": [
+      "scaling",
+      "block size",
+      "Hong Kong agreement"
+    ],
+    "actors": [
+      "Bitcoin Core contributors",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin Roundtable Consensus",
+        "publisher": "Bitcoin Roundtable",
+        "url": "https://medium.com/@bitcoinroundtable/bitcoin-roundtable-consensus-266d475a61ff",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "new-york-agreement-segwit2x",
+      "uasf-bip148",
+      "bitcoin-cash-fork"
+    ]
+  },
+  {
+    "slug": "bitcoin-core-version-0-12-released",
+    "date": "2016-02-23",
+    "precision": "day",
+    "title": "Bitcoin Core v0.12.0 is released",
+    "summary": "Bitcoin Core v0.12.0 added major networking, mempool, wallet, and performance improvements.",
+    "details": "The release introduced optional pruning support, clarified fee behavior, improved signature validation performance, and expanded ZeroMQ notifications. It also deployed CHECKLOCKTIMEVERIFY support after the earlier BIP 65 soft fork.",
+    "whyItMatters": "The release made full-node operation more efficient and provided stronger building blocks for time-locked transactions.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Core",
+      "release",
+      "pruning"
+    ],
+    "actors": [
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin Core version 0.12.0 released",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/release/v0.12.0",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "Version 0.12.0 included libsecp256k1 signature validation, optional blockchain pruning, and BIP 65 policy support."
+  },
+  {
+    "slug": "openbazaar-one-point-zero-launch",
+    "date": "2016-04-04",
+    "precision": "day",
+    "title": "OpenBazaar launches a decentralized marketplace",
+    "summary": "OpenBazaar released its first production version for peer-to-peer commerce using bitcoin without a central marketplace operator.",
+    "details": "Buyers and sellers connected through open-source desktop software, and optional moderators could help resolve disputes through multisignature escrow. The design sought to decentralize listings and payments rather than recreate a conventional hosted market.",
+    "whyItMatters": "OpenBazaar tested Bitcoin as the payment layer for a censorship-resistant commerce protocol.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "OpenBazaar",
+      "marketplace",
+      "peer-to-peer"
+    ],
+    "actors": [
+      "OpenBazaar",
+      "Brian Hoffman",
+      "OB1"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "About OpenBazaar",
+        "publisher": "OpenBazaar",
+        "url": "https://openbazaar.github.io/official_site/about/",
+        "type": "primary"
+      },
+      {
+        "title": "Decentralized Bitcoin market OpenBazaar is now live",
+        "publisher": "CoinDesk",
+        "url": "https://www.coindesk.com/markets/2016/04/04/decentralized-bitcoin-market-openbazaar-is-now-live",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "steam-accepts-bitcoin",
+    "date": "2016-04-27",
+    "precision": "day",
+    "title": "Steam adds bitcoin payments",
+    "summary": "Valve’s Steam platform integrated BitPay so customers could fund game purchases with bitcoin.",
+    "details": "Valve cited demand for an international payment option in markets where conventional cards were less accessible. BitPay handled conversion and settlement for the gaming platform.",
+    "whyItMatters": "The integration exposed a large global digital-goods audience to Bitcoin payments.",
+    "category": "adoption",
+    "categories": [
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Steam",
+      "Valve",
+      "BitPay",
+      "gaming"
+    ],
+    "actors": [
+      "Valve",
+      "Steam",
+      "BitPay"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Load your Steam wallet with dollars using Bitcoin",
+        "publisher": "BitPay",
+        "url": "https://www.bitpay.com/blog/load-your-steam-wallet-using-bitcoin/",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "craig-wright-claims-satoshi-identity",
+    "date": "2016-05-02",
+    "precision": "day",
+    "title": "Craig Wright publicly claims to be Satoshi",
+    "summary": "Australian computer scientist Craig Wright told several media organizations that he was Bitcoin creator Satoshi Nakamoto.",
+    "details": "Independent experts quickly showed that the publicly offered signature did not prove access to a Satoshi-era private key, and Wright withdrew a promise to provide further proof. In 2024, the High Court of England and Wales ruled that Wright was not Nakamoto, did not write the white paper, and did not create Bitcoin.",
+    "whyItMatters": "The episode became the most prominent false-identity claim in Bitcoin history and sharpened expectations for cryptographic proof.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "crisis"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "AU"
+      },
+      {
+        "country": "GB"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Craig Wright",
+      "Satoshi Nakamoto",
+      "identity claim"
+    ],
+    "actors": [
+      "Craig Wright",
+      "BBC",
+      "The Economist",
+      "Gavin Andresen"
+    ],
+    "evidence": "disputed",
+    "sources": [
+      {
+        "title": "Major questions arise over Craig Wright’s claim to be Satoshi Nakamoto",
+        "publisher": "TechCrunch",
+        "url": "https://techcrunch.com/2016/05/02/major-questions-arise-over-craig-wrights-claim-to-be-satoshi-nakamoto/",
+        "type": "secondary"
+      },
+      {
+        "title": "UK High Court rules Australian computer scientist is not Bitcoin founder",
+        "publisher": "Associated Press",
+        "url": "https://apnews.com/article/2eb9005bfbb96e0b03c30cb2de6d7d2c",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "japan-passes-virtual-currency-regulation",
+    "date": "2016-05-25",
+    "precision": "day",
+    "title": "Japan passes a framework for virtual-currency exchanges",
+    "summary": "Japan’s Diet approved amendments recognizing virtual currency as an asset-like means of payment and regulating exchange operators.",
+    "details": "The amended Payment Services Act introduced registration, segregation of customer assets, security, and anti-money-laundering requirements. The rules took effect in April 2017 rather than on the date the bill passed.",
+    "whyItMatters": "Japan became one of the first major economies to enact a comprehensive national exchange framework.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption",
+      "infrastructure"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "JP"
+      }
+    ],
+    "tags": [
+      "Japan",
+      "Payment Services Act",
+      "exchange regulation"
+    ],
+    "actors": [
+      "National Diet of Japan",
+      "Japan Financial Services Agency"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Regulation of Cryptocurrency: Japan",
+        "publisher": "Law Library of Congress",
+        "url": "https://www.loc.gov/item/2018299331/",
+        "type": "secondary"
+      },
+      {
+        "title": "Japan’s virtual currency regulation and its recent developments",
+        "publisher": "Mori Hamada & Matsumoto",
+        "url": "https://events.eventact.com/ki2/crypto/Masakazu%20Masujima%20%28Mori%20Hamada%20%26%20Matsumoto%29-Japans%20Virtual%20Currency%20Regulation%20and%20its%20Recent%20Developments.pdf",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "csv-soft-fork-activates",
+    "date": "2016-07-04",
+    "precision": "day",
+    "title": "Relative lock-time soft forks activate",
+    "summary": "Bitcoin activated BIPs 68, 112, and 113, enabling consensus-enforced relative timelocks and CHECKSEQUENCEVERIFY.",
+    "details": "The package let transactions constrain spending relative to an output’s confirmation age and standardized median-time-past rules. These capabilities became important building blocks for bidirectional payment channels and the Lightning Network.",
+    "whyItMatters": "Relative timelocks expanded Bitcoin’s smart-contract toolkit without changing its base monetary rules.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "CSV",
+      "relative timelock",
+      "soft fork",
+      "Lightning"
+    ],
+    "actors": [
+      "Bitcoin Core contributors",
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "BIP 68: Relative lock-time using consensus-enforced sequence numbers",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bip/68/",
+        "type": "primary"
+      },
+      {
+        "title": "Segregated Witness Upgrade Guide",
+        "publisher": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/2016/10/27/segwit-upgrade-guide/",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 419,328",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/419328",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "BIPs 68, 112, and 113 were deployed together through BIP 9 versionbits.",
+    "blockHeight": 419328,
+    "bip": 68
+  },
+  {
+    "slug": "second-bitcoin-halving",
+    "date": "2016-07-09",
+    "precision": "day",
+    "title": "Bitcoin’s second halving",
+    "summary": "At block 420,000, Bitcoin’s block subsidy fell from 25 BTC to 12.5 BTC.",
+    "details": "The programmed reduction occurred after another 210,000 blocks without a special administrative action. Mining revenue from new issuance was cut in half before accounting for transaction fees or price changes.",
+    "whyItMatters": "The event reinforced confidence that Bitcoin’s monetary schedule would execute as specified across market cycles.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "protocol",
+      "finance"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "halving",
+      "issuance",
+      "block subsidy"
+    ],
+    "actors": [
+      "Bitcoin miners"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin block 420000",
+        "publisher": "Blockchain.com Explorer",
+        "url": "https://www.blockchain.com/explorer/blocks/btc/000000000000000002cce816c0ab2c5c269cb081896b7dcb34b8422d6b74ffa1",
+        "type": "primary"
+      },
+      {
+        "title": "Controlled supply",
+        "publisher": "Bitcoin Wiki",
+        "url": "https://en.bitcoin.it/wiki/Controlled_supply",
+        "type": "secondary"
+      },
+      {
+        "title": "Bitcoin block 420,000",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/420000",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The block subsidy became 12.5 BTC at height 420,000.",
+    "blockHeight": 420000
+  },
+  {
+    "slug": "bitfinex-2016-security-breach",
+    "date": "2016-08-02",
+    "precision": "day",
+    "title": "Bitfinex loses nearly 120,000 BTC",
+    "summary": "A security breach removed approximately 119,756 BTC from Bitfinex customer wallets and forced the exchange to halt operations.",
+    "details": "Bitfinex distributed the loss across accounts and issued BFX tokens representing customer claims, later redeeming or converting them. U.S. authorities recovered a large portion of the stolen bitcoin years later and prosecuted the laundering case.",
+    "whyItMatters": "The theft became one of the largest exchange losses in Bitcoin terms and reshaped multisignature custody practices.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure",
+      "finance"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "landmark",
+    "curated": true,
+    "places": [
+      {
+        "country": "HK"
+      },
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitfinex",
+      "exchange hack",
+      "multisig"
+    ],
+    "actors": [
+      "Bitfinex",
+      "BitGo"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Security breach",
+        "publisher": "Bitfinex",
+        "url": "https://blog.bitfinex.com/announcements/security-breach/",
+        "type": "primary"
+      },
+      {
+        "title": "2016 security breach Bitcoin recovery FAQ",
+        "publisher": "Bitfinex",
+        "url": "https://support.bitfinex.com/hc/en-us/articles/4417401349657-2016-Security-Breach-Bitcoin-Recovery-Frequently-Asked-Questions-FAQ",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "bitcoin-core-0-13-1-segwit-release",
+    "date": "2016-10-27",
+    "precision": "day",
+    "title": "Bitcoin Core v0.13.1 ships SegWit activation parameters",
+    "summary": "Bitcoin Core v0.13.1 included validation and miner-signaling support for the Segregated Witness soft fork.",
+    "details": "SegWit separated transaction witness data from the legacy transaction identifier calculation, addressed unwanted malleability, and introduced a weight-based capacity model. The code’s release did not itself activate the rules; deployment still required the specified BIP 9 signaling threshold.",
+    "whyItMatters": "The release put Bitcoin’s most consequential scaling and transaction-format upgrade into deployable mainnet software.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "infrastructure"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "SegWit",
+      "Bitcoin Core",
+      "soft fork",
+      "scaling"
+    ],
+    "actors": [
+      "Bitcoin Core contributors",
+      "Pieter Wuille"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bitcoin Core version 0.13.1 released",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/en/release/v0.13.1",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin Core 0.13.1 released with Segregated Witness",
+        "publisher": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/2016/10/27/release-0.13.1/",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The release carried activation parameters for BIPs 141, 143, and 147 and used BIP 9 versionbits.",
+    "bip": 141
+  },
+  {
+    "slug": "segwit-miner-signaling-begins",
+    "date": "2016-11-18",
+    "precision": "day",
+    "title": "SegWit miner signaling begins",
+    "summary": "The first full 2,016-block BIP 9 signaling period for SegWit began at block 439,488.",
+    "details": "Miners could set version bit 1 to indicate readiness to enforce the new rules. The first period ended far below the 95% lock-in threshold, beginning months of debate over activation that continued into 2017.",
+    "whyItMatters": "The signaling window turned the SegWit proposal into a live test of Bitcoin’s upgrade governance.",
+    "category": "protocol",
+    "categories": [
+      "protocol",
+      "mining",
+      "crisis"
+    ],
+    "kind": "activation",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "SegWit",
+      "BIP 9",
+      "miner signaling"
+    ],
+    "actors": [
+      "Bitcoin miners",
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Segregated Witness Upgrade Guide",
+        "publisher": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/2016/10/27/segwit-upgrade-guide/",
+        "type": "primary"
+      },
+      {
+        "title": "BIP 141: Segregated Witness",
+        "publisher": "Bitcoin.org",
+        "url": "https://bitcoin.org/bip/141/",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin block 439,488",
+        "publisher": "Blockstream Explorer",
+        "url": "https://blockstream.info/block-height/439488",
+        "type": "primary"
+      }
+    ],
+    "technicalNote": "The first signaling period ran from block 439,488 through 441,503 under BIP 9.",
+    "blockHeight": 439488,
+    "bip": 141
+  }
+]

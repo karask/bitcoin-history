@@ -1,0 +1,298 @@
+[
+  {
+    "slug": "chaum-blind-signatures-paper",
+    "date": "1983-01-01",
+    "precision": "year",
+    "title": "Blind signatures make untraceable payments thinkable",
+    "summary": "David Chaum published a cryptographic method allowing a bank to sign a token without seeing what it signed.",
+    "details": "The construction let a payer obtain a valid signature on a value the signer could not read, so a coin could be verified as genuine without being linked to the person who withdrew it. It established that electronic money did not have to choose between being verifiable and being private.",
+    "whyItMatters": "It is the first workable answer to the question Bitcoin would later answer differently: how to make digital money that is not surveilled.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "cryptography",
+      "privacy",
+      "digital cash"
+    ],
+    "actors": [
+      "David Chaum"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Blind Signatures for Untraceable Payments",
+        "publisher": "Advances in Cryptology (CRYPTO '82)",
+        "url": "https://chaum.com/wp-content/uploads/2022/01/Chaum-blind-signatures.pdf",
+        "type": "primary"
+      }
+    ]
+  },
+  {
+    "slug": "digicash-founded",
+    "date": "1989-01-01",
+    "precision": "year",
+    "title": "DigiCash tries to commercialise electronic money",
+    "summary": "David Chaum founded DigiCash in Amsterdam to turn blind-signature research into a working payment product.",
+    "details": "The company's ecash system ran pilots with several banks and briefly looked like the default form electronic money would take. It filed for bankruptcy in 1998, having never reached the merchant and consumer scale it needed.",
+    "whyItMatters": "Its failure showed that a cryptographically sound digital currency can still die if it depends on banks agreeing to issue it.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "infrastructure"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "NL"
+      }
+    ],
+    "tags": [
+      "DigiCash",
+      "ecash",
+      "digital cash"
+    ],
+    "actors": [
+      "David Chaum",
+      "DigiCash"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "E-Money (That's What I Want)",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/1994/12/emoney/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "cypherpunks-mailing-list-founded",
+    "date": "1992-09-01",
+    "precision": "month",
+    "title": "The cypherpunks mailing list convenes",
+    "summary": "A mailing list formed around the idea that cryptography, not legislation, would decide the future of privacy.",
+    "details": "The list gathered the cryptographers, engineers and activists who would spend the next fifteen years proposing digital cash schemes and arguing about their failures. Its recurring premise was that useful privacy tools had to be deployed rather than asked for.",
+    "whyItMatters": "Bitcoin's white paper was announced to this community's direct descendant, and its design assumptions were argued out here first.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "cypherpunks",
+      "privacy",
+      "mailing list"
+    ],
+    "actors": [
+      "Eric Hughes",
+      "Timothy C. May",
+      "John Gilmore"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Crypto Rebels",
+        "publisher": "WIRED",
+        "url": "https://www.wired.com/1993/02/crypto-rebels/",
+        "type": "secondary"
+      }
+    ]
+  },
+  {
+    "slug": "hashcash-proposed",
+    "date": "1997-03-28",
+    "precision": "day",
+    "title": "Hashcash proposes proof of work",
+    "summary": "Adam Back announced a scheme that required a sender to burn measurable computation before a message would be accepted.",
+    "details": "Hashcash asked a sender to find a partial hash collision, a task that is expensive to perform and trivial to check. It was aimed at email spam and denial-of-service abuse rather than at money.",
+    "whyItMatters": "Bitcoin's white paper cites hashcash directly; its proof of work is this idea repurposed to order a ledger.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "mining"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "GB"
+      }
+    ],
+    "tags": [
+      "proof of work",
+      "hashcash",
+      "spam"
+    ],
+    "actors": [
+      "Adam Back"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Announcement of hashcash",
+        "publisher": "Hashcash.org",
+        "url": "http://www.hashcash.org/papers/announce.txt",
+        "type": "primary"
+      },
+      {
+        "title": "Hashcash — A Denial of Service Counter-Measure",
+        "publisher": "Hashcash.org",
+        "url": "http://www.hashcash.org/hashcash.pdf",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "bitcoin-white-paper-announced"
+    ]
+  },
+  {
+    "slug": "b-money-proposed",
+    "date": "1998-11-01",
+    "precision": "month",
+    "title": "b-money describes a currency without a mint",
+    "summary": "Wei Dai circulated a proposal for money whose creation and ownership were tracked by every participant rather than an issuer.",
+    "details": "The scheme required participants to maintain their own copy of the ledger and to create money by performing computational work of measurable cost. Dai left the hardest problem, keeping the separate copies in agreement, largely unsolved.",
+    "whyItMatters": "It is the closest published antecedent to Bitcoin's structure, and the first work the white paper cites.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "b-money",
+      "distributed ledger",
+      "cypherpunks"
+    ],
+    "actors": [
+      "Wei Dai"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "b-money",
+        "publisher": "Wei Dai",
+        "url": "http://www.weidai.com/bmoney.txt",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "satoshi-contacts-wei-dai",
+      "bitcoin-white-paper-announced"
+    ]
+  },
+  {
+    "slug": "rpow-reusable-proofs-of-work",
+    "date": "2004-08-01",
+    "precision": "month",
+    "title": "Hal Finney builds reusable proofs of work",
+    "summary": "Finney released RPOW, a running system that let a proof-of-work token be handed on rather than spent once.",
+    "details": "A trusted server exchanged a used token for a fresh one, with remote attestation intended to prove the server was running unmodified code. The design still depended on that single server behaving, which Bitcoin later removed the need for.",
+    "whyItMatters": "Finney built the closest working precursor to Bitcoin, and four years later received the first bitcoin transaction.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "protocol"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "RPOW",
+      "proof of work",
+      "trusted computing"
+    ],
+    "actors": [
+      "Hal Finney"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "RPOW — Reusable Proofs of Work",
+        "publisher": "Satoshi Nakamoto Institute",
+        "url": "https://nakamotoinstitute.org/finney/rpow/",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "first-person-to-person-bitcoin-transaction",
+      "hal-finney-running-bitcoin"
+    ]
+  },
+  {
+    "slug": "bit-gold-described",
+    "date": "2005-12-27",
+    "precision": "day",
+    "title": "Nick Szabo publishes bit gold",
+    "summary": "Szabo described a currency in which solved computational puzzles are chained together and timestamped.",
+    "details": "Each solution became the input to the next, producing a verifiable chain of work that no participant could cheaply forge. Szabo had circulated the design privately since 1998 and never implemented it.",
+    "whyItMatters": "Bit gold anticipates Bitcoin's chained proof of work almost exactly, without a mechanism for settling disagreements about the chain.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "research",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "bit gold",
+      "proof of work",
+      "timestamping"
+    ],
+    "actors": [
+      "Nick Szabo"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Bit gold",
+        "publisher": "Unenumerated",
+        "url": "https://unenumerated.blogspot.com/2005/12/bit-gold.html",
+        "type": "primary"
+      }
+    ]
+  }
+]
