@@ -15,6 +15,7 @@ export function createRideCameraMotion(camera: THREE.PerspectiveCamera) {
   const fromPosition = new THREE.Vector3(), fromRotation = new THREE.Quaternion();
   let fromFov = camera.fov;
   return {
+    reset() { initialized = false; elapsed = 0; duration = 0; },
     update(position: THREE.Vector3, rotation: THREE.Quaternion, fov: number, view: RideView, dt: number) {
       if (!initialized) {
         camera.position.copy(position); camera.quaternion.copy(rotation); camera.fov = fov;

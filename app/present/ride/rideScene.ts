@@ -9,7 +9,7 @@ import { buildExhibit, type Exhibit } from "./exhibits";
 
 export type RideScene = {
   draw: (time: number) => void;
-  setStation: (index: number) => void;
+  setStation: (index: number, teleport?: boolean) => void;
   setComfort: (value: boolean) => void;
   setPlayback: (playing: boolean, speed: number) => void;
   setView: (view: RideView) => void;
@@ -222,15 +222,19 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     draw, resize, telemetry, hasArrived: () => arrived, frameTime: () => frameMean,
     debug: () => ({ distance, targetDistance, camera: camera.position.toArray(), rotation: camera.quaternion.toArray(),
       seat: v(path.point(cameraU)).add(new THREE.Vector3(0, 2.9, 0)).toArray(), transitioning: cameraMotion.isTransitioning() }),
-    setStation: index => {
+    setStation: (index, teleport = false) => {
       const next = THREE.MathUtils.clamp(index, 0, events.length - 1);
-      if (next === currentIndex) return;
+      if (next === currentIndex && !teleport) return;
       departureHold = arrived && view === "exhibit" ? EXHIBIT_TRANSITION_SECONDS + 0.1 : 0;
       if (arrived) velocity = 0;
       currentIndex = next; targetDistance = path.distanceAt(track.stations[next].u); arrived = false; paused = false;
       orbitYaw = -0.35; orbitPitch = 0.25; orbitRadius = 55;
       // Initial deep links position the train directly, subsequent navigation rides there.
-      if (!ready) { distance = targetDistance; cameraU = track.stations[next].u; velocity = 0; departureHold = 0; }
+      if (!ready || teleport) {
+        distance = targetDistance; cameraU = track.stations[next].u;
+        velocity = 0; departureHold = 0; lastAcceleration = 0; roll = 0;
+        cameraMotion.reset();
+      }
       if (Math.abs(targetDistance - distance) < 0.08) { arrived = true; options.onArrive(); }
     },
     setPlayback: (value, multiplier) => { if (playing !== value) paused = !value; playing = value; speed = multiplier; },

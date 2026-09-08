@@ -3,6 +3,22 @@ import test from "node:test";
 import * as THREE from "three";
 import { cameraEase, createRideCameraMotion, EXHIBIT_TRANSITION_SECONDS } from "../lib/ride-camera.ts";
 
+test("timeline teleport cancels an in-flight camera transfer and snaps to the selected event", () => {
+  const camera = new THREE.PerspectiveCamera(), rig = createRideCameraMotion(camera);
+  const rotation = new THREE.Quaternion();
+  rig.update(new THREE.Vector3(), rotation, 49, "exhibit", 1 / 60);
+  rig.update(new THREE.Vector3(20, 3, 0), rotation, 65, "seat", 1 / 60);
+  assert.equal(rig.isTransitioning(), true);
+  rig.reset();
+  const destination = new THREE.Vector3(5000, 400, 200);
+  rig.update(destination, rotation, 49, "exhibit", 1 / 60);
+  assert.equal(camera.position.distanceTo(destination), 0);
+  assert.equal(camera.fov, 49);
+  assert.equal(rig.isTransitioning(), false);
+  rig.update(destination.clone().addScalar(10), rotation, 65, "seat", 1 / 60);
+  assert.equal(rig.isTransitioning(), true, "normal departure easing resumes after a teleport");
+});
+
 test("camera transfers ease out of and into stops, without an initial lurch", () => {
   assert.equal(cameraEase(0), 0); assert.equal(cameraEase(1), 1);
   const camera = new THREE.PerspectiveCamera(), rig = createRideCameraMotion(camera);

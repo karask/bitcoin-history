@@ -10,6 +10,7 @@ type RideModeProps = {
   track: Track;
   events: PresentationEvent[];
   currentIndex: number;
+  seekVersion: number;
   reducedMotion: boolean;
   comfort: boolean;
   playing: boolean;
@@ -28,13 +29,13 @@ const SLOW_FRAME_MS = 42;
 const HOPELESS_FRAME_MS = 250;
 
 export default function RideMode({
-  track, events, currentIndex, reducedMotion, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion,
+  track, events, currentIndex, seekVersion, reducedMotion, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion,
 }: RideModeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<RideScene | null>(null);
-  const stateRef = useRef({ currentIndex, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion });
+  const stateRef = useRef({ currentIndex, seekVersion, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion });
   useEffect(() => {
-    stateRef.current = { currentIndex, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion };
+    stateRef.current = { currentIndex, seekVersion, comfort, playing, speed, view, onTelemetry, onArrive, onFallback, onMotion };
   });
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export default function RideMode({
     let disposed = false;
     let scene: RideScene | null = null;
     let lastIndex = -1;
+    let lastSeekVersion = seekVersion;
     let slowSince = 0;
     let lastTelemetry = 0;
 
@@ -70,9 +72,10 @@ export default function RideMode({
     const loop = (time: number) => {
       if (disposed || !scene) return;
       const state = stateRef.current;
-      if (state.currentIndex !== lastIndex) {
+      if (state.currentIndex !== lastIndex || state.seekVersion !== lastSeekVersion) {
         lastIndex = state.currentIndex;
-        scene.setStation(lastIndex);
+        scene.setStation(lastIndex, state.seekVersion !== lastSeekVersion);
+        lastSeekVersion = state.seekVersion;
       }
       scene.setComfort(state.comfort);
       scene.setPlayback(state.playing, state.speed);
@@ -127,9 +130,10 @@ export default function RideMode({
         (t = performance.now()) => {
           if (!scene) return;
           const state = stateRef.current;
-          if (state.currentIndex !== lastIndex) {
+          if (state.currentIndex !== lastIndex || state.seekVersion !== lastSeekVersion) {
             lastIndex = state.currentIndex;
-            scene.setStation(lastIndex);
+            scene.setStation(lastIndex, state.seekVersion !== lastSeekVersion);
+            lastSeekVersion = state.seekVersion;
           }
           scene.setComfort(state.comfort);
           scene.setPlayback(state.playing, state.speed);

@@ -80,6 +80,7 @@ export default function PresentationExperience({
 
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [seekVersion, setSeekVersion] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState<(typeof SPEEDS)[number]>(1);
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -425,6 +426,7 @@ export default function PresentationExperience({
             track={track}
             events={events}
             currentIndex={safeIndex}
+            seekVersion={seekVersion}
             reducedMotion={reducedMotion}
             comfort={comfort}
             playing={playing}
@@ -641,7 +643,12 @@ export default function PresentationExperience({
                   max={Math.max(0, eventCount - 1)}
                   step={1}
                   value={safeIndex}
-                  onChange={(event) => goTo(Number(event.currentTarget.value))}
+                  onChange={(event) => {
+                    setCurrentIndex(clamp(Number(event.currentTarget.value), 0, eventCount - 1));
+                    setRailArrived(false);
+                    setSeekVersion(version => version + 1);
+                    setPlaying(true);
+                  }}
                   aria-label="Choose a presentation chapter"
                   aria-valuetext={`${safeIndex + 1} of ${eventCount}: ${currentEvent.title}`}
                 />
