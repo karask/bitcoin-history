@@ -269,8 +269,7 @@ export default function PresentationExperience({
     audioRef.current = null;
   }, []);
 
-  // The bed follows the district you are in, whether or not sound is on, so enabling it
-  // mid-ride does not jump to the wrong key.
+  // Keep the audio controller informed of the current district.
   useEffect(() => {
     if (currentEvent) audioRef.current?.setDistrict(currentEvent.category);
   }, [currentEvent]);
@@ -703,7 +702,7 @@ export default function PresentationExperience({
                 onClick={() => void enableSound(!soundEnabled)}
                 disabled={audioBusy}
                 aria-pressed={soundEnabled}
-                aria-label={soundEnabled ? "Turn ambient sound off" : "Turn ambient sound on"}
+                aria-label={soundEnabled ? "Turn arrival chimes off" : "Turn arrival chimes on"}
               >
                 <span className="sound-bars" aria-hidden="true"><i /><i /><i /></span>
                 <span>{audioBusy ? "STARTING…" : audioUnavailable ? "RETRY SOUND" : soundEnabled ? "SOUND ON" : "SOUND OFF"}</span>
@@ -716,7 +715,7 @@ export default function PresentationExperience({
                     const value = Number(event.target.value); setVolume(value); audioRef.current?.setVolume(value / 100);
                   }} />
                   <button type="button" onClick={() => void enableSound(true, true)} disabled={audioBusy}>Test sound</button>
-                  <p role="status">{audioUnavailable ?? (soundEnabled ? "Audio is running. Test sound plays three clear notes." : "Sound is off. Test sound enables it and plays three notes.")}</p>
+                  <p role="status">{audioUnavailable ?? (soundEnabled ? "Soft arrival chimes only. Travel is silent." : "Sound is off. Enable it for soft arrival chimes.")}</p>
                   <p>If you hear nothing, unmute this browser tab and check your device volume and selected speakers or headphones.</p>
                 </div>
               </details>

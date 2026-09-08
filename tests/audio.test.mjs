@@ -37,16 +37,18 @@ test.after(() => { globalThis.AudioContext = previousContext; globalThis.window 
 test("enabling resumes audio and immediately schedules three audible midrange notes", async () => {
   const rig = createRideAudio(); const ctx = Context.last;
   assert.equal(rig.isEnabled(), false);
-  assert.ok(ctx.oscillators.every(o => o.frequency.value >= 196), "ambient voices must reach small speakers");
+  assert.equal(ctx.oscillators.length, 0, "no continuous background voices");
   await rig.setEnabled(true);
   assert.equal(ctx.state, "running"); assert.equal(rig.isEnabled(), true);
-  assert.equal(ctx.oscillators.length, 6, "three ambience voices plus three confirmation notes");
-  assert.deepEqual(ctx.oscillators.slice(3).map(o => o.frequency.value), [523.25, 659.25, 783.99]);
+  assert.equal(ctx.oscillators.length, 3, "only three finite confirmation notes");
+  assert.deepEqual(ctx.oscillators.map(o => o.frequency.value), [523.25, 659.25, 783.99]);
+  assert.ok(ctx.oscillators.every(o => o.stopped), "every note has a scheduled stop");
   assert.ok(ctx.gains[0].gain.value > 0.4);
-  rig.setMotion(1, -0.3); assert.ok(ctx.filters[0].frequency.value > 1000);
+  rig.setMotion(1, -0.3); rig.setDistrict("mining");
+  assert.equal(ctx.oscillators.length, 3, "motion and district changes remain silent");
   rig.setVolume(0); assert.equal(ctx.gains[0].gain.value, 0);
   rig.setVolume(1); assert.equal(ctx.gains[0].gain.value, 0.65);
-  rig.testTone(); assert.equal(ctx.oscillators.length, 9);
+  rig.testTone(); assert.equal(ctx.oscillators.length, 6);
   await rig.setEnabled(false); assert.equal(rig.isEnabled(), false); assert.equal(ctx.gains[0].gain.value, 0);
   rig.dispose(); assert.equal(ctx.state, "closed");
 });
