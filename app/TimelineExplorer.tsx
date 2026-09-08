@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { sitePath } from "@/lib/site-path";
 import { useEffect, useMemo, useState } from "react";
 import {

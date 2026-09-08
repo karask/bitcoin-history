@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { AnimatePresence, motion } from "motion/react";
 import {
   categoryLabels,
