@@ -25,7 +25,12 @@ test("server-renders the timeline explorer and site metadata", async () => {
   assert.match(html, /BITCOIN TIMECHAIN/i);
   assert.match(html, /History doesn’t move/i);
   assert.match(html, /One chain\. Hundreds/i);
-  assert.match(html, /CINEMATIC MODE/i);
+  assert.match(html, /Start cinematic ride/i);
+  assert.match(html, /Ride through Bitcoin history in 3D/i);
+  assert.match(html, /class="browse-events" href="#explore"/);
+  assert.match(html, /class="hero-scroll" href="#explore"/);
+  assert.match(html, /Scroll to explore the events/i);
+  assert.match(html, /Event timeline/i);
   assert.match(html, /VISIBLE CHAIN/i);
   assert.match(html, /ALL EVENTS/i);
   assert.match(html, /FILTERS/i);

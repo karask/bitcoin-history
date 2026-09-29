@@ -224,8 +224,8 @@ export default function TimelineExplorer({ events }: { events: TimelineEvent[] }
     <header className="site-header">
       <Link className="brand" href={sitePath("/")} aria-label="Bitcoin Timechain home"><span className="brand-mark" aria-hidden="true">₿</span><span>BITCOIN TIMECHAIN</span></Link>
       <nav aria-label="Primary navigation">
-        <a href="#explore">Explore</a>
-        <Link href={sitePath(`/present?${presentationParams.toString()}`)}>Present</Link>
+        <a href="#explore">Event timeline</a>
+        <Link href={sitePath(`/present?${presentationParams.toString()}`)}>Cinematic ride</Link>
         <a href="#method">Method</a>
       </nav>
       <span className="archive-status"><i aria-hidden="true" /> ARCHIVE 1983—NOW</span>
@@ -236,10 +236,15 @@ export default function TimelineExplorer({ events }: { events: TimelineEvent[] }
       <p className="hero-kicker">THE HISTORY OF AN IDEA IN MOTION <span>01 / ORIGINS</span></p>
       <h1>History doesn’t move<br />in a <em>straight line.</em></h1>
       <div className="hero-orbit" aria-hidden="true"><div className="hero-coin">₿</div></div>
-      <div className="hero-footer">
-        <p>Follow the breakthroughs, arguments, crises, and unlikely moments that carried Bitcoin from a cryptography mailing list into world history.</p>
-        <Link className="ride-button" href={sitePath(`/present?${presentationParams.toString()}`)}><b aria-hidden="true">▶</b><span><small>CINEMATIC MODE</small>Start the journey</span></Link>
+      <p className="hero-intro">Follow the breakthroughs, arguments, crises, and unlikely moments that carried Bitcoin from a cryptography mailing list into world history.</p>
+      <div className="hero-actions">
+        <div className="hero-ride">
+          <Link className="ride-button" href={sitePath(`/present?${presentationParams.toString()}`)} aria-describedby="ride-description"><b aria-hidden="true">▶</b><span>Start cinematic ride</span></Link>
+          <p id="ride-description">Ride through Bitcoin history in 3D.</p>
+        </div>
+        <a className="browse-events" href="#explore">Browse the event list <span aria-hidden="true">↓</span></a>
       </div>
+      <a className="hero-scroll" href="#explore"><span>Scroll to explore the events</span><span className="hero-scroll-arrow" aria-hidden="true">↓</span></a>
     </section>
 
     <section className="archive-intro" id="explore">
