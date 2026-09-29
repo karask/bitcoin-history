@@ -33,7 +33,8 @@ function stamp(k: ExhibitKit, x: number, y: number, z: number, text: string, pos
   k.sphere(x, y + 1.3, z, .75, k.m.wood).scale.y = .6;
   const label = k.label(text, x, y + .23, z + 2.5, 5.5, 2, { bg: positive ? "#285c4b" : "#6f3428", size: 100 }); label.rotation.x = -Math.PI / 2;
 }
-function chair(k: ExhibitKit, x: number, z: number, rotation = 0) {
+// Front-row chairs face negative Z, toward the desks and podiums.
+function chair(k: ExhibitKit, x: number, z: number, rotation = Math.PI) {
   const g = new T.Group(); g.position.set(x, 0, z); g.rotation.y = rotation; k.static.add(g);
   k.box(0, 2.8, 0, 2.8, .65, 2.8, k.m.ink, .2, g);
   k.box(0, 4.7, -1.2, 2.8, 3, .5, k.m.panel, .2, g);
@@ -586,7 +587,7 @@ export function assemblyScene(k: ExhibitKit) {
     k.mark(motif === "speech" ? "speech-not-enacted-policy" : "podium-and-audience");
   } else {
     k.desk(0, 0, 25, 4.5);
-    for (const x of [-9, -3, 3, 9]) { chair(k, x, 5); chair(k, x, -5, Math.PI); paperStack(k, x, 4.9, 0, 3); }
+    for (const x of [-9, -3, 3, 9]) { chair(k, x, 5); chair(k, x, -5, 0); paperStack(k, x, 4.9, 0, 3); }
     k.folio(0, 10, -7, `${words(motif)}\n${words(state)}`); k.mark("negotiation-table-not-consensus-enforcement");
   }
   stateCard(k, `${words(motif)} / ${words(state)}`, 0, 11.8);
