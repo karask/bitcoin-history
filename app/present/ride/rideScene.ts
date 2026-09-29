@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { Sky } from "three/addons/objects/Sky.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import type { PresentationEvent } from "@/lib/event-schema";
 import { sampleTrack, type Track } from "@/lib/track";
 import { advanceRide, createRidePath, type RideTelemetry, type RideView, type V3 } from "@/lib/ride-path";
@@ -31,17 +32,27 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = options.quality > 0.7;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x172c3e);
   scene.fog = new THREE.FogExp2(0x284250, 0.00026);
   const camera = new THREE.PerspectiveCamera(65, 1, 0.15, 24000);
-  scene.add(new THREE.HemisphereLight(0xd0edff, 0x4b4751, 1.7));
+  scene.add(new THREE.HemisphereLight(0xd0edff, 0x4b4751, 1.1));
+  // One shared reflection environment and a fixed light count for all exhibits.
+  // Metal, wood and paper retain their material character without adding lights
+  // for every resident miniature (and recompiling shaders at each station).
+  const pmrem = new THREE.PMREMGenerator(renderer), room = new RoomEnvironment();
+  const environment = pmrem.fromScene(room, 0.04);
+  scene.environment = environment.texture; scene.environmentIntensity = 0.35;
+  room.dispose(); pmrem.dispose();
   const sun = new THREE.DirectionalLight(0xffdab1, 2.7);
-  sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
+  sun.castShadow = true; sun.shadow.mapSize.set(options.quality > 0.7 ? 2048 : 1024, options.quality > 0.7 ? 2048 : 1024);
   Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 40, bottom: -40, near: 10, far: 240 });
   sun.shadow.bias = -0.0003; sun.shadow.normalBias = 0.04;
   scene.add(sun, sun.target);
+  const exhibitFill = new THREE.DirectionalLight(0xffe0b0, 0.65);
+  const exhibitRim = new THREE.DirectionalLight(0xa7ccdf, 0.8);
+  scene.add(exhibitFill, exhibitFill.target, exhibitRim, exhibitRim.target);
   const headlight = new THREE.PointLight(0xffd89e, 40, 110, 1.3); scene.add(headlight);
   const path = createRidePath(track, sampleTrack);
   const sky = new Sky(); sky.scale.setScalar(22000); sky.position.x = path.length / 2;
@@ -144,7 +155,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   let arrived = true, playing = false, paused = false, speed = 1, comfort = options.comfort;
   let departureHold = 0, lastAcceleration = 0;
   let view: RideView = "exhibit", previousTime = 0, elapsed = 0, frameMean = 16, quality = options.quality;
-  let orbitYaw = -0.35, orbitPitch = 0.25, orbitRadius = 55, roll = 0, ready = false, residentIndex = -1;
+  let orbitYaw = -0.35, orbitPitch = 0.25, orbitRadius = 55, roll = 0, ready = false, residentIndex = -1, preparedIndex = -1;
   const desiredPosition = new THREE.Vector3(), desiredLook = new THREE.Vector3();
   const aim = new THREE.Object3D(), cameraMotion = createRideCameraMotion(camera);
   const telemetry = (): RideTelemetry => {
@@ -159,6 +170,10 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   };
   resize();
   const draw = (time: number) => {
+    // Prepare the destination and neighbours at the chapter/departure boundary.
+    // Never build a detailed miniature when the moving train crosses the
+    // halfway point between stations: that used to introduce mid-ride hitches.
+    if (preparedIndex !== currentIndex) { ensureExhibits(currentIndex); preparedIndex = currentIndex; }
     const rawDelta = previousTime ? time - previousTime : 16; previousTime = time;
     // Cap a tab-resume gap, but never exclude sustained sub-5-FPS frames.
     frameMean = frameMean * 0.97 + Math.min(rawDelta, 500) * 0.03;
@@ -175,9 +190,14 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     }
     const nearest = track.stations.reduce((best, station, i) => Math.abs(station.u - cameraU) < Math.abs(track.stations[best].u - cameraU) ? i : best, 0);
     if (nearest !== residentIndex) {
-      ensureExhibits(nearest); residentIndex = nearest;
+      residentIndex = nearest;
       const origin = exhibitTransform(nearest).origin;
       sun.target.position.copy(origin); sun.position.copy(origin).add(new THREE.Vector3(-55, 100, 80));
+      const transform = exhibitTransform(nearest);
+      exhibitFill.target.position.copy(origin).add(new THREE.Vector3(0, 8, 0));
+      exhibitRim.target.position.copy(exhibitFill.target.position);
+      exhibitFill.position.copy(new THREE.Vector3(0, 16, 28).applyQuaternion(transform.rotation)).add(origin);
+      exhibitRim.position.copy(new THREE.Vector3(20, 24, -12).applyQuaternion(transform.rotation)).add(origin);
     }
     for (const [i, exhibit] of resident) {
       exhibit.group.visible = Math.abs(path.distanceAt(track.stations[i].u) - distance) < 900;
@@ -248,7 +268,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
       scene.traverse(object => { if (object instanceof THREE.InstancedMesh) object.dispose(); });
       geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose());
       grid.geometry.dispose(); (grid.material as THREE.Material).dispose(); scene.clear(); renderer.dispose();
-      sky.geometry.dispose(); sky.material.dispose(); sun.shadow.map?.dispose();
+      sky.geometry.dispose(); sky.material.dispose(); sun.shadow.map?.dispose(); environment.dispose();
     },
   };
 }

@@ -4,6 +4,7 @@ import test from "node:test";
 import { buildTrack, sampleTrack } from "../lib/track.ts";
 import { createRidePath, advanceRide } from "../lib/ride-path.ts";
 import { buildExhibit, exhibitKind } from "../app/present/ride/exhibits.ts";
+import { installCanvasStub } from "./helpers/canvas.mjs";
 
 const read = async name => JSON.parse(await readFile(new URL(`../content/${name}.json`, import.meta.url), "utf8"));
 const all = [...await read("events-prehistory"), ...await read("events-early"), ...await read("events-late")].sort((a,b) => a.date.localeCompare(b.date));
@@ -97,9 +98,8 @@ test("each ride leg visibly accelerates from rest then brakes to a stop", () => 
 
 // Canvas text is rasterized by the browser. This stub tests actual Three geometry,
 // transforms, finite bounds, batching and all-record coverage without needing WebGL.
-const previousDocument = globalThis.document;
-globalThis.document = { createElement: () => ({ width: 0, height: 0, getContext: () => ({ fillRect() {}, fillText() {}, measureText: text => ({ width: text.length * 45 }) }) }) };
 test("every historical record has a buildable, detailed 3D exhibit", () => {
+  const restore = installCanvasStub();
   try {
     const kinds = new Set();
     for (const record of all) {
@@ -113,10 +113,11 @@ test("every historical record has a buildable, detailed 3D exhibit", () => {
         const positions = object.geometry.getAttribute("position"); vertices += positions.count;
         for (const value of positions.array) assert.ok(Number.isFinite(value), `${record.slug}: invalid geometry`);
       });
-      assert.ok(vertices > 1000, `${record.slug}: no detailed exhibit`);
-      assert.ok(meshes < 190, `${record.slug}: unbatched render budget (${meshes} meshes)`);
+      assert.ok(vertices > 10000, `${record.slug}: no detailed exhibit`);
+      assert.ok(meshes < 65, `${record.slug}: unbatched render budget (${meshes} meshes)`);
+      assert.ok(vertices < 700000, `${record.slug}: excessive vertex budget (${vertices})`);
       exhibit.update(2); exhibit.dispose();
     }
-    assert.equal(kinds.size, 9);
-  } finally { globalThis.document = previousDocument; }
+    assert.equal(kinds.size, 24);
+  } finally { restore(); }
 });

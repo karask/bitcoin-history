@@ -24,7 +24,8 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
 - Drag the exhibit to orbit; scroll or use `+` / `-` to zoom. Focus the canvas and
   use arrow keys for keyboard orbiting. Outside the canvas, left/right navigate.
 - Space plays/pauses. Playback speed affects travel and stop duration. All chapter
-  selections travel along the track; only the initial deep link positions directly.
+  arrows travel along the track; seeking on the bottom timeline teleports to the
+  selected event and preserves playback. Initial deep links also position directly.
 - **Read the story & sources** pauses the ride and opens the full sourced record.
 - **Ride** is the default, including for reduced-motion preferences. The former
   Rail view is now **Reader**, a 2D price chart with the full reading panel;
@@ -36,7 +37,8 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
   those coaster effects. Both settings retain animated travel. Comfort starts
   on when the device requests reduced motion.
 - **Sound ON** plays a three-note confirmation and enables the synthesized
-  soundtrack. **Audio settings** has a volume slider and **Test sound** button.
+  arrival chimes, with no continuous engine/buzzing sound. **Audio settings** has a
+  volume slider and **Test sound** button.
   If the cue is silent, check the tab mute, device volume, and selected output.
 
 ### Data and interpretation
@@ -54,14 +56,43 @@ The 3D scene is lazy-loaded. Rail, vehicle, exhibits and HUD share a single
 chronological path mapping; arc length is used only for physical travel speed.
 Only three adjacent exhibits are resident, static details are material-batched,
 and graphics resolution drops on slow devices before falling back to 2D.
+Exhibits are prepared at chapter boundaries, not halfway through a moving ride.
+
+### Review the detailed stations locally
+
+```bash
+npm run preview:stations
+```
+
+Open `http://localhost:4178/` (or `http://100.96.113.72:4178/` on Tailscale).
+Search all 275 events, filter the 24 scene families, and orbit/zoom each actual
+production model. This is a local review tool, not an extra published site route.
+The gallery's main-site link expects the ride on port 4173:
+`npm run dev -- --hostname 0.0.0.0 --port 4173`.
+
+Scene assignments live in `app/present/ride/exhibit-design.ts`; new records need
+an explicit assignment. `exhibit-kit.ts` owns reusable materials and detailed
+objects, `exhibit-scenes.ts` contains the narrative scenes, and `exhibit-pizza.ts`
+contains the approved pizzeria. Proposals, passage, effective dates, reversals,
+closures and repayments have different visual states. Generic gold tokens are
+symbolic; the NEM/ETH thefts and customer-data breach are not depicted as BTC
+thefts. Memorials and disputed identities use artifacts, not invented portraits.
+The pizza offer has empty boxes; the purchase has two finished pizzas. Upright
+lids no longer intersect the oven masonry.
+
+The ride uses one shared reflection environment and fixed lights; exhibits add
+no lights of their own. Each is material-batched to fewer than 65 meshes and
+700,000 vertices, with explicit geometry/material/texture cleanup on eviction.
+Market sculptures are labeled directional illustrations; the rail remains the
+actual bundled monthly-price visualization.
 
 ### Verification
 
 `npm test` builds the site and runs corpus, server-rendering, hydration, track,
 and 3D geometry/movement regressions. `npm run lint` checks source quality.
 
-The rebuilt ride passes the build, all 56 automated tests, lint, and the optional
-desktop/mobile browser smoke test (including a live bear-market descent).
+The automated suite includes all-record scene coverage, narrative-state checks,
+geometry budgets, bounded placement and GPU-resource lifecycle regressions.
 The full `npx tsc --noEmit` command still reports missing Cloudflare starter
 declarations in the unchanged `db/index.ts` and `worker/index.ts`
 (`cloudflare:workers`, `Fetcher`, `D1Database`); no ride-file type errors remain.

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Timechain · Station gallery</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <header><a href="http://localhost:4173/present">₿ <span>TIMECHAIN<small>STATION GALLERY</small></span></a><span class="local">LOCAL REVIEW · ACTUAL RIDE MODELS</span></header>
+  <main>
+    <section class="stage" aria-label="Interactive station preview">
+      <div class="topline"><span id="count"></span><span id="family"></span></div>
+      <canvas id="scene" aria-label="3D station. Drag to orbit and scroll to zoom." tabindex="0"></canvas>
+      <div class="views"><button data-view="wide" class="active">Three-quarter</button><button data-view="front">Front</button><button data-view="detail">Closer</button><button id="rotate" aria-pressed="false">↻ Orbit</button></div>
+      <div class="bottomline"><span>DRAG TO EXPLORE · SCROLL TO ZOOM</span><span id="stats" role="status">Loading…</span></div>
+    </section>
+    <aside>
+      <p class="eyebrow">275 MOMENTS · 24 SCENE FAMILIES</p><h1>History, made tangible.</h1>
+      <p class="intro">The ride’s new dioramas, ready to inspect. Shared craft; different stories.</p>
+      <label for="search">Find an event</label><input id="search" type="search" placeholder="Pizza, El Salvador, halving…">
+      <label for="kind">Scene family</label><select id="kind"><option value="">All families</option></select>
+      <label for="event">Historical event</label><select id="event"></select>
+      <div class="navigation"><button id="previous">← Previous</button><button id="next">Next →</button></div>
+      <p id="date" class="eyebrow"></p><h2 id="title"></h2><p id="summary"></p>
+      <div class="recipe"><span>VISUAL STORY</span><strong id="recipe"></strong><p id="objects"></p></div>
+      <p class="note">Interpretive miniatures—not reconstructions of real premises. Objects and stages reflect the event; decorative art is original. Market sculptures show direction, not measured prices.</p>
+    </aside>
+  </main>
+  <script type="module" src="/main.ts"></script>
+</body></html>

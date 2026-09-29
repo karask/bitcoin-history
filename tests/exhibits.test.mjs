@@ -1,0 +1,99 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+import * as T from "three";
+import { exhibitDesigns, exhibitDesign } from "../app/present/ride/exhibit-design.ts";
+import { buildExhibit } from "../app/present/ride/exhibits.ts";
+import { installCanvasStub } from "./helpers/canvas.mjs";
+
+const all = (await Promise.all(["prehistory", "early", "late"].map(async name => JSON.parse(await readFile(new URL(`../content/events-${name}.json`, import.meta.url), "utf8"))))).flat();
+const record = slug => all.find(e => e.slug === slug);
+const design = slug => exhibitDesign(record(slug));
+
+test("all 275 records have explicit, non-orphaned editorial assignments", () => {
+  assert.equal(all.length, 275);
+  assert.deepEqual(Object.keys(exhibitDesigns).sort(), all.map(e => e.slug).sort());
+  assert.equal(new Set(Object.values(exhibitDesigns).map(d => d.kind)).size, 24);
+});
+
+test("important historical changes are not just swapped labels", () => {
+  for (const slugs of [
+    ["bitcoin-pizza-offer-posted", "bitcoin-pizza-purchase"],
+    ["el-salvador-bitcoin-law-announced", "el-salvador-bitcoin-law-passed", "el-salvador-bitcoin-law-effective", "el-salvador-amends-bitcoin-law"],
+    ["central-african-republic-bitcoin-legal-tender", "central-african-republic-removes-bitcoin-legal-tender"],
+    ["steam-accepts-bitcoin", "steam-drops-bitcoin"],
+    ["mt-gox-halts-bitcoin-withdrawals", "mt-gox-files-for-bankruptcy", "mt-gox-civil-rehabilitation", "mt-gox-bitcoin-repayments-begin"],
+    ["blackrock-files-spot-bitcoin-etp", "us-spot-bitcoin-etps-approved", "us-spot-bitcoin-etps-start-trading"],
+    ["taproot-bips-published", "taproot-locks-in", "taproot-activates"],
+    ["tesla-bitcoin-purchase-disclosed", "tesla-sells-most-bitcoin"],
+    ["bitcoin-2017-cycle-high", "bitcoin-2018-cycle-low"],
+  ]) assert.equal(new Set(slugs.map(s => JSON.stringify(design(s)))).size, slugs.length, slugs.join(" / "));
+});
+
+test("scenes encode the affected asset and do not imply a conviction or enacted bill", () => {
+  const restore = installCanvasStub();
+  try {
+    for (const [slug, artifact] of [
+      ["coincheck-hack", "affected-asset:NEM"], ["bybit-exchange-theft", "affected-asset:ETH"],
+      ["coinbase-customer-data-theft", "identity-records-not-coin-theft"],
+      ["charlie-shrem-charged", "allegations-not-conviction"],
+      ["fit21-passes-us-house", "legislative-stage:1"],
+      ["clarity-act-senate-banking-advances", "legislative-stage:0"],
+      ["mt-gox-bitcoin-repayments-begin", "creditor-repayments"],
+      ["bitcoin-value-overflow-incident", "validation-repair-not-exchange-collapse"],
+    ]) {
+      const e = buildExhibit(record(slug), 0xffaa66);
+      assert.ok(e.group.userData.design.artifacts.includes(artifact), slug); e.dispose();
+    }
+  } finally { restore(); }
+});
+
+test("each family stays finite, inside its island, and owns no per-station lights", () => {
+  const restore = installCanvasStub();
+  try {
+    const selected = new Map(); for (const e of all) selected.set(design(e.slug).kind, e);
+    selected.set("purchase", record("bitcoin-pizza-purchase"));
+    for (const e of selected.values()) {
+      const exhibit = buildExhibit(e, 0xffaa66);
+      const bounds = new T.Box3().setFromObject(exhibit.group);
+      for (const v of [...bounds.min.toArray(), ...bounds.max.toArray()]) assert.ok(Number.isFinite(v), e.slug);
+      assert.ok(bounds.min.x >= -23 && bounds.max.x <= 23, `${e.slug}: width ${bounds.min.x} / ${bounds.max.x}`);
+      assert.ok(bounds.min.z >= -15 && bounds.max.z <= 16, `${e.slug}: depth`);
+      assert.ok(bounds.max.y <= 27 && bounds.min.y >= -3, `${e.slug}: height`);
+      let lights = 0; exhibit.group.traverse(o => { if (o.isLight) lights++; }); assert.equal(lights, 0, e.slug);
+      exhibit.dispose();
+    }
+  } finally { restore(); }
+});
+
+test("exhibit disposal releases every live geometry, material and texture exactly once", () => {
+  const restore = installCanvasStub();
+  try {
+    for (const slug of ["bitcoin-pizza-purchase", "bitcoin-pizza-offer-posted", "genesis-block-mined", "first-bitcoin-halving", "ftx-chapter-11"]) {
+      const exhibit = buildExhibit(record(slug), 0xffaa66), resources = new Map();
+      const watch = resource => { if (resource && !resources.has(resource)) { resources.set(resource, 0); resource.addEventListener("dispose", () => resources.set(resource, resources.get(resource) + 1)); } };
+      exhibit.group.traverse(o => {
+        if (!o.isMesh) return;
+        watch(o.geometry);
+        for (const m of Array.isArray(o.material) ? o.material : [o.material]) { watch(m); for (const v of Object.values(m)) if (v?.isTexture) watch(v); }
+      });
+      exhibit.update(1); exhibit.dispose(); exhibit.dispose(); exhibit.update(2);
+      for (const n of resources.values()) assert.equal(n, 1, slug);
+      assert.equal(exhibit.group.children.length, 0);
+    }
+  } finally { restore(); }
+});
+
+test("both Pizza Day lids physically clear the oven bricks, including angled edge flaps", () => {
+  const restore = installCanvasStub();
+  try {
+    for (const slug of ["bitcoin-pizza-purchase", "bitcoin-pizza-offer-posted"]) {
+      const exhibit = buildExhibit(record(slug), 0xffaa66);
+      const bounds = b => new T.Box3(new T.Vector3(...b.min), new T.Vector3(...b.max));
+      const { lids, ovenBricks } = exhibit.group.userData.occlusion;
+      assert.equal(lids.length, 2); assert.equal(ovenBricks.length, 17);
+      for (const lid of lids) for (const brick of ovenBricks) assert.equal(bounds(lid).intersectsBox(bounds(brick)), false, `${slug}: masonry clips through a lid`);
+      exhibit.dispose();
+    }
+  } finally { restore(); }
+});
