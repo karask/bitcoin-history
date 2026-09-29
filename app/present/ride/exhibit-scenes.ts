@@ -614,11 +614,18 @@ export function treasuryScene(k: ExhibitKit) {
     k.mark("retirement-fund-not-direct-coin-display");
   } else { k.books(2, 4.9, 2, 6); paperStack(k, 11, 4.9, 4); k.mark(motif === "national" || motif === "state" ? "public-reserve-established" : "corporate-balance-sheet"); }
   if (["buying", "selling"].includes(state)) {
-    const direction = state === "selling" ? 1 : -1;
-    // Route the transfer below the document, in front of the desk, so it never
-    // crosses the company name or the purchase/sale explanation.
-    k.tube([[-7 * direction, 3.9, 8.7], [0, 4.6, 8.7], [7 * direction, 3.9, 8.7]], .14, state === "selling" ? m.blue : m.brass);
-    const tip = k.mesh(new T.ConeGeometry(.55, 1.2, 12), m.brass, 7 * direction, 3.9, 8.7); tip.rotation.z = direction * -Math.PI / 2;
+    // Connect the document's left edge directly to the vault opening. Keeping
+    // the entire route left of the paper leaves the company name unobstructed.
+    const route: [number, number, number][] = [[3.3, 10.5, 1.1], [1.5, 10.5, 1.1], [-1, 9.7, 1.1], [-6.2, 7.6, 1.1]];
+    if (state === "selling") route.reverse();
+    const material = state === "selling" ? m.blue : m.brass;
+    const end = new T.Vector3(...route.at(-1)!);
+    const direction = end.clone().sub(new T.Vector3(...route.at(-2)!)).normalize();
+    const tipCenter = end.clone().addScaledVector(direction, -.6);
+    route[route.length - 1] = tipCenter.toArray();
+    k.tube(route, .16, material);
+    const tip = k.mesh(new T.ConeGeometry(.55, 1.2, 12), material, ...tipCenter.toArray());
+    tip.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), direction);
     k.mark(state === "selling" ? "coins-leave-treasury" : "coins-enter-treasury");
   }
   stateCard(k, `${words(motif)} / ${words(state)}`, 0, 11.8);
