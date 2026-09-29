@@ -184,6 +184,7 @@
   align-items: center;
   gap: 17px;
   min-width: 275px;
+  margin-top: clamp(24px, 3vh, 36px);
   padding: 12px 24px 12px 12px;
   border: 1px solid color-mix(in srgb, var(--scene-accent) 82%, #fff);
   border-radius: 999px;
