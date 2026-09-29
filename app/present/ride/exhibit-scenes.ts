@@ -215,6 +215,30 @@ export function protocolScene(k: ExhibitKit) {
     }
     if (state === "locked-in") k.ring(0, 8.5, 2.5, 2, .25, m.brass);
     k.mark(`${motif}-tree`);
+  } else if (motif === "reorganization") {
+    // Final outcome, not a merger: both branches retain the same ancestor,
+    // but only the 0.7-compatible branch continues. Counts are schematic.
+    block(-12, 7.5, 0); block(-7, 7.5, 0);
+    k.tube([[-12, 7.5, 0], [-7, 7.5, 0]], .15, m.steel);
+    k.label("SHARED HISTORY", -9.5, 10.3, 2, 10, 1.5);
+
+    const abandoned = k.material(0x63716e, .9);
+    k.tube([[-7, 7.5, 0], [-4, 11.5, 0], [-1, 11.5, 0], [4, 11.5, 0]], .13, abandoned);
+    for (const x of [-1, 4]) block(x, 11.5, 0, abandoned);
+    k.label("0.8 BRANCH / ABANDONED", 2, 14.2, 2, 18, 1.6);
+    // A terminal cap, rather than a connector back into the surviving branch.
+    k.box(6.3, 11.5, 0, .24, 2.5, 2.5, m.red);
+
+    k.tube([[-7, 7.5, 0], [-4, 5, 0], [-1, 5, 0], [12.5, 5, 0]], .15, m.brass);
+    for (const x of [-1, 3.5, 8, 12.5]) block(x, 5, 0, m.brass);
+    k.label("0.7-COMPATIBLE / CANONICAL", 5.5, 7.5, 2, 20, 1.6);
+    k.framed("MINERS DOWNGRADE TO 0.7\nMORE CUMULATIVE WORK WINS", 0, 14.3, -10.8, 27, 2.6);
+    k.label("FINAL OUTCOME / SCHEMATIC BLOCK COUNTS", 0, .7, 10.05, 26, .65);
+    k.mark("shared-ancestor-two-competing-branches");
+    k.mark("0.7-compatible-chain-more-work");
+    k.mark("0.8-branch-abandoned-not-merged");
+    stateCard(k, "REORGANIZED / NOT MERGED");
+    return;
   } else if (motif === "split" || motif === "sidechain") {
     block(-10, 5, 1); block(-4, 5, 1); k.tube([[-10, 5, 1], [-4, 5, 1]], .15);
     for (const branch of [-1, 1]) {
@@ -222,9 +246,8 @@ export function protocolScene(k: ExhibitKit) {
       k.tube([[-4, 5, 1], [1, y, 0], [8, y, 0]], .13, branch > 0 && state === "cancelled" ? m.red : m.brass);
       block(3, y, 0, branch < 0 ? m.brass : m.blue); block(10, y, 0, branch < 0 ? m.brass : m.blue);
     }
-    if (state === "rejoined") k.tube([[10, 10, 0], [13, 8, 1], [10, 5, 0]], .18, m.green);
     if (state === "cancelled") for (const a of [-.7, .7]) k.box(8, 10, 2, .32, 5, .22, m.red).rotation.z = a;
-    k.mark(state === "cancelled" ? "cancelled-branch" : state === "rejoined" ? "rejoined-branches" : "separate-chains");
+    k.mark(state === "cancelled" ? "cancelled-branch" : "separate-chains");
   } else if (motif === "segwit") {
     const separated = state === "active" || state === "user-activated";
     block(-7, 6, 1, m.steel, "TX"); block(-2, 6, 1, m.steel, "TX");

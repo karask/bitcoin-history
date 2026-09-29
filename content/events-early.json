@@ -2679,7 +2679,7 @@
     "precision": "day",
     "title": "An accidental chain split is resolved",
     "summary": "A large block accepted by Bitcoin 0.8 nodes was rejected by many older nodes, splitting the network into two chains.",
-    "details": "Developers and major mining pools coordinated a temporary return to version 0.7 rules so the older-compatible chain became dominant. Trading and some payment processing paused while the network converged.",
+    "details": "BTC Guild and Slush downgraded their mining nodes from Bitcoin 0.8 to 0.7, moving majority hash power onto the older-compatible branch. That branch overtook the competing branch in cumulative proof of work, causing 0.8 nodes to reorganize onto it and abandon their previous branch. The two branches were not merged. Trading and some payment processing paused during the incident.",
     "whyItMatters": "The incident exposed hidden consensus dependencies and demonstrated both the power and limits of emergency coordination.",
     "category": "crisis",
     "categories": [

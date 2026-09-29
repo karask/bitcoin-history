@@ -57,7 +57,8 @@ assign("protocol", "key-tree", "proposed", `bip32-hierarchical-deterministic-wal
 assign("protocol", "seed", "proposed", `bip39-mnemonic-seed-phrases`);
 assign("protocol", "script", "active", `p2sh-bip16-activates`);
 assign("protocol", "height", "active", `bip34-block-height-activation`);
-assign("protocol", "split", "rejoined", `march-2013-chain-split bip66-activation-chain-split`);
+assign("protocol", "reorganization", "0.7-canonical", `march-2013-chain-split`);
+assign("protocol", "split", "resolved", `bip66-activation-chain-split`);
 assign("protocol", "split", "released", `bitcoin-xt-block-size-release`);
 assign("protocol", "clock", "active", `csv-soft-fork-activates`);
 assign("protocol", "segwit", "signaling", `segwit-miner-signaling-begins`);

@@ -4,6 +4,8 @@ import test from "node:test";
 import * as T from "three";
 import { exhibitDesigns, exhibitDesign } from "../app/present/ride/exhibit-design.ts";
 import { buildExhibit } from "../app/present/ride/exhibits.ts";
+import { ExhibitKit } from "../app/present/ride/exhibit-kit.ts";
+import { protocolScene } from "../app/present/ride/exhibit-scenes.ts";
 import { installCanvasStub } from "./helpers/canvas.mjs";
 
 const all = (await Promise.all(["prehistory", "early", "late"].map(async name => JSON.parse(await readFile(new URL(`../content/events-${name}.json`, import.meta.url), "utf8"))))).flat();
@@ -45,6 +47,30 @@ test("scenes encode the affected asset and do not imply a conviction or enacted 
       const e = buildExhibit(record(slug), 0xffaa66);
       assert.ok(e.group.userData.design.artifacts.includes(artifact), slug); e.dispose();
     }
+  } finally { restore(); }
+});
+
+test("March 2013 has a longer canonical branch, not a bridge between fork tips", () => {
+  const restore = installCanvasStub();
+  try {
+    const k = new ExhibitKit(record("march-2013-chain-split"), design("march-2013-chain-split"), 0xffaa66);
+    const labels = [], label = k.label.bind(k);
+    k.label = (text, ...args) => { labels.push(text); return label(text, ...args); };
+    protocolScene(k);
+    const blocks = k.static.children.filter(o => o.isMesh && o.geometry.type === "RoundedBoxGeometry" && o.geometry.parameters.width === 3.3);
+    assert.ok(blocks.filter(o => o.position.y === 5).length > blocks.filter(o => o.position.y === 11.5).length);
+    k.static.traverse(o => {
+      const points = o.geometry?.parameters?.path?.points;
+      if (!points) return;
+      const a = points[0], b = points.at(-1);
+      assert.ok(!(a.x > 0 && b.x > 0 && Math.abs(a.y - b.y) > 3), "fork tips must not connect");
+    });
+    assert.ok(labels.includes("0.7-COMPATIBLE / CANONICAL"));
+    assert.ok(labels.includes("0.8 BRANCH / ABANDONED"));
+    assert.ok(labels.every(text => !text.includes("REJOINED")));
+    const exhibit = k.finish(), bounds = new T.Box3().setFromObject(exhibit.group);
+    assert.ok(bounds.min.x >= -23 && bounds.max.x <= 23 && bounds.max.y <= 27);
+    exhibit.dispose();
   } finally { restore(); }
 });
 
