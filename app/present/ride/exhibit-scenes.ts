@@ -191,6 +191,47 @@ export function halvingScene(k: ExhibitKit) {
   k.mark("subsidy-halved-not-total-supply"); stateCard(k, "NEW BLOCK SUBSIDY / NOT THE TOTAL SUPPLY");
 }
 
+function segwitBlock(k: ExhibitKit) {
+  const { m } = k;
+  // Cutaway of ONE block. Witness is a separate serialization/commitment
+  // structure, not an off-chain store or a second blockchain (BIP 141).
+  for (const x of [-14, 14]) for (const z of [-3.8, 3.8]) k.box(x, 8, z, .22, 10.5, .22, m.brass);
+  for (const y of [2.75, 13.25]) {
+    for (const z of [-3.8, 3.8]) k.box(0, y, z, 28, .22, .22, m.brass);
+    for (const x of [-14, 14]) k.box(x, y, 0, .22, .22, 7.6, m.brass);
+  }
+  k.box(-7.5, 2.7, 0, 12.3, .35, 7.2, m.panel);
+  k.box(7.5, 2.7, 0, 12.3, .35, 7.2, m.blue);
+  k.label(`BLOCK ${k.event.blockHeight?.toLocaleString("en-US") ?? "481,824"} / CUTAWAY`, 0, 13.35, 3.94, 27.5, 1.55);
+  k.label("BASE TRANSACTION DATA", -7.5, 11.6, 1.7, 12.2, 1.35);
+  k.label("WITNESS DATA", 7.5, 11.6, 1.7, 11.6, 1.35);
+  for (let i = 0; i < 2; i++) {
+    const y = 9.5 - i * 2.9;
+    k.box(-7.5, y, 0, 10.5, 2.1, 2.5, m.steel, .16);
+    k.label(`TX ${i + 1}\nINPUTS / OUTPUTS`, -7.5, y, 1.27, 9.9, 1.9);
+    // Two witness stack items for an illustrative P2WPKH input.
+    for (let item = 0; item < 2; item++) {
+      const yy = y + .55 - item * 1.1;
+      k.box(7.5, yy, 0, 9.8, .95, 2.5, m.blue, .12);
+      k.label(`TX ${i + 1} / ${item ? "PUBLIC KEY" : "SIGNATURE"}`, 7.5, yy, 1.27, 9.2, .8);
+    }
+    k.tube([[-2.2, y, 0], [2.5, y, 0]], .075, m.blue);
+    // Commitment path behind the stack, leaving its printed face unobstructed.
+    k.tube([[12.5, y, -1.7], [13, y, -1.7], [13, 3.8, -1.7], [7.5, 3.8, -1.7]], .07, m.brass);
+  }
+  k.box(-7.5, 3.8, 0, 10.5, 1.7, 2.5, m.cream, .12);
+  k.label("COINBASE\nWITNESS COMMITMENT", -7.5, 3.8, 1.27, 9.9, 1.55);
+  k.box(7.5, 3.8, 0, 9.8, 1.7, 2.5, m.brass, .12);
+  k.label("wtxid TREE ROOT", 7.5, 3.8, 1.27, 9.2, 1.3);
+  k.tube([[2.5, 3.8, 0], [-2.2, 3.8, 0]], .12, m.brass);
+  const tip = k.mesh(new T.ConeGeometry(.32, .7, 12), m.brass, -1.85, 3.8, 0); tip.rotation.z = Math.PI / 2;
+  k.framed("SEPARATE WITNESS / SAME BLOCK", 0, 14.2, -10.8, 27, 1.8);
+  k.label("SCHEMATIC / P2WPKH INPUT EXAMPLES", 0, .7, 10.05, 26, .65);
+  k.mark("transactions-inside-block-cutaway");
+  k.mark("witness-on-chain-in-same-block");
+  k.mark("witness-commitment-via-coinbase");
+}
+
 export function protocolScene(k: ExhibitKit) {
   const { motif, state } = k.design, { m } = k;
   k.floor("gallery");
@@ -249,7 +290,12 @@ export function protocolScene(k: ExhibitKit) {
     if (state === "cancelled") for (const a of [-.7, .7]) k.box(8, 10, 2, .32, 5, .22, m.red).rotation.z = a;
     k.mark(state === "cancelled" ? "cancelled-branch" : "separate-chains");
   } else if (motif === "segwit") {
-    const separated = state === "active" || state === "user-activated";
+    if (state === "active") {
+      segwitBlock(k);
+      stateCard(k, "SEGWIT / ACTIVE");
+      return;
+    }
+    const separated = state === "user-activated";
     block(-7, 6, 1, m.steel, "TX"); block(-2, 6, 1, m.steel, "TX");
     block(separated ? 8 : 3, separated ? 10 : 6, 1, m.blue, "WITNESS");
     k.tube([[-6, 4, 1], [0, 3, 1], [8, separated ? 8 : 4, 1]], .12, m.brass);
@@ -569,8 +615,10 @@ export function treasuryScene(k: ExhibitKit) {
   } else { k.books(2, 4.9, 2, 6); paperStack(k, 11, 4.9, 4); k.mark(motif === "national" || motif === "state" ? "public-reserve-established" : "corporate-balance-sheet"); }
   if (["buying", "selling"].includes(state)) {
     const direction = state === "selling" ? 1 : -1;
-    k.tube([[-7 * direction, 12, 2], [0, 14.2, 2], [7 * direction, 12, 2]], .14, state === "selling" ? m.blue : m.brass);
-    const tip = k.mesh(new T.ConeGeometry(.55, 1.2, 12), m.brass, 7 * direction, 12, 2); tip.rotation.z = direction * -Math.PI / 2;
+    // Route the transfer below the document, in front of the desk, so it never
+    // crosses the company name or the purchase/sale explanation.
+    k.tube([[-7 * direction, 3.9, 8.7], [0, 4.6, 8.7], [7 * direction, 3.9, 8.7]], .14, state === "selling" ? m.blue : m.brass);
+    const tip = k.mesh(new T.ConeGeometry(.55, 1.2, 12), m.brass, 7 * direction, 3.9, 8.7); tip.rotation.z = direction * -Math.PI / 2;
     k.mark(state === "selling" ? "coins-leave-treasury" : "coins-enter-treasury");
   }
   stateCard(k, `${words(motif)} / ${words(state)}`, 0, 11.8);
@@ -606,7 +654,9 @@ export function assemblyScene(k: ExhibitKit) {
     k.box(0, 1, -1, 28, 1.4, 15, m.wood); k.box(0, 5, 0, 7, 6.5, 5, m.ink, .2); k.box(0, 8.6, 0, 8, .5, 5.4, m.wood);
     k.tube([[1, 8.8, 0], [1, 10.1, 0], [0, 10.6, 1]], .065, m.steel); k.sphere(0, 10.6, 1, .18, m.edge);
     k.label(words(motif), 0, 5.5, 2.54, 6.4, 3);
-    for (const x of [-10, -6, 6, 10]) chair(k, x, 7);
+    // The stage ends at Z=6.5; the whole chair (including its rear legs)
+    // now sits beyond it, with a visible aisle instead of intersecting it.
+    for (const x of [-10, -6, 6, 10]) chair(k, x, 8.5);
     k.mark(motif === "speech" ? "speech-not-enacted-policy" : "podium-and-audience");
   } else {
     k.desk(0, 0, 25, 4.5);

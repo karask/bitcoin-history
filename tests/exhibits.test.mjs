@@ -5,7 +5,7 @@ import * as T from "three";
 import { exhibitDesigns, exhibitDesign } from "../app/present/ride/exhibit-design.ts";
 import { buildExhibit } from "../app/present/ride/exhibits.ts";
 import { ExhibitKit } from "../app/present/ride/exhibit-kit.ts";
-import { protocolScene } from "../app/present/ride/exhibit-scenes.ts";
+import { assemblyScene, protocolScene } from "../app/present/ride/exhibit-scenes.ts";
 import { installCanvasStub } from "./helpers/canvas.mjs";
 
 const all = (await Promise.all(["prehistory", "early", "late"].map(async name => JSON.parse(await readFile(new URL(`../content/events-${name}.json`, import.meta.url), "utf8"))))).flat();
@@ -43,6 +43,9 @@ test("scenes encode the affected asset and do not imply a conviction or enacted 
       ["clarity-act-senate-banking-advances", "legislative-stage:0"],
       ["mt-gox-bitcoin-repayments-begin", "creditor-repayments"],
       ["bitcoin-value-overflow-incident", "validation-repair-not-exchange-collapse"],
+      ["segwit-activates", "transactions-inside-block-cutaway"],
+      ["segwit-activates", "witness-on-chain-in-same-block"],
+      ["segwit-activates", "witness-commitment-via-coinbase"],
     ]) {
       const e = buildExhibit(record(slug), 0xffaa66);
       assert.ok(e.group.userData.design.artifacts.includes(artifact), slug); e.dispose();
@@ -74,11 +77,33 @@ test("March 2013 has a longer canonical branch, not a bridge between fork tips",
   } finally { restore(); }
 });
 
+test("hearing, conference and speech chairs are entirely clear of the stage", () => {
+  const restore = installCanvasStub();
+  try {
+    for (const slug of ["us-senate-virtual-currency-hearings", "first-bitcoin-conference-new-york", "trump-bitcoin-nashville-policy-speech"]) {
+      const k = new ExhibitKit(record(slug), design(slug), 0xffaa66);
+      assemblyScene(k); k.group.updateMatrixWorld(true);
+      const stage = k.static.children.find(o => o.geometry?.parameters.width === 28 && o.geometry?.parameters.depth === 15);
+      assert.ok(stage, slug);
+      const stageBounds = new T.Box3().setFromObject(stage);
+      const chairs = k.static.children.filter(o => o.isGroup);
+      assert.equal(chairs.length, 4, slug);
+      for (const chair of chairs) {
+        const bounds = new T.Box3().setFromObject(chair);
+        assert.ok(bounds.min.z > stageBounds.max.z + .25, `${slug}: chair must clear the stage edge`);
+        assert.equal(bounds.intersectsBox(stageBounds), false, slug);
+      }
+      k.finish().dispose();
+    }
+  } finally { restore(); }
+});
+
 test("each family stays finite, inside its island, and owns no per-station lights", () => {
   const restore = installCanvasStub();
   try {
     const selected = new Map(); for (const e of all) selected.set(design(e.slug).kind, e);
     selected.set("purchase", record("bitcoin-pizza-purchase"));
+    selected.set("segwit-active", record("segwit-activates"));
     for (const e of selected.values()) {
       const exhibit = buildExhibit(e, 0xffaa66);
       const bounds = new T.Box3().setFromObject(exhibit.group);
@@ -95,7 +120,7 @@ test("each family stays finite, inside its island, and owns no per-station light
 test("exhibit disposal releases every live geometry, material and texture exactly once", () => {
   const restore = installCanvasStub();
   try {
-    for (const slug of ["bitcoin-pizza-purchase", "bitcoin-pizza-offer-posted", "genesis-block-mined", "first-bitcoin-halving", "ftx-chapter-11"]) {
+    for (const slug of ["bitcoin-pizza-purchase", "bitcoin-pizza-offer-posted", "genesis-block-mined", "first-bitcoin-halving", "ftx-chapter-11", "segwit-activates"]) {
       const exhibit = buildExhibit(record(slug), 0xffaa66), resources = new Map();
       const watch = resource => { if (resource && !resources.has(resource)) { resources.set(resource, 0); resource.addEventListener("dispose", () => resources.set(resource, resources.get(resource) + 1)); } };
       exhibit.group.traverse(o => {
