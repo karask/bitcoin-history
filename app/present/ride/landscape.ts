@@ -1,7 +1,8 @@
 import * as T from "three";
 import type { Track } from "../../../lib/track";
 import { createLandscapeLayout, landscapeRandom, smooth, type LandscapePath, type LandscapeRegion } from "./landscape-layout.ts";
-import { ModelBuilder, makeAnimal, makeBoat, makeHeron, makeHouse, makeLighthouse, makeShepherd, makeTree, makeUnderstory } from "./landscape-models.ts";
+import { ModelBuilder, makeAnimal, makeBoat, makeHeron, makeHouse, makeShepherd, makeTree, makeUnderstory } from "./landscape-models.ts";
+import { freezeStaticTransforms, type StaticInstanceBatch } from "./instance-culling.ts";
 
 type Placement = { x: number; y: number; z: number; scale: number; yaw: number; tint: number };
 type Chunk = { x: number; group: T.Group; detail: T.Group; placements: Map<string, Placement[]> };
@@ -50,14 +51,15 @@ export function createLandscape(path: LandscapePath, track: Track) {
   const chunkAt = (x: number) => chunks[Math.max(0, Math.min(chunks.length - 1, Math.floor(x / chunkSize)))];
   const models = new Map<string, T.BufferGeometry>();
   const distantModels = new Map<string, T.BufferGeometry>();
+  const cullable: StaticInstanceBatch[] = [], animated = new Set<T.Object3D>();
   const treeBatches: { x: number; mesh: T.InstancedMesh; near: T.BufferGeometry; far: T.BufferGeometry }[] = [];
-  const boatBatches: { x: number; mesh: T.InstancedMesh; placements: Placement[] }[] = [];
+  const boatBatches: { x: number; mesh: T.InstancedMesh; placements: Placement[]; lastTime?: number }[] = [];
   for (const kind of ["oak", "pine", "birch", "autumn", "willow", "orchard"] as const) for (let v = 0; v < 2; v++) {
     models.set(`${kind}${v}`, own(makeTree(kind, 789 + v * 273)));
     distantModels.set(`${kind}${v}`, own(makeTree(kind, 789 + v * 273, true)));
   }
   for (const kind of ["sheep", "deer", "wolf", "fox", "goat", "dog"] as const) { models.set(kind, own(makeAnimal(kind))); models.set(`${kind}-grazing`, own(makeAnimal(kind, true))); }
-  models.set("shepherd", own(makeShepherd())); models.set("heron", own(makeHeron())); models.set("lighthouse", own(makeLighthouse()));
+  models.set("shepherd", own(makeShepherd())); models.set("heron", own(makeHeron()));
   for (const style of ["village", "chalet", "farm"] as const) for (let v = 0; v < 3; v++) models.set(`${style}${v}`, own(makeHouse(style, v)));
   for (const kind of ["grass", "flowers", "reeds", "rock", "hay", "fern"] as const) models.set(kind, own(makeUnderstory(kind)));
   models.set("boat", own(makeBoat())); models.set("sailboat", own(makeBoat(true)));
@@ -96,7 +98,8 @@ export function createLandscape(path: LandscapePath, track: Track) {
       }
     }
     for (let i = 0; i < columns; i++) for (let j = 0; j < rows - 1; j++) { const a = i * rows + j, b = a + rows; indices.push(a, a + 1, b, a + 1, b + 1, b); }
-    const g = own(new T.BufferGeometry()); g.setAttribute("position", new T.Float32BufferAttribute(positions, 3)); g.setAttribute("color", new T.Float32BufferAttribute(colors, 3)); g.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2)); g.setIndex(indices); g.computeVertexNormals();
+    const g = own(new T.BufferGeometry()); g.setAttribute("position", new T.Float32BufferAttribute(positions, 3)); g.setAttribute("color", new T.Float32BufferAttribute(colors, 3)); g.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2)); g.setIndex(indices);
+    g.setAttribute("normal", new T.BufferAttribute(new Float32Array(positions.length), 3));
     const land = new T.Mesh(g, groundMat); land.receiveShadow = true; chunks[c].group.add(land);
   }
   // Shared boundaries get analytical normals so tiling cannot leave lighting seams.
@@ -131,7 +134,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
     }
   }
 
-  const animations: { x: number; update: (t: number) => void }[] = [];
+  const animations: { x: number; update: (t: number) => void; lastTime?: number }[] = [];
   const meshObject = (g: T.BufferGeometry, m: T.Material, parent: T.Object3D) => { const o = new T.Mesh(own(g), m); parent.add(o); return o; };
   const ribbon = (r: LandscapeRegion) => {
     const positions: number[] = [], indices: number[] = [], y = layout.water(r).y;
@@ -163,7 +166,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
       const x = w.x + Math.cos(a) * w.rx * radius, z = w.z + Math.sin(a) * w.rz * radius;
       b.box([x, w.y + .06, z], [2 + random() * 8, .02, .1], 0x9bc5ba);
     }
-    const ripples = build(b, r.x, true); animations.push({ x: r.x, update: t => { ripples.position.x = Math.sin(t * .2) * .7; } });
+    const ripples = build(b, r.x, true); animated.add(ripples); animations.push({ x: r.x, update: t => { ripples.position.x = Math.sin(t * .2) * .7; } });
   };
   const fence = (x: number, z: number, length: number, angle = 0, stone = false) => {
     const b = new ModelBuilder(), steps = Math.ceil(length / 5);
@@ -186,7 +189,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
     const b = new ModelBuilder(); b.box([x, (y + ground) / 2 - 1.5, z], [15 * scale, y - ground + 3, 14 * scale], 0x969683, [0, yaw, 0]); build(b, x);
   };
   const flock = (r: LandscapeRegion, gull = false) => {
-    const root = new T.Group(); chunkAt(r.x).group.add(root);
+    const root = new T.Group(); chunkAt(r.x).group.add(root); animated.add(root);
     const b = new ModelBuilder(); b.ball([0, 0, 0], [1.3, .4, .45], gull ? 0xe5e6d6 : 0x4f5b55); b.ball([1, .12, 0], [.38, .32, .3], gull ? 0xe5e6d6 : 0x4f5b55);
     const bodyGeo = own(b.finish()), wingBuilder = new ModelBuilder();
     wingBuilder.box([-.2, 0, 1.25], [1.5, .09, 2.5], gull ? 0xe5e6d6 : 0x4f5b55, [0, .15, 0]);
@@ -244,7 +247,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
       const fall = meshObject(new T.PlaneGeometry(23, 20, 8, 1), waterMat, chunkAt(x).group); fall.position.set(wx, wy + 10, wz + 1.8);
       const top = meshObject(new T.PlaneGeometry(23, 18), waterMat, chunkAt(x).group); top.rotation.x = -Math.PI / 2; top.position.set(wx, wy + 21.1, wz + 8);
       const foam = meshObject(new T.CircleGeometry(17, 32), foamMat, chunkAt(x).group); foam.rotation.x = -Math.PI / 2; foam.position.set(wx, wy + .12, wz - 4); foam.scale.set(1, .5, 1);
-      animations.push({ x, update: t => { foam.scale.x = 1 + Math.sin(t * .75) * .035; } });
+      animated.add(foam); animations.push({ x, update: t => { foam.scale.x = 1 + Math.sin(t * .75) * .035; } });
       flock(r);
     } else if (r.kind === "alpine") {
       pond(r); const w = layout.water(r);
@@ -261,11 +264,10 @@ export function createLandscape(path: LandscapePath, track: Track) {
       const b = new ModelBuilder();
       for (const offset of [-1, 1]) { b.add(new T.TorusGeometry(5, .28, 5, 32), 0x72563f, [0, 0, offset]); for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5; b.rod([0, 0, offset], [Math.sin(a) * 5, Math.cos(a) * 5, offset], .13, 0x8f724e); } }
       for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; b.box([Math.sin(a) * 5, Math.cos(a) * 5, 0], [1, .16, 2.6], 0x95784e, [0, 0, -a]); }
-      wheel.add(new T.Mesh(own(b.finish()), sculptureMat)); animations.push({ x, update: t => { wheel.rotation.z = t * .12; } });
+      wheel.add(new T.Mesh(own(b.finish()), sculptureMat)); animated.add(wheel); animations.push({ x, update: t => { wheel.rotation.z = t * .12; } });
     } else if (r.kind === "coast") {
       pond(r); const w = layout.water(r), shore = r.z - 105;
       for (let row = 0; row < 2; row++) for (let i = 0; i < 6; i++) house(`village${i % 3}`, x - 87 + i * 29, shore + row * 28, .85 + random() * .2, Math.PI);
-      house("lighthouse", x + 190, r.z - 90, 1.1);
       const b = new ModelBuilder(), dockX = x - 15;
       const dockStart = layout.height(dockX, shore) + .3;
       for (let i = 0; i < 55; i++) {
@@ -297,7 +299,16 @@ export function createLandscape(path: LandscapePath, track: Track) {
     instances.instanceMatrix.needsUpdate = true; instances.computeBoundingSphere();
     (["grass", "flowers", "reeds", "fern"].includes(name) ? chunk.detail : chunk.group).add(instances);
     if (distantModels.has(name)) treeBatches.push({ x: chunk.x, mesh: instances, near: geo, far: distantModels.get(name)! });
-    if (name === "boat" || name === "sailboat") boatBatches.push({ x: chunk.x, mesh: instances, placements });
+    if (name === "boat" || name === "sailboat") {
+      boatBatches.push({ x: chunk.x, mesh: instances, placements });
+      // Rocking/bobbing can extend beyond the initial, static bounding sphere.
+      instances.boundingSphere!.radius += 1;
+    } else {
+      geo.computeBoundingSphere(); const bounds = geo.boundingSphere!.clone();
+      const far = distantModels.get(name);
+      if (far) { far.computeBoundingSphere(); bounds.union(far.boundingSphere!); bounds.radius += .2; }
+      cullable.push({ mesh: instances, bounds });
+    }
     if (distantModels.has(name) || ["sheep", "sheep-grazing", "deer", "deer-grazing", "wolf", "fox", "dog", "shepherd"].includes(name)) {
       const list = contactTransforms.get(chunk) ?? [];
       for (const p of placements) {
@@ -311,12 +322,13 @@ export function createLandscape(path: LandscapePath, track: Track) {
   }
   for (const [chunk, transforms] of contactTransforms) {
     const shadows = new T.InstancedMesh(contactGeometry, contactMat, transforms.length);
-    transforms.forEach((m, i) => shadows.setMatrixAt(i, m)); shadows.instanceMatrix.needsUpdate = true; shadows.computeBoundingSphere(); chunk.detail.add(shadows);
+    transforms.forEach((m, i) => shadows.setMatrixAt(i, m)); shadows.instanceMatrix.needsUpdate = true; shadows.computeBoundingSphere(); chunk.detail.add(shadows); cullable.push({ mesh: shadows });
   }
   for (const chunk of chunks) chunk.placements.clear();
+  freezeStaticTransforms(group, animated);
   let disposed = false;
   return {
-    group, layout,
+    group, layout, cullable,
     update(time: number, u: number, overview: boolean, quality: number) {
       const x = u * path.length, range = overview ? 6200 : quality > .4 ? 2900 : 2100;
       breeze.value = time;
@@ -326,13 +338,13 @@ export function createLandscape(path: LandscapePath, track: Track) {
         trees.mesh.geometry = distance < (quality > .7 ? 800 : 460) && !overview ? trees.near : trees.far;
         trees.mesh.castShadow = distance < 460 && quality > .7;
       }
-      for (const animation of animations) if (Math.abs(animation.x - x) < range) animation.update(time);
-      for (const boats of boatBatches) if (Math.abs(boats.x - x) < range) {
+      for (const animation of animations) if (Math.abs(animation.x - x) < range && animation.lastTime !== time) { animation.update(time); animation.lastTime = time; }
+      for (const boats of boatBatches) if (Math.abs(boats.x - x) < range && boats.lastTime !== time) {
         boats.placements.forEach((p, i) => {
           dummy.position.set(p.x, p.y + Math.sin(time * .7 + i) * .13, p.z);
           dummy.rotation.set(Math.sin(time * .6 + i) * .018, p.yaw, Math.sin(time * .8 + i) * .01);
           dummy.scale.setScalar(p.scale); dummy.updateMatrix(); boats.mesh.setMatrixAt(i, dummy.matrix);
-        }); boats.mesh.instanceMatrix.needsUpdate = true;
+        }); boats.mesh.instanceMatrix.needsUpdate = true; boats.lastTime = time;
       }
     },
     dispose() {

@@ -70,7 +70,7 @@ export default function RideMode({
     sceneRef.current = scene;
 
     const loop = (time: number) => {
-      if (disposed || !scene) return;
+      if (disposed || !scene || document.hidden) return;
       const state = stateRef.current;
       if (state.currentIndex !== lastIndex || state.seekVersion !== lastSeekVersion) {
         lastIndex = state.currentIndex;
@@ -85,12 +85,11 @@ export default function RideMode({
         state.onFallback(error instanceof Error ? error.message : "3D rendering could not continue.");
         return;
       }
-      if (state.onMotion) {
-        const motion = scene.telemetry();
-        state.onMotion(motion.velocity / 95, motion.grade);
-      }
-      if (time - lastTelemetry > 100) {
-        state.onTelemetry(scene.telemetry());
+      const reportTelemetry = time - lastTelemetry > 100;
+      const motion = state.onMotion || reportTelemetry ? scene.telemetry() : undefined;
+      if (motion) state.onMotion?.(motion.velocity / 95, motion.grade);
+      if (reportTelemetry && motion) {
+        state.onTelemetry(motion);
         lastTelemetry = time;
       }
 
@@ -112,6 +111,12 @@ export default function RideMode({
       frame = window.requestAnimationFrame(loop);
     };
     frame = window.requestAnimationFrame(loop);
+    const onVisibilityChange = () => {
+      window.cancelAnimationFrame(frame);
+      slowSince = 0; scene?.resetClock();
+      if (!document.hidden && !disposed) frame = window.requestAnimationFrame(loop);
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const observer = new ResizeObserver(() => scene?.resize());
     observer.observe(canvas);
@@ -146,6 +151,7 @@ export default function RideMode({
     return () => {
       disposed = true;
       window.cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       observer.disconnect();
       canvas.removeEventListener("webglcontextlost", onContextLost);
       scene?.dispose();

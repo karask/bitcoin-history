@@ -65,6 +65,20 @@ test("landscape and railway use finite, bounded geometry and release shared reso
   assert.ok(uniqueVertices < 1300000, `shared geometry exceeds budget: ${uniqueVertices}`);
   for (const u of [0, .25, .5, .8, 1]) { world.update(3, u, false, .55); railway.update(u, false); }
   world.update(4, .5, true, 1); railway.update(.5, true);
+  const staticBatches = new Set(world.cullable.map(b => b.mesh)), boats = [];
+  world.group.traverse(o => { if (o.isInstancedMesh && !staticBatches.has(o)) boats.push(o); });
+  assert.ok(boats.length > 0, "animated boats remain outside the static visibility cache");
+  const versions = boats.map(b => b.instanceMatrix.version);
+  world.update(4, .5, true, 1);
+  assert.deepEqual(boats.map(b => b.instanceMatrix.version), versions, "a paused scene must not re-upload identical boat transforms");
+  world.update(5, .5, true, 1);
+  boats.forEach((b, i) => assert.ok(b.instanceMatrix.version > versions[i], "boats resume their original animation"));
+  const animatedPoses = new Map();
+  world.group.traverse(o => { if (o.matrixAutoUpdate) { o.updateMatrix(); animatedPoses.set(o, o.matrix.clone()); } });
+  world.update(6, .5, true, 1);
+  let moving = 0;
+  for (const [object, before] of animatedPoses) { object.updateMatrix(); if (!object.matrix.equals(before)) moving++; }
+  assert.ok(moving > 10, "birds, wings, water and the mill remain animated");
   world.group.updateMatrixWorld(true); assert.ok(!new T.Box3().setFromObject(world.group).isEmpty());
   world.dispose(); railway.dispose(); world.dispose(); railway.dispose();
   for (const [resource, count] of resources) assert.equal(count, 1, `${resource.type ?? resource.constructor.name} leaked or disposed twice`);

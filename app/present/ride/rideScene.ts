@@ -9,6 +9,8 @@ import { categoryColors } from "@/lib/palette";
 import { buildExhibit, type Exhibit } from "./exhibits";
 import { createLandscape } from "./landscape";
 import { createRailway } from "./railway";
+import { createInstanceCuller } from "./instance-culling";
+import { createRenderDemand } from "./render-demand";
 
 export type RideScene = {
   draw: (time: number) => void;
@@ -21,6 +23,7 @@ export type RideScene = {
   resize: () => void;
   dispose: () => void;
   frameTime: () => number;
+  resetClock: () => void;
   lowerQuality: () => boolean;
   telemetry: () => RideTelemetry;
   hasArrived: () => boolean;
@@ -66,6 +69,9 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   const landscape = createLandscape(path, track);
   const railway = createRailway(path, landscape.layout);
   scene.add(landscape.group, railway.group);
+  const instances = createInstanceCuller([...landscape.cullable, ...railway.cullable]);
+  const cameraFrustum = new THREE.Frustum(), viewProjection = new THREE.Matrix4();
+  const renderDemand = createRenderDemand();
   const v = (p: V3) => new THREE.Vector3(p.x, p.y, p.z);
   const geometries = new Set<THREE.BufferGeometry>(), materials = new Set<THREE.Material>();
   const material = (color: number, metalness = 0, roughness = 0.7, emissive = 0) => {
@@ -85,13 +91,15 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   const trim = mesh(new THREE.BoxGeometry(2.91, 0.06, 0.1), amber, cart); trim.position.set(0, -1.46, -1.32);
 
   const resident = new Map<number, Exhibit>();
-  const exhibitTransform = (index: number) => {
-    const f = path.frame(track.stations[index].u);
+  const exhibitTimes = new WeakMap<Exhibit, number>();
+  const exhibitTransforms = track.stations.map(station => {
+    const f = path.frame(station.u);
     const forward = new THREE.Vector3(f.tangent.x, 0, f.tangent.z).normalize(), side = v(f.side);
     const origin = v(f.point).addScaledVector(side, 31).addScaledVector(forward, 18).add(new THREE.Vector3(0, -3.5, 0));
     const rotation = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(side, new THREE.Vector3(0, 1, 0), forward.clone().negate()));
     return { origin, rotation, side, forward };
-  };
+  });
+  const exhibitTransform = (index: number) => exhibitTransforms[index];
   const ensureExhibits = (index: number) => {
     const wanted = new Set([index - 1, index, index + 1].filter(i => i >= 0 && i < events.length));
     for (const [i, exhibit] of resident) if (!wanted.has(i)) { scene.remove(exhibit.group); exhibit.dispose(); resident.delete(i); }
@@ -120,6 +128,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     const bounds = canvas.getBoundingClientRect(); const width = Math.max(1, bounds.width), height = Math.max(1, bounds.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, quality > 0.7 ? 1.5 : quality > 0.4 ? 0.8 : 0.6));
     renderer.setSize(width, height, false); camera.aspect = width / height; camera.updateProjectionMatrix();
+    renderDemand.invalidate();
   };
   resize();
   const draw = (time: number) => {
@@ -153,7 +162,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     }
     for (const [i, exhibit] of resident) {
       exhibit.group.visible = Math.abs(path.distanceAt(track.stations[i].u) - distance) < 900;
-      if (exhibit.group.visible) exhibit.update(elapsed);
+      if (exhibit.group.visible && exhibitTimes.get(exhibit) !== elapsed) { exhibit.update(elapsed); exhibitTimes.set(exhibit, elapsed); }
     }
     const f = path.frame(cameraU), position = v(f.point), tangent = v(f.tangent), up = v(f.up);
     const activeView = view === "exhibit" && !arrived ? "seat" : view;
@@ -191,18 +200,30 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     const fov = activeView === "exhibit" ? 49 : activeView === "overview" ? 58 : 65 + (comfort ? 0 : Math.min(10, velocity * 0.05));
     cameraMotion.update(desiredPosition, aim.quaternion, fov, activeView, dt, comfort);
     camera.updateProjectionMatrix();
-    cart.visible = activeView === "seat" && !cameraMotion.isTransitioning();
+    const showCart = activeView === "seat" && !cameraMotion.isTransitioning();
+    if (cart.visible !== showCart) renderDemand.invalidate();
+    cart.visible = showCart;
     headlight.position.copy(position).addScaledVector(tangent, 12).addScaledVector(up, 6);
     if (!ready && arrived) options.onArrive();
-    ready = true; renderer.render(scene, camera);
+    ready = true;
+    if (!renderDemand.needsFrame(camera, elapsed)) return;
+    camera.updateMatrixWorld();
+    cameraFrustum.setFromProjectionMatrix(viewProjection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+    sun.updateMatrixWorld(); sun.target.updateMatrixWorld();
+    sun.shadow.updateMatrices(sun);
+    // Preserve off-camera trees/supports that still cast a visible shadow.
+    instances.update(cameraFrustum, renderer.shadowMap.enabled ? sun.shadow.getFrustum() : undefined);
+    renderer.render(scene, camera);
   };
   return {
     draw, resize, telemetry, hasArrived: () => arrived, frameTime: () => frameMean,
+    resetClock: () => { previousTime = 0; frameMean = 16; },
     debug: () => ({ distance, targetDistance, camera: camera.position.toArray(), rotation: camera.quaternion.toArray(),
       seat: v(path.point(cameraU)).add(new THREE.Vector3(0, 2.9, 0)).toArray(), transitioning: cameraMotion.isTransitioning() }),
     setStation: (index, teleport = false) => {
       const next = THREE.MathUtils.clamp(index, 0, events.length - 1);
       if (next === currentIndex && !teleport) return;
+      renderDemand.invalidate();
       departureHold = arrived && view === "exhibit" ? exhibitTransitionSeconds(comfort) + 0.1 : 0;
       if (arrived) velocity = 0;
       currentIndex = next; targetDistance = path.distanceAt(track.stations[next].u); arrived = false; paused = false;
@@ -217,7 +238,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     },
     setPlayback: (value, multiplier) => { if (playing !== value) paused = !value; playing = value; speed = multiplier; },
     setComfort: value => { comfort = value; },
-    setView: value => { view = value; },
+    setView: value => { if (view !== value) renderDemand.invalidate(); view = value; },
     orbit: (dx, dy) => { orbitYaw = THREE.MathUtils.clamp(orbitYaw - dx * 0.007, -1.3, 1.3); orbitPitch = THREE.MathUtils.clamp(orbitPitch + dy * 0.005, 0.03, 0.95); },
     zoom: delta => { orbitRadius = THREE.MathUtils.clamp(orbitRadius + delta * 0.04, 28, 95); },
     lowerQuality: () => { if (quality <= 0.35) return false; quality = quality > 0.55 ? 0.55 : 0.35; renderer.shadowMap.enabled = false; resize(); return true; },

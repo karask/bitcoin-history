@@ -154,20 +154,6 @@ export function makeHouse(style: "village" | "chalet" | "farm", variant = 0) {
   return b.finish();
 }
 
-export function makeLighthouse() {
-  const b = new ModelBuilder();
-  b.cone([0, 1, 0], 7, 2, 0x999a88, 6, 16);
-  b.cone([0, 15, 0], 4.7, 28, 0xe2dfcc, 3, 16);
-  b.cone([0, 20, 0], 3.7, 4, 0xb46249, 3.5, 16);
-  b.cone([0, 30, 0], 5.2, 1, 0x50656a, 5.2, 16);
-  b.cone([0, 32.5, 0], 3.3, 4, 0xb4d3ce, 3.3, 12);
-  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; b.rod([Math.cos(a) * 3.4, 30.5, Math.sin(a) * 3.4], [Math.cos(a) * 3.4, 34.5, Math.sin(a) * 3.4], .1, 0x3a565b); }
-  b.cone([0, 35.5, 0], 4.2, 2, 0x496367);
-  for (const y of [8, 15, 25]) b.box([0, y, 4.1 - y * .047], [1.2, 2.2, .15], 0x3d626c);
-  b.box([0, 3, 4.65], [2.2, 4, .2], 0x425c59);
-  return b.finish();
-}
-
 export function makeBoat(sail = false) {
   const b = new ModelBuilder();
   b.ball([0, .15, 0], [4.8, 1.1, 1.7], 0x496b74); b.box([0, .82, 0], [6.3, .3, 2.6], 0xc7b896);

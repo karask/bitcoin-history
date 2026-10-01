@@ -1,6 +1,7 @@
 import * as T from "three";
 import type { LandscapeLayout, LandscapePath } from "./landscape-layout.ts";
 import { ModelBuilder } from "./landscape-models.ts";
+import { freezeStaticTransforms, type StaticInstanceBatch } from "./instance-culling.ts";
 
 const v = (p: { x: number; y: number; z: number }) => new T.Vector3(p.x, p.y, p.z);
 
@@ -14,6 +15,7 @@ export function createRailway(path: LandscapePath, land: LandscapeLayout) {
   const frameMat = mat({ color: 0x34554c, roughness: .5, metalness: .65 });
   const detailMat = mat({ vertexColors: true, roughness: .68, metalness: .18 });
   const chunks: { u: number; group: T.Group }[] = [];
+  const cullable: StaticInstanceBatch[] = [];
   const axis = new T.Vector3(0, 1, 0), dummy = new T.Object3D();
   const beamGeometry = own(new T.CylinderGeometry(1, 1, 1, 8));
   const blockGeometry = own(new T.BoxGeometry(1, 1, 1));
@@ -38,7 +40,7 @@ export function createRailway(path: LandscapePath, land: LandscapeLayout) {
   const batch = (geometry: T.BufferGeometry, material: T.Material, matrices: T.Matrix4[], parent: T.Group) => {
     if (!matrices.length) return;
     const mesh = new T.InstancedMesh(geometry, material, matrices.length);
-    matrices.forEach((m, i) => mesh.setMatrixAt(i, m)); mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); mesh.castShadow = true; mesh.receiveShadow = true; parent.add(mesh);
+    matrices.forEach((m, i) => mesh.setMatrixAt(i, m)); mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); mesh.castShadow = true; mesh.receiveShadow = true; parent.add(mesh); cullable.push({ mesh });
   };
   const block = (p: T.Vector3, scale: T.Vector3, rotation?: T.Quaternion) => {
     dummy.position.copy(p); dummy.scale.copy(scale); dummy.quaternion.copy(rotation ?? new T.Quaternion()); dummy.updateMatrix(); return dummy.matrix.clone();
@@ -96,7 +98,7 @@ export function createRailway(path: LandscapePath, land: LandscapeLayout) {
   }
 
   // Paving is partly buried in its terrace; steps reach the miniature's raised floor.
-  for (const plot of land.plots) {
+  const plazaGeometry = (() => {
     const b = new ModelBuilder();
     b.box([0, -.18, 0], [44, .6, 39], 0xaaa994);
     for (let x = -21; x <= 21; x += 3) {
@@ -108,14 +110,16 @@ export function createRailway(path: LandscapePath, land: LandscapeLayout) {
       b.box([x, .75, 15], [2.3, 1.5, 3.5], 0x8a9180);
       for (let z = -1; z <= 1; z++) { b.ball([x, 1.6, 15 + z], [1, .75, .75], 0x63804c); b.ball([x + .2, 2.15, 15 + z], [.27, .17, .27], 0xd1b99b, 0); }
     }
-    const mesh = new T.Mesh(own(b.finish()), detailMat);
-    mesh.position.set(plot.x, plot.y, plot.z);
-    mesh.quaternion.setFromRotationMatrix(new T.Matrix4().makeBasis(new T.Vector3(plot.sideX, 0, plot.sideZ), new T.Vector3(0, 1, 0), new T.Vector3(-plot.forwardX, 0, -plot.forwardZ)));
-    mesh.receiveShadow = true; mesh.castShadow = true; group.add(mesh);
-  }
+    return own(b.finish());
+  })();
+  batch(plazaGeometry, detailMat, land.plots.map(plot => {
+    const rotation = new T.Quaternion().setFromRotationMatrix(new T.Matrix4().makeBasis(new T.Vector3(plot.sideX, 0, plot.sideZ), new T.Vector3(0, 1, 0), new T.Vector3(-plot.forwardX, 0, -plot.forwardZ)));
+    return block(new T.Vector3(plot.x, plot.y, plot.z), new T.Vector3(1, 1, 1), rotation);
+  }), group);
+  freezeStaticTransforms(group);
   let disposed = false;
   return {
-    group,
+    group, cullable,
     update(u: number, overview: boolean) { for (const chunk of chunks) chunk.group.visible = Math.abs(chunk.u - u) * path.length < (overview ? 6500 : 3100); },
     dispose() {
       if (disposed) return; disposed = true;
