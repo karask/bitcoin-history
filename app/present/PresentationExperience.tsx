@@ -89,7 +89,7 @@ export default function PresentationExperience({
   const [audioBusy, setAudioBusy] = useState(false);
   const [volume, setVolume] = useState(70);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  // Ride is always the default; reduced-motion preferences enable Comfort instead.
+  // Both Ride and Comfort are on by default, independently of device preferences.
   const [modeChoice, setModeChoice] = useState<PresentationMode | null>(null);
   const [comfortChoice, setComfortChoice] = useState<boolean | null>(null);
   /** False while the vehicle is travelling. The panel only reads once it has settled. */
@@ -99,7 +99,7 @@ export default function PresentationExperience({
 
   const requested = modeChoice ?? "ride";
   const mode: PresentationMode = requested === "ride" && rideUnavailable ? "reader" : requested;
-  const comfort = comfortChoice ?? reducedMotion;
+  const comfort = comfortChoice ?? true;
   const arrived = railArrived;
 
   const onFallback = useCallback((reason: string) => {
@@ -119,14 +119,15 @@ export default function PresentationExperience({
       events.map((event) => ({
         slug: event.slug,
         date: event.date,
+        precision: event.precision,
         category: event.category,
         significance: event.significance,
         kind: event.kind,
       })),
       priceContext.values as Record<string, number>,
-      { resolution: 2400, pacingBlend: 0.82, lastObservationDate: priceContext.source.coverage.match(/through (\d{4}-\d{2}-\d{2})/)?.[1] },
+      { resolution: 2400, pacingBlend: 0.82, smoothRide: mode === "ride", lastObservationDate: priceContext.source.coverage.match(/through (\d{4}-\d{2}-\d{2})/)?.[1] },
     );
-  }, [events]);
+  }, [events, mode]);
 
   const accent = currentEvent ? categoryColors[currentEvent.category] : categoryColors.origins;
   const sceneStyle = { "--scene-accent": accent } as CSSProperties;
@@ -476,7 +477,8 @@ export default function PresentationExperience({
               <p className="launch-premise">
                 Board a front-seat roller coaster shaped by Bitcoin’s price. Climb the rallies,
                 descend through bear markets, then stop inside detailed 3D historical exhibits.
-                Drag to look around. Zoom out to see the track.
+                Travel through forests, river valleys and seaside villages between stops.
+                Drag at an exhibit to look around. Zoom out to see the track.
               </p>
 
               <button className="start-button" type="button" onClick={startJourney}>
@@ -488,8 +490,8 @@ export default function PresentationExperience({
               </button>
               <p className="launch-note">
                 Sound remains off until you choose to enable it.
-                {" Track: daily UTC reference prices, smoothly interpolated on a logarithmic scale. Event prices use recorded daily observations; intraday milestones are shown separately. Not live quotes."}
-                {reducedMotion && " Comfort starts on for your reduced-motion preference. Ride still travels; choose Reader for the calmer 2D view."}
+                {" Rail follows a smoothed price trend with broad, rounded hills. Comfort starts ON. Event prices use unchanged daily UTC observations; intraday milestones are shown separately. Not live quotes."}
+                {reducedMotion && " Your device requests reduced motion. Scenery animation stays still; choose Reader for the calmer 2D view."}
               </p>
 
               <nav className="setlist-picker" aria-label="Choose a different show">
@@ -701,11 +703,11 @@ export default function PresentationExperience({
                 aria-pressed={comfort}
                 aria-label={comfort ? "Turn comfort mode off" : "Turn comfort mode on"}
                 aria-describedby="comfort-explanation"
-                title="Comfort steadies the camera: no banking or speed zoom. The ride still accelerates and brakes."
+                title="Comfort keeps a steady horizon, gentle pitch and slower camera turns, with no banking or speed zoom."
               >
                 <span>{comfort ? "COMFORT ON" : "COMFORT OFF"}</span>
               </button>
-              <p id="comfort-explanation" role="tooltip">Comfort ON steadies the camera: no banking or speed-related zoom. OFF adds those coaster effects. Travel still accelerates and brakes in either setting.</p>
+              <p id="comfort-explanation" role="tooltip">Comfort ON limits pitch and camera turn speed, with no banking or speed zoom. OFF adds those coaster effects. The smoothed rail and gentle acceleration remain in both settings.</p>
               </div>
               <button
                 type="button"

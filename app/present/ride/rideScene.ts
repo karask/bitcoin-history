@@ -4,9 +4,11 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import type { PresentationEvent } from "@/lib/event-schema";
 import { sampleTrack, type Track } from "@/lib/track";
 import { advanceRide, createRidePath, type RideTelemetry, type RideView, type V3 } from "@/lib/ride-path";
-import { createRideCameraMotion, EXHIBIT_TRANSITION_SECONDS } from "@/lib/ride-camera";
+import { createRideCameraMotion, exhibitTransitionSeconds, comfortableSeatDirection } from "@/lib/ride-camera";
 import { categoryColors } from "@/lib/palette";
 import { buildExhibit, type Exhibit } from "./exhibits";
+import { createLandscape } from "./landscape";
+import { createRailway } from "./railway";
 
 export type RideScene = {
   draw: (time: number) => void;
@@ -34,10 +36,10 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   renderer.shadowMap.enabled = options.quality > 0.7;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x172c3e);
-  scene.fog = new THREE.FogExp2(0x284250, 0.00026);
+  scene.background = new THREE.Color(0xb8d5dc);
+  scene.fog = new THREE.FogExp2(0xc6d7cd, 0.00020);
   const camera = new THREE.PerspectiveCamera(65, 1, 0.15, 24000);
-  scene.add(new THREE.HemisphereLight(0xd0edff, 0x4b4751, 1.1));
+  scene.add(new THREE.HemisphereLight(0xe0f0ee, 0x777456, 1.2));
   // One shared reflection environment and a fixed light count for all exhibits.
   // Metal, wood and paper retain their material character without adding lights
   // for every resident miniature (and recompiling shaders at each station).
@@ -45,9 +47,9 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   const environment = pmrem.fromScene(room, 0.04);
   scene.environment = environment.texture; scene.environmentIntensity = 0.35;
   room.dispose(); pmrem.dispose();
-  const sun = new THREE.DirectionalLight(0xffdab1, 2.7);
+  const sun = new THREE.DirectionalLight(0xffe7ba, 2.2);
   sun.castShadow = true; sun.shadow.mapSize.set(options.quality > 0.7 ? 2048 : 1024, options.quality > 0.7 ? 2048 : 1024);
-  Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 40, bottom: -40, near: 10, far: 240 });
+  Object.assign(sun.shadow.camera, { left: -105, right: 105, top: 95, bottom: -95, near: 10, far: 310 });
   sun.shadow.bias = -0.0003; sun.shadow.normalBias = 0.04;
   scene.add(sun, sun.target);
   const exhibitFill = new THREE.DirectionalLight(0xffe0b0, 0.65);
@@ -56,73 +58,24 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
   const headlight = new THREE.PointLight(0xffd89e, 40, 110, 1.3); scene.add(headlight);
   const path = createRidePath(track, sampleTrack);
   const sky = new Sky(); sky.scale.setScalar(22000); sky.position.x = path.length / 2;
-  sky.material.uniforms.turbidity.value = 5;
-  sky.material.uniforms.rayleigh.value = 2.5;
-  sky.material.uniforms.sunPosition.value.set(-180000, 42000, 140000);
+  sky.material.uniforms.turbidity.value = 2.2;
+  sky.material.uniforms.rayleigh.value = 1.2;
+  sky.material.uniforms.mieCoefficient.value = .003;
+  sky.material.uniforms.sunPosition.value.set(-180000, 135000, 140000);
   scene.add(sky);
+  const landscape = createLandscape(path, track);
+  const railway = createRailway(path, landscape.layout);
+  scene.add(landscape.group, railway.group);
   const v = (p: V3) => new THREE.Vector3(p.x, p.y, p.z);
   const geometries = new Set<THREE.BufferGeometry>(), materials = new Set<THREE.Material>();
   const material = (color: number, metalness = 0, roughness = 0.7, emissive = 0) => {
     const m = new THREE.MeshStandardMaterial({ color, roughness, metalness, emissive: color, emissiveIntensity: emissive }); materials.add(m); return m;
   };
-  const steel = material(0xe6e7dc, 0.7, 0.24), beam = material(0x344953, 0.6), ties = material(0x70848a, 0.6);
-  const amber = material(0xffa536, 0.5, 0.3, 0.8), concrete = material(0x7f898b);
+  const steel = material(0xe6e7dc, 0.7, 0.24);
+  const amber = material(0xcba15e, 0.5, 0.3, 0.12);
   const mesh = (geometry: THREE.BufferGeometry, mat: THREE.Material, parent: THREE.Object3D = scene) => {
     geometries.add(geometry); const object = new THREE.Mesh(geometry, mat); parent.add(object); return object;
   };
-
-  // Chronological u is the ONLY world position parameter. Arc distance is converted
-  // explicitly for movement, never accidentally passed as a date to Three's *At API.
-  class RailCurve extends THREE.Curve<THREE.Vector3> {
-    offset: number; lift: number;
-    constructor(offset = 0, lift = 0) { super(); this.offset = offset; this.lift = lift; this.arcLengthDivisions = 6000; }
-    getPoint(u: number, target = new THREE.Vector3()) {
-      const f = path.frame(u);
-      return target.copy(v(f.point)).addScaledVector(v(f.side), this.offset).addScaledVector(v(f.up), this.lift);
-    }
-  }
-  const segments = Math.min(6200, Math.ceil(path.totalDistance / 2.8));
-  for (const side of [-1.65, 1.65]) {
-    mesh(new THREE.TubeGeometry(new RailCurve(side), segments, 0.24, 6, false), steel);
-    mesh(new THREE.TubeGeometry(new RailCurve(side, -0.55), segments, 0.085, 4, false), amber);
-  }
-  mesh(new THREE.TubeGeometry(new RailCurve(0, -1.8), segments, 0.5, 5, false), beam);
-  function instances(geometry: THREE.BufferGeometry, mat: THREE.Material, count: number, place: (dummy: THREE.Object3D, i: number) => void) {
-    geometries.add(geometry); const object = new THREE.InstancedMesh(geometry, mat, count); const dummy = new THREE.Object3D();
-    for (let i = 0; i < count; i++) { dummy.position.set(0, 0, 0); dummy.rotation.set(0, 0, 0); dummy.scale.set(1, 1, 1); place(dummy, i); dummy.updateMatrix(); object.setMatrixAt(i, dummy.matrix); }
-    object.instanceMatrix.needsUpdate = true; object.computeBoundingSphere(); scene.add(object); return object;
-  }
-  const sleeperCount = Math.ceil(path.totalDistance / 3.6);
-  instances(new THREE.BoxGeometry(4.6, 0.24, 0.48), ties, sleeperCount, (dummy, i) => {
-    const f = path.frame(path.uAtDistance(i / (sleeperCount - 1) * path.totalDistance));
-    dummy.position.copy(v(f.point)).addScaledVector(v(f.up), -0.4);
-    dummy.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(v(f.side), v(f.up), v(f.tangent).negate()));
-  });
-  const supports = Math.ceil(path.totalDistance / 45);
-  instances(new THREE.CylinderGeometry(0.65, 0.9, 1, 6), beam, supports * 2, (dummy, i) => {
-    const f = path.frame(path.uAtDistance(Math.floor(i / 2) / (supports - 1) * path.totalDistance));
-    const top = v(f.point).addScaledVector(v(f.side), i % 2 ? 2.8 : -2.8);
-    dummy.position.set(top.x, (top.y - 24) / 2, top.z); dummy.scale.y = top.y + 20;
-  });
-  instances(new THREE.BoxGeometry(7, 1, 6), concrete, supports, (dummy, i) => {
-    const p = path.point(path.uAtDistance(i / (supports - 1) * path.totalDistance)); dummy.position.set(p.x, -22, p.z);
-  });
-
-  // Terrain and pillars make altitude tangible, even when prices are many decades apart.
-  const ground = mesh(new THREE.PlaneGeometry(path.length * 3, 14000), material(0x263f42));
-  ground.rotation.x = -Math.PI / 2; ground.position.set(path.length / 2, -23, 0);
-  const terrainGeometry = new THREE.PlaneGeometry(path.length * 2.5, 10000, 128, 64).rotateX(-Math.PI / 2);
-  const terrainPositions = terrainGeometry.getAttribute("position");
-  for (let i = 0; i < terrainPositions.count; i++) {
-    const x = terrainPositions.getX(i), z = terrainPositions.getZ(i);
-    const fade = THREE.MathUtils.smoothstep(Math.abs(z), 350, 1100);
-    const ridge = Math.max(0, Math.sin(x * 0.0013 + z * 0.0018) + 0.45 * Math.sin(x * 0.004 - z * 0.003) + 0.3);
-    terrainPositions.setY(i, -25 + fade * (90 + ridge ** 1.5 * 350));
-  }
-  terrainGeometry.computeVertexNormals();
-  const terrainMat = material(0x405e66, 0, 0.95); terrainMat.flatShading = true;
-  mesh(terrainGeometry, terrainMat).position.x = path.length / 2;
-  const grid = new THREE.GridHelper(path.length * 2, 100, 0x48656b, 0x344e53); grid.position.set(path.length / 2, -22.5, 0); scene.add(grid);
 
   // The front-seat nose and safety bar give the rider a fixed physical reference.
   const cart = new THREE.Group(); camera.add(cart); scene.add(camera);
@@ -192,7 +145,6 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     if (nearest !== residentIndex) {
       residentIndex = nearest;
       const origin = exhibitTransform(nearest).origin;
-      sun.target.position.copy(origin); sun.position.copy(origin).add(new THREE.Vector3(-55, 100, 80));
       const transform = exhibitTransform(nearest);
       exhibitFill.target.position.copy(origin).add(new THREE.Vector3(0, 8, 0));
       exhibitRim.target.position.copy(exhibitFill.target.position);
@@ -205,10 +157,15 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     }
     const f = path.frame(cameraU), position = v(f.point), tangent = v(f.tangent), up = v(f.up);
     const activeView = view === "exhibit" && !arrived ? "seat" : view;
+    landscape.update(elapsed, cameraU, activeView === "overview", quality);
+    railway.update(cameraU, activeView === "overview");
+    // The same sunlight direction follows the train, so moving shadows stay local.
+    sun.target.position.copy(arrived ? exhibitTransform(currentIndex).origin : position);
+    sun.position.copy(sun.target.position).add(new THREE.Vector3(-90, 140, 100));
     if (activeView === "overview") {
-      const extent = Math.min(path.length, 2800);
-      desiredPosition.set(position.x - extent * 0.38, position.y + extent * 0.6, position.z + extent * 0.85);
-      desiredLook.set(Math.min(path.length, position.x + extent * 0.16), position.y - 120, position.z);
+      const extent = Math.min(path.length, 1800);
+      desiredPosition.set(position.x - extent * .3, position.y + extent * .85, position.z + extent * .55);
+      desiredLook.set(Math.min(path.length, position.x + extent * .1), position.y - 20, position.z - 100);
     } else if (activeView === "exhibit") {
       const transform = exhibitTransform(currentIndex), focus = transform.origin.clone().add(new THREE.Vector3(0, 10, 0));
       const r = orbitRadius * (camera.aspect < 1 ? 1.45 : 1);
@@ -220,9 +177,10 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
       // Stable vertical seat clearance: the old surface-normal offset jumped
       // sideways/vertically when a compressed price curve changed pitch sharply.
       desiredPosition.copy(position).add(new THREE.Vector3(0, 2.9, 0));
-      const aheadU = path.uAtDistance(Math.min(path.totalDistance, distance + (comfort ? 48 : 24)));
+      const aheadU = path.uAtDistance(Math.min(path.totalDistance, distance + (comfort ? Math.max(100, velocity * 1.1) : 24)));
       desiredLook.copy(v(path.point(aheadU))).addScaledVector(up, 2.1);
       if (distance >= path.totalDistance - 24) desiredLook.copy(position).addScaledVector(tangent, 35).addScaledVector(up, 2.1);
+      if (comfort) desiredLook.copy(desiredPosition).addScaledVector(comfortableSeatDirection(desiredLook.clone().sub(desiredPosition)), 100);
     }
     aim.position.copy(desiredPosition); aim.up.set(0, 1, 0);
     // Cameras look down local -Z (Object3D.lookAt uses +Z).
@@ -231,7 +189,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     const bank = comfort || activeView !== "seat" || arrived ? 0 : THREE.MathUtils.clamp((nextTangent.z - f.tangent.z) * velocity * 0.09, -0.13, 0.13);
     roll += (bank - roll) * (1 - Math.exp(-dt * 4)); aim.rotateZ(roll);
     const fov = activeView === "exhibit" ? 49 : activeView === "overview" ? 58 : 65 + (comfort ? 0 : Math.min(10, velocity * 0.05));
-    cameraMotion.update(desiredPosition, aim.quaternion, fov, activeView, dt);
+    cameraMotion.update(desiredPosition, aim.quaternion, fov, activeView, dt, comfort);
     camera.updateProjectionMatrix();
     cart.visible = activeView === "seat" && !cameraMotion.isTransitioning();
     headlight.position.copy(position).addScaledVector(tangent, 12).addScaledVector(up, 6);
@@ -245,7 +203,7 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     setStation: (index, teleport = false) => {
       const next = THREE.MathUtils.clamp(index, 0, events.length - 1);
       if (next === currentIndex && !teleport) return;
-      departureHold = arrived && view === "exhibit" ? EXHIBIT_TRANSITION_SECONDS + 0.1 : 0;
+      departureHold = arrived && view === "exhibit" ? exhibitTransitionSeconds(comfort) + 0.1 : 0;
       if (arrived) velocity = 0;
       currentIndex = next; targetDistance = path.distanceAt(track.stations[next].u); arrived = false; paused = false;
       orbitYaw = -0.35; orbitPitch = 0.25; orbitRadius = 55;
@@ -265,9 +223,10 @@ export function createRideScene(canvas: HTMLCanvasElement, track: Track, events:
     lowerQuality: () => { if (quality <= 0.35) return false; quality = quality > 0.55 ? 0.55 : 0.35; renderer.shadowMap.enabled = false; resize(); return true; },
     dispose: () => {
       for (const exhibit of resident.values()) exhibit.dispose(); resident.clear();
+      landscape.dispose(); railway.dispose();
       scene.traverse(object => { if (object instanceof THREE.InstancedMesh) object.dispose(); });
       geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose());
-      grid.geometry.dispose(); (grid.material as THREE.Material).dispose(); scene.clear(); renderer.dispose();
+      scene.clear(); renderer.dispose();
       sky.geometry.dispose(); sky.material.dispose(); sun.shadow.map?.dispose(); environment.dispose();
     },
   };

@@ -1,11 +1,13 @@
 /**
  * The track the presentation rides.
  *
- * Its shape is not decorative: elevation is the real BTC/USD series on a log scale,
- * so when the ride plunges it plunges because the market did. This module is pure and
+ * Elevation is price-derived on a log scale. The presentation rounds the daily trend
+ * into comfortable hills; displayed event quotes remain independent. This module is pure and
  * dependency-free — no React, no path aliases, no JSON imports — so `tests/track.test.mjs`
  * can import it directly under Node's type stripping.
  */
+import { smoothDailyLogs, smoothRailLogs, rideTrackLength, RIDE_TREND_WINDOW_DAYS } from "./ride-smoothing.ts";
+import { priceOnDate } from "./prices.ts";
 
 /** The minimum an event needs to become a station. */
 export type TrackEventInput = {
@@ -14,6 +16,7 @@ export type TrackEventInput = {
   category: string;
   significance: "landmark" | "major" | "context";
   kind?: string;
+  precision?: "day" | "month" | "year";
 };
 
 /** Daily UTC reference observations keyed `YYYY-MM-DD`. */
@@ -24,7 +27,7 @@ export type TrackPoint = {
   u: number;
   /** Calendar date at this point, ISO `YYYY-MM-DD`. */
   date: string;
-  /** Interpolated price, or null before Bitcoin had a quoted price. */
+  /** Interpolated rail/trend value, NOT a recorded quote; null before price data. */
   priceUsd: number | null;
   /** 0..1 log-scaled height. Flat at 0 through the pre-price era. */
   elevation: number;
@@ -49,6 +52,7 @@ export type Station = {
 };
 
 export type Track = {
+  smoothing: { trendWindowDays: number; bendSigmaUnits: number } | null;
   points: TrackPoint[];
   stations: Station[];
   /** Where the pre-price tunnel ends and the first climb begins, in u. */
@@ -70,6 +74,8 @@ export type TrackOptions = {
   pacingBlend?: number;
   /** How many points to resample the track into. */
   resolution?: number;
+  /** Geometry-only daily trend filtering and distance-based rounding. */
+  smoothRide?: boolean;
 };
 
 const DEFAULT_PACING_BLEND = 0.55;
@@ -204,7 +210,8 @@ export function buildTrack(
   // so the ride visits them in the same sequence the archive lists them.
   const ordered = [...events].sort((a, b) => a.date.localeCompare(b.date));
 
-  const knots = buildPriceKnots(series, options.lastObservationDate);
+  const rawKnots = buildPriceKnots(series, options.lastObservationDate);
+  const knots = options.smoothRide ? smoothDailyLogs(rawKnots) : rawKnots;
   const days = ordered.map((event) => toDayNumber(event.date));
   const firstDay = days[0];
   const lastDay = days[days.length - 1];
@@ -294,6 +301,20 @@ export function buildTrack(
     });
   }
 
+  let smoothing: Track["smoothing"] = null;
+  const firstPricedIndex = points.findIndex(point => point.priceUsd !== null);
+  if (options.smoothRide && firstPricedIndex >= 0) {
+    const firstLog = Math.log10(points[firstPricedIndex].priceUsd!);
+    const logs = points.map(point => point.priceUsd === null ? firstLog : Math.log10(point.priceUsd));
+    const rounded = smoothRailLogs(logs, firstPricedIndex, rideTrackLength(ordered.length), logCeiling - logFloor);
+    smoothing = { trendWindowDays: RIDE_TREND_WINDOW_DAYS, bendSigmaUnits: rounded.sigmaUnits };
+    points.forEach((point, index) => {
+      if (point.priceUsd === null) return;
+      point.priceUsd = 10 ** rounded.values[index];
+      point.elevation = clamp((rounded.values[index] - logFloor) / (logCeiling - logFloor), 0, 1);
+    });
+  }
+
   // Central-difference grade, so speed and banking read from the same curve the eye sees.
   for (let index = 0; index < points.length; index += 1) {
     const previous = points[Math.max(index - 1, 0)];
@@ -315,13 +336,14 @@ export function buildTrack(
       date: event.date,
       elevation,
       lateral: lateralAtU(u),
-      priceUsd: price,
+      priceUsd: options.smoothRide ? priceOnDate(series, event.date, event.precision) : price,
       category: event.category,
       significance: event.significance,
     };
   });
 
-  return {
+  const track: Track = {
+    smoothing,
     points,
     stations,
     firstPricedU: firstPriced ? firstPriced.u : 0,
@@ -332,6 +354,11 @@ export function buildTrack(
     },
     logRange: { min: logFloor, max: logCeiling },
   };
+  if (options.smoothRide) {
+    // Stations sit on the final rounded rail, not on raw daily-price spikes.
+    track.stations.forEach(station => { station.elevation = sampleTrack(track, station.u).elevation; });
+  }
+  return track;
 }
 
 /** Interpolate a point at an arbitrary position along the track. */

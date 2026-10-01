@@ -1,4 +1,5 @@
 import type { Track, TrackPoint } from "./track";
+import { rideTrackLength, SMOOTH_RIDE_HEIGHT } from "./ride-smoothing.ts";
 
 export type V3 = { x: number; y: number; z: number };
 export type RideView = "seat" | "exhibit" | "overview";
@@ -10,8 +11,8 @@ const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v
  * Sideways bends are scenic. Only the price series controls elevation.
  */
 export function createRidePath(track: Track, sample: (track: Track, u: number) => TrackPoint) {
-  const length = Math.max(6800, track.stations.length * 150);
-  const height = 1450;
+  const length = rideTrackLength(track.stations.length);
+  const height = track.smoothing ? SMOOTH_RIDE_HEIGHT : 1450;
   const base = 32;
   // No market data means no price-implied hill. Keep the pre-price run level with
   // the first observed close so entering the series cannot invent a vertical jump.
@@ -66,8 +67,8 @@ export function createRidePath(track: Track, sample: (track: Track, u: number) =
     speedLimits[i] = Math.min(190, Math.sqrt(8 / Math.max(curvature, 0.00001)), 0.7 / Math.max(curvature, 0.00001));
   }
   // Bidirectional envelope: the previous-chapter control rides the same safe path.
-  for (let i = speedCount - 1; i >= 0; i--) speedLimits[i] = Math.min(speedLimits[i], Math.sqrt(speedLimits[i + 1] ** 2 + 2 * 30 * speedStep));
-  for (let i = 1; i <= speedCount; i++) speedLimits[i] = Math.min(speedLimits[i], Math.sqrt(speedLimits[i - 1] ** 2 + 2 * 30 * speedStep));
+  for (let i = speedCount - 1; i >= 0; i--) speedLimits[i] = Math.min(speedLimits[i], Math.sqrt(speedLimits[i + 1] ** 2 + 2 * 18 * speedStep));
+  for (let i = 1; i <= speedCount; i++) speedLimits[i] = Math.min(speedLimits[i], Math.sqrt(speedLimits[i - 1] ** 2 + 2 * 18 * speedStep));
   const speedLimitAt = (distance: number) => {
     const n = clamp(distance / speedStep, 0, speedCount), i = Math.min(speedCount - 1, Math.floor(n));
     // Braking distance is linear in v², not v. Interpolating speeds directly can
@@ -87,8 +88,8 @@ export function advanceRide(distance: number, target: number, velocity: number, 
   const cruise = Math.min(clamp(95 - grade * direction * 125, 36, 190), bendSpeedLimit) * speed;
   // Playback scales time, so acceleration scales with speed squared. A few seconds
   // of visible run-up and braking replace the old abrupt short-leg transitions.
-  const acceleration = 28 * speed * speed;
-  const deceleration = 38 * speed * speed;
+  const acceleration = 18 * speed * speed;
+  const deceleration = 26 * speed * speed;
   const brake = Math.sqrt(2 * deceleration * remaining);
   const desired = Math.min(cruise, brake);
   const nextVelocity = Math.max(0, velocity + clamp(desired - velocity, -deceleration * dt, acceleration * dt));

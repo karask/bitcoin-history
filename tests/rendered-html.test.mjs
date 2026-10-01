@@ -80,6 +80,8 @@ test("presentation route renders a user-triggered launch", async () => {
   const html = await response.text();
   assert.match(html, /Enter the Timechain/i);
   assert.match(html, /Sound remains off/i);
+  assert.match(html, /Rail follows a smoothed price trend/i);
+  assert.match(html, /Comfort starts ON/i);
   assert.match(html, /Presentation mode — Bitcoin Timechain/i);
 });
 

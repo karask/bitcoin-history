@@ -32,10 +32,13 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
   the old separate Reader mode has been removed.
 - Travel accelerates away from an exhibit and brakes before the next stop.
   Tight price bends also trigger anticipatory braking. The front-seat camera stays
-  attached to the rail, with bounded pitch/yaw and eased 2.4-second exhibit transfers.
-  **Comfort ON** removes camera banking and speed-related zoom; **OFF** adds
-  those coaster effects. Both settings retain animated travel. Comfort starts
-  on when the device requests reduced motion.
+  attached to the rail. **Comfort ON** is the default: the travelling camera has a
+  stable horizon, ±20° pitch limit, a gently ramped 14°/second turn-rate cap, longer
+  look-ahead and 3.6-second exhibit transfers. It removes banking and speed-related
+  zoom; **OFF** adds those coaster effects and uses 2.4-second transfers. Both settings
+  retain the rounded rail and gentler acceleration/braking. Comfort reduces abrupt
+  motion but cannot guarantee that every viewer will be comfortable; Reader remains
+  available for a stationary 2D experience.
 - **Sound ON** plays a three-note confirmation and enables the synthesized
   arrival chimes, with no continuous engine/buzzing sound. **Audio settings** has a
   volume slider and **Test sound** button.
@@ -43,9 +46,15 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
 
 ### Data and interpretation
 
-The track's height follows 5,881 bundled Coin Metrics daily PriceUSD observations
-(18 July 2010–23 August 2026), using bounded, monotone interpolation in logarithmic
-price space. Dates and unrounded values are preserved from the source. The displayed
+The rail follows a **smoothed price trend**, derived from 5,881 bundled Coin Metrics
+daily PriceUSD observations (18 July 2010–23 August 2026). Centered Gaussian weighting
+over ±7 days in log-price space removes small daily oscillations. After calendar
+compression, positive-weight spatial filtering rounds the rail with a minimum
+100-world-unit Gaussian sigma, widened adaptively for tight curvature. Vertical
+exaggeration falls from 1,450 to 960 units. Peaks and turning points may soften or
+shift; stations sit on the rounded rail rather than being forced onto raw-price
+spikes. Raw data, Reader's 2D daily curve and the archive's event-date chart remain unchanged.
+Dates and unrounded values are preserved from the source. The displayed
 event price uses its exact dated observation at 00:00 UTC, independently of the
 interpolated rail. These are daily references, not live quotes, intraday highs/lows,
 or exact event-time transaction prices. Missing observations and events dated only
@@ -68,6 +77,25 @@ chronological path mapping; arc length is used only for physical travel speed.
 Only three adjacent exhibits are resident, static details are material-batched,
 and graphics resolution drops on slow devices before falling back to 2D.
 Exhibits are prepared at chapter boundaries, not halfway through a moving ride.
+
+The scenery follows seven fictional landscape families: sheep pastures (with a
+shepherd, dog and distant wolf), oak forest and deer clearings, a river gorge and
+waterfall, alpine lake and chalet, autumn orchard and watermill, a fishing village
+with an open sea, and willow wetlands with herons. Longer timelines revisit these
+families with seeded variations. These landscapes are decorative, not claims
+about the geography of historical events.
+
+The land rises with the smoothed railway and is terraced beneath every station.
+Paved aprons and steps meet the exhibit foundations. Polished running tubes,
+braced frames, mounting plates and bolts sit on piers anchored to the same terrain
+height field; gorge crossings have masonry arches. Water occupies level carved
+basins instead of inheriting the changing price elevation.
+
+Trees and other repeated models share instanced geometry. Spatial batches are
+culled, distant trees switch to lighter models, and small ground details disappear
+at lower quality. Breeze, circling birds, watermill rotation and gently bobbing
+boats freeze when paused or when the device requests reduced motion. The scenery
+is generated locally and needs no external model, texture or wildlife downloads.
 
 ### Review the detailed stations locally
 
@@ -95,7 +123,7 @@ The ride uses one shared reflection environment and fixed lights; exhibits add
 no lights of their own. Each is material-batched to fewer than 65 meshes and
 700,000 vertices, with explicit geometry/material/texture cleanup on eviction.
 Market sculptures are labeled directional illustrations; the rail remains the
-actual bundled daily-price visualization.
+smoothed price-trend visualization. Its mini-chart uses the same rounded curve.
 
 ### Verification
 
