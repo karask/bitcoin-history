@@ -13,17 +13,7 @@ import {
   type TimelineEvent,
 } from "@/lib/event-schema";
 import { matchesPlace, type Place } from "@/lib/places";
-
-const monthlyPrice = priceContext.values as Record<string, number>;
-
-/**
- * Price on the month of the event, or null before Bitcoin had a quoted price at all.
- * Derived rather than authored so the corpus can never disagree with the series the
- * presentation rides on.
- */
-function priceAt(date: string): number | null {
-  return monthlyPrice[date.slice(0, 7)] ?? null;
-}
+import { priceOnDate } from "@/lib/prices";
 
 function validateCorpus(): BitcoinEvent[] {
   const parsed = [...prehistoryRaw, ...earlyRaw, ...lateRaw].map((record, index) => {
@@ -41,7 +31,7 @@ function validateCorpus(): BitcoinEvent[] {
     if (event.endDate && event.endDate < event.date) {
       throw new Error(`Event ${event.slug} ends before it starts`);
     }
-    return { ...event, places: event.places as Place[], priceUsd: priceAt(event.date) };
+    return { ...event, places: event.places as Place[], priceUsd: priceOnDate(priceContext.values, event.date, event.precision) };
   });
 
   const slugs = new Set<string>();

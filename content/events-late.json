@@ -622,6 +622,12 @@
     "date": "2017-12-17",
     "precision": "day",
     "title": "Bitcoin peaks near $20,000",
+    "priceMilestone": {
+      "usd": 19666,
+      "label": "Bitstamp intraday high",
+      "approximate": false,
+      "source": { "title": "Bitcoin bubble inflates again after pre-Christmas rout", "publisher": "Reuters / The Guardian", "url": "https://www.theguardian.com/technology/2017/dec/26/bitcoin-bubble-rises-again-after-pre-christmas-rout", "type": "secondary" }
+    },
     "summary": "The 2017 rally topped out just under $20,000 before losing more than four fifths of its value.",
     "details": "The run had drawn retail attention worldwide, futures listings on two U.S. exchanges, and a fee market that made small payments uneconomic. Bitcoin would not trade at this level again for three years.",
     "whyItMatters": "It set the template later cycles were measured against: a parabolic top, a long drawdown, and a recovery that outlasts the people who called it dead.",
@@ -3098,6 +3104,12 @@
     "date": "2021-11-10",
     "precision": "day",
     "title": "Bitcoin reaches its 2021 cycle high",
+    "priceMilestone": {
+      "usd": 69000,
+      "label": "Reported intraday high",
+      "approximate": true,
+      "source": { "title": "Bitcoin tops $69,000 after hot inflation numbers released", "publisher": "The Block", "url": "https://www.theblock.co/news/ecosystems/2021-11-10-bitcoin-tops-69000-after-hot-inflation-numbers-released-123919", "type": "secondary" }
+    },
     "summary": "Bitcoin traded near $69,000 on major dollar markets before beginning a prolonged decline.",
     "details": "Exact intraday highs differ by exchange and benchmark, so the level is conventionally rounded. The market peak arrived amid elevated inflation readings, leverage, and broad digital-asset speculation.",
     "whyItMatters": "The high became the reference point for the 2022 market contraction and subsequent recovery.",
@@ -5839,6 +5851,12 @@
     "date": "2024-12-05",
     "precision": "day",
     "title": "Bitcoin trades above $100,000",
+    "priceMilestone": {
+      "usd": 100000,
+      "label": "Dollar-market threshold crossed",
+      "approximate": false,
+      "source": { "title": "Bitcoin hits $100,000 mark", "publisher": "Reuters", "url": "https://www.reuters.com/technology/bitcoin-hits-100000-mark-2024-12-05/", "type": "secondary" }
+    },
     "summary": "Bitcoin crossed the $100,000 level on major dollar markets for the first time.",
     "details": "The milestone followed strong spot-ETF demand, the fourth halving, and expectations of a more supportive U.S. policy environment. Exact timestamps and highs vary among continuously trading venues.",
     "whyItMatters": "A six-figure price became a widely recognized marker of Bitcoin's transition into a large global asset market.",
@@ -6672,6 +6690,12 @@
     "date": "2025-10-06",
     "precision": "day",
     "title": "Bitcoin reaches its all-time high near $126,000",
+    "priceMilestone": {
+      "usd": 126000,
+      "label": "Reported intraday high",
+      "approximate": true,
+      "source": { "title": "Bitcoin hits new all-time record high", "publisher": "Reuters / Investing.com", "url": "https://www.investing.com/news/forex-news/bitcoin-hovers-near-alltime-high-4273225", "type": "secondary" }
+    },
     "summary": "The price peaked at roughly $126,000, the highest level Bitcoin has traded at.",
     "details": "The rally had run on spot ETF inflows, corporate treasury buying and a supportive U.S. policy turn. Four days later the market suffered the largest liquidation event in its history, and the price has not returned to this level since.",
     "whyItMatters": "This is the top of the cycle that institutional access built, and the beginning of the drawdown that followed it.",

@@ -6,6 +6,8 @@ import { categoryLabels, formatEventRange, kindLabels } from "@/lib/event-schema
 import { formatPlaces } from "@/lib/places";
 import { getAdjacentEvents, getAllEvents, getEventBySlug, getRelatedEvents } from "@/lib/events";
 import { sitePath } from "@/lib/site-path";
+import { formatDailyPrice } from "@/lib/prices";
+import priceContext from "@/content/price-context.json";
 
 type EventPageProps = { params: Promise<{ slug: string }> };
 
@@ -76,7 +78,12 @@ export default async function EventPage({ params }: EventPageProps) {
           <dt>SIGNIFICANCE</dt><dd>{event.significance}</dd>
           <dt>KIND</dt><dd>{kindLabels[event.kind]}</dd>
           <dt>PLACE</dt><dd>{formatPlaces(event.places)}</dd>
-          {event.priceUsd !== null && <><dt>BTC / USD (MONTH CLOSE)</dt><dd>{event.priceUsd < 1 ? `$${event.priceUsd.toFixed(2)}` : `$${Math.round(event.priceUsd).toLocaleString("en-US")}`}</dd></>}
+          <dt>BTC / USD (DAILY · 00:00 UTC)</dt><dd>{formatDailyPrice(event.priceUsd)}{event.precision !== "day" && " — exact date unknown"}</dd>
+          <dt>PRICE SOURCE</dt><dd><a href={priceContext.source.documentation} target="_blank" rel="noreferrer">Coin Metrics PriceUSD ↗</a></dd>
+          {event.priceMilestone && <><dt>EVENT PRICE MILESTONE</dt><dd>
+            {event.priceMilestone.approximate ? "≈ " : ""}{formatDailyPrice(event.priceMilestone.usd)} · {event.priceMilestone.label}<br />
+            <a href={event.priceMilestone.source.url} target="_blank" rel="noreferrer">{event.priceMilestone.source.publisher} ↗</a>
+          </dd></>}
           <dt>ACTORS</dt><dd>{event.actors.length ? event.actors.join(", ") : "—"}</dd>
           {event.blockHeight !== undefined && <><dt>BLOCK HEIGHT</dt><dd>{event.blockHeight.toLocaleString("en-US")}</dd></>}
           {event.bip !== undefined && <><dt>BIP</dt><dd>{event.bip}</dd></>}

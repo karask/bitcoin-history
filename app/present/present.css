@@ -1218,6 +1218,8 @@
 .presentation-shell .ride-live-price span { display: flex; align-items: center; gap: 8px; font: 11px var(--mono, ui-monospace), monospace; color: #c5d8dd; }
 .presentation-shell .ride-live-price i { width: 4px; height: 4px; border-radius: 50%; background: #ffbf71; }
 .presentation-shell .ride-live-price strong { display: block; margin-top: 9px; font: 500 30px var(--mono, ui-monospace), monospace; letter-spacing: -0.05em; }
+.presentation-shell .ride-price-basis { display: block; margin-top: 10px; color: #a1bbc5; font: 9px var(--mono, ui-monospace), monospace; letter-spacing: 0.03em; }
+.presentation-shell .ride-price-milestone { display: block; margin-top: 9px; color: #ffcb88; font-size: 12px; line-height: 1.5; text-decoration: underline; text-underline-offset: 3px; }
 .presentation-shell .ride-instruments svg { display: block; width: 100%; margin-top: 12px; overflow: visible; }
 .presentation-shell .ride-chart-labels { display: flex; justify-content: space-between; font: 10px var(--mono, ui-monospace), monospace; color: #adbec3; }
 .presentation-shell .ride-data-note { margin-top: 13px; color: #b6c9d0; font-size: 12px; line-height: 1.5; }
@@ -1278,6 +1280,8 @@
   .presentation-shell .ride-instruments { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; margin-top: 6px; }
   .presentation-shell .ride-live-price span { font-size: 10px; }
   .presentation-shell .ride-live-price strong { font-size: 21px; margin-top: 5px; }
+  .presentation-shell .ride-price-basis { margin-top: 6px; font-size: 8px; }
+  .presentation-shell .ride-price-milestone { margin-top: 5px; font-size: 10px; }
   .presentation-shell .ride-instruments svg { width: 105px; margin: 0 0 0 8px; }
   .presentation-shell .ride-chart-labels, .presentation-shell .ride-data-note { display: none; }
   .presentation-shell .orbit-hint { font-size: 9px; margin-top: 8px; }

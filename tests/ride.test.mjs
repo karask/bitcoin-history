@@ -72,9 +72,10 @@ test("pause freezes an underway journey, and speed affects actual travel", () =>
   assert.ok(simulate(0, 1, -500) > 0, "backwards travel arrives exactly");
 });
 
-test("monthly closes are dated at month-end and interpolation cannot invent extrema", () => {
-  const input = ["2020-01-31", "2020-02-29", "2020-03-31", "2020-04-30"].map((date,i) => ({ slug: `price-${i}`, date, category: "finance", significance: "major" }));
-  const sample = buildTrack(input, { "2020-01": 10, "2020-02": 100, "2020-03": 20, "2020-04": 50 }, { resolution: 3000, pacingBlend: 0 });
+test("daily observations stay on their source dates and interpolation cannot invent extrema", () => {
+  const dates = ["2020-01-01", "2020-01-02", "2020-01-03", "2020-01-04"];
+  const input = dates.map((date,i) => ({ slug: `price-${i}`, date, category: "finance", significance: "major" }));
+  const sample = buildTrack(input, Object.fromEntries(dates.map((date,i) => [date, [10,100,20,50][i]])), { resolution: 3000, pacingBlend: 0 });
   sample.stations.forEach((s, i) => assert.ok(Math.abs(s.priceUsd - [10,100,20,50][i]) < 1e-8));
   for (const p of sample.points) assert.ok(p.priceUsd >= 10 - 1e-8 && p.priceUsd <= 100 + 1e-8);
 });

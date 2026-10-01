@@ -49,6 +49,20 @@ test("the white-paper record includes a licensed archive artifact", async () => 
   assert.match(html, /CC0 \/ Wikimedia Commons/i);
 });
 
+test("event pages distinguish exact-date daily reference prices from sourced milestones", async () => {
+  const parity = await render("/events/bitcoin-dollar-parity");
+  const html = await parity.text();
+  assert.equal(parity.status, 200);
+  assert.match(html, /DAILY · 00:00 UTC/);
+  assert.match(html, /\$1\.02/);
+  assert.match(html, /EVENT PRICE MILESTONE/);
+  assert.match(html, /Mt\. Gox parity threshold/);
+  assert.match(html, /\$1\.00/);
+  assert.doesNotMatch(html, /MONTH CLOSE|\$0\.64/);
+  const pizza = await render("/events/bitcoin-pizza-purchase");
+  assert.match(await pizza.text(), /No recorded daily price/);
+});
+
 test("event detail metadata is record-specific and clears the generic card", async () => {
   const event = all.find((item) => item.slug === "bitcoin-white-paper-announced");
   const response = await render(`/events/${event.slug}`);

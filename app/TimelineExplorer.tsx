@@ -21,15 +21,17 @@ type ScopePreset = "curated" | "all";
 
 function PriceContext({ events }: { events: TimelineEvent[] }) {
   if (events.length < 2) return null;
-  const monthly = priceContext.values as Record<string, number>;
-  const logs = events.map((event) => Math.log10(Math.max(monthly[event.date.slice(0, 7)] ?? 0.01, 0.01)));
-  const min = Math.min(...logs);
-  const max = Math.max(...logs);
+  const logs = events.map(event => event.priceUsd === null ? null : Math.log10(event.priceUsd));
+  const recorded = logs.filter((value): value is number => value !== null);
+  if (!recorded.length) return null;
+  const min = Math.min(...recorded);
+  const max = Math.max(...recorded);
   const height = Math.max(325, events.length * 305);
   const points = logs.map((value, index) => {
+    if (value === null) return "";
     const x = 22 + ((value - min) / Math.max(max - min, 1)) * 176;
     const y = 12 + (index / (logs.length - 1)) * (height - 24);
-    return `${index === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
+    return `${index === 0 || logs[index - 1] === null ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
   }).join(" ");
 
   return <svg className="price-context-graphic" viewBox={`0 0 220 ${height}`} preserveAspectRatio="none" aria-hidden="true">
@@ -276,7 +278,7 @@ export default function TimelineExplorer({ events }: { events: TimelineEvent[] }
 
     <section className={`timeline-section ${showPrice ? "with-price" : ""}`} id="events" aria-labelledby="timeline-title">
       <div className="timeline-heading"><div><p className="eyebrow">VISIBLE CHAIN</p><p className="result-count" aria-live="polite">{filtered.length} of {events.length} events</p></div><h2 id="timeline-title">Every event, in its place.</h2><Link className="filtered-tour" href={sitePath(`/present?${presentationParams.toString()}`)}>PRESENT THESE RESULTS <span aria-hidden="true">▶</span></Link></div>
-      {showPrice && <div className="price-key"><span>BTC / USD</span><b>LOG CONTEXT</b><a href={priceContext.source.documentation} target="_blank" rel="noreferrer">COIN METRICS PRICEUSD ↗</a><small>Monthly closing snapshots · checked 24 Aug 2026 · not investment data</small></div>}
+      {showPrice && <div className="price-key"><span>BTC / USD</span><b>LOG CONTEXT</b><a href={priceContext.source.documentation} target="_blank" rel="noreferrer">COIN METRICS PRICEUSD ↗</a><small>Event-date daily references · 00:00 UTC · missing observations leave gaps</small></div>}
       <div className="explorer-events">
         {showPrice && <PriceContext events={filtered} />}
         {filtered.length ? <ol>

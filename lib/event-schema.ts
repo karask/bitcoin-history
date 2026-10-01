@@ -121,6 +121,13 @@ export const bitcoinEventSchema = z.object({
   actors: z.array(z.string()),
   evidence: z.enum(["documented", "well-supported", "disputed", "estimated"]),
   sources: z.array(sourceSchema).min(1),
+  /** A separately sourced market milestone, not the daily reference price. */
+  priceMilestone: z.object({
+    usd: z.number().positive(),
+    label: z.string().min(4),
+    approximate: z.boolean(),
+    source: sourceSchema,
+  }).optional(),
   /** Slugs of records that belong to the same thread, for "follow this story". */
   related: z.array(z.string()).optional(),
   technicalNote: z.string().optional(),
@@ -134,7 +141,8 @@ export type BitcoinEventRecord = z.infer<typeof bitcoinEventSchema>;
 /**
  * The stored record plus fields derived at load time. `priceUsd` is never authored —
  * it is read from content/price-context.json so the corpus cannot drift from the
- * price series the presentation rides on. It is null before Bitcoin had a quoted price.
+ * price series the presentation rides on. Null means no observation for this exact
+ * date, including events whose date is only known to the month or year.
  */
 export type BitcoinEvent = BitcoinEventRecord & {
   places: Place[];
@@ -166,6 +174,7 @@ export type TimelineEvent = Pick<
   | "txid"
   | "bip"
   | "priceUsd"
+  | "priceMilestone"
 >;
 
 /** Full reading material is sent only to the presentation, not every archive card. */
@@ -192,11 +201,11 @@ export function toTimelineEvent(event: BitcoinEvent): TimelineEvent {
   const {
     slug, date, endDate, precision, title, summary, whyItMatters, category, categories,
     kind, scope, significance, curated, places, tags, actors, evidence, related,
-    technicalNote, blockHeight, txid, bip, priceUsd,
+    technicalNote, blockHeight, txid, bip, priceUsd, priceMilestone,
   } = event;
   return {
     slug, date, endDate, precision, title, summary, whyItMatters, category, categories,
     kind, scope, significance, curated, places, tags, actors, evidence, related,
-    technicalNote, blockHeight, txid, bip, priceUsd,
+    technicalNote, blockHeight, txid, bip, priceUsd, priceMilestone,
   };
 }

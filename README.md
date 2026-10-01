@@ -43,14 +43,25 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
 
 ### Data and interpretation
 
-The track's height follows the bundled Coin Metrics monthly closing snapshots,
-using bounded, monotone interpolation in logarithmic price space. Monthly closes
-are dated at month-end, except the last partial observation (23 August 2026).
-These are not live quotes, daily highs/lows, or exact event-day transaction prices.
+The track's height follows 5,881 bundled Coin Metrics daily PriceUSD observations
+(18 July 2010–23 August 2026), using bounded, monotone interpolation in logarithmic
+price space. Dates and unrounded values are preserved from the source. The displayed
+event price uses its exact dated observation at 00:00 UTC, independently of the
+interpolated rail. These are daily references, not live quotes, intraday highs/lows,
+or exact event-time transaction prices. Missing observations and events dated only
+to a month/year display no recorded daily price. The archive chart leaves gaps.
+Separately sourced parity/threshold and intraday-high milestones appear alongside
+the daily reference; differing exchange/index quotes are identified in their labels.
 Dates are compressed horizontally to pace the chapters; lateral bends are scenic.
 The pre-price section is flat. Exhibits are interpretive miniatures, not claims
 to reconstruct actual buildings or rooms. Historical details and citations come
 from the existing archive records; this change does not expand the corpus.
+
+Refresh the checked-in daily bundle with `npm run prices:refresh`. Its default
+preserves the archive coverage; `npm run prices:refresh -- YYYY-MM-DD` explicitly
+changes the final observation day. The script validates the complete response
+before replacing the bundle and records retrieval date, API request and raw-response
+SHA-256. The published site has no runtime price API dependency.
 
 The 3D scene is lazy-loaded. Rail, vehicle, exhibits and HUD share a single
 chronological path mapping; arc length is used only for physical travel speed.
@@ -84,7 +95,7 @@ The ride uses one shared reflection environment and fixed lights; exhibits add
 no lights of their own. Each is material-batched to fewer than 65 meshes and
 700,000 vertices, with explicit geometry/material/texture cleanup on eviction.
 Market sculptures are labeled directional illustrations; the rail remains the
-actual bundled monthly-price visualization.
+actual bundled daily-price visualization.
 
 ### Verification
 

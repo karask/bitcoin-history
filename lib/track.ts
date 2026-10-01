@@ -16,7 +16,7 @@ export type TrackEventInput = {
   kind?: string;
 };
 
-/** Monthly closes keyed `YYYY-MM`, as shipped in content/price-context.json. */
+/** Daily UTC reference observations keyed `YYYY-MM-DD`. */
 export type PriceSeries = Record<string, number>;
 
 export type TrackPoint = {
@@ -60,7 +60,7 @@ export type Track = {
 };
 
 export type TrackOptions = {
-  /** Last observation can be a partial month; do not date it in the future. */
+  /** Optional explicit observation cutoff. */
   lastObservationDate?: string;
   /**
    * How much to even out pacing. 0 keeps the track linear in real time, which is honest
@@ -125,7 +125,7 @@ function toISODate(dayNumber: number): string {
   return new Date(Math.round(dayNumber) * DAY).toISOString().slice(0, 10);
 }
 
-/** Catmull-Rom through four knots. Gives C¹ continuity across the monthly price points. */
+/** Catmull-Rom through four knots. Gives C¹ continuity across the price points. */
 export function catmullRom(p0: number, p1: number, p2: number, p3: number, t: number): number {
   const t2 = t * t;
   const t3 = t2 * t;
@@ -139,15 +139,15 @@ export function catmullRom(p0: number, p1: number, p2: number, p3: number, t: nu
 
 type PriceKnot = { day: number; logPrice: number; price: number };
 
-/** A monthly closing snapshot belongs at month-end, not at the 15th. */
+/** Preserve the daily source dates; never relocate observations to month-end. */
 function buildPriceKnots(series: PriceSeries, lastObservationDate?: string): PriceKnot[] {
   return Object.keys(series)
+    .filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date) && Number.isFinite(series[date]) && series[date] > 0
+      && (!lastObservationDate || date <= lastObservationDate))
     .sort()
-    .map((month) => {
-      const price = series[month];
-      const [year, monthNumber] = month.split("-").map(Number);
-      const monthEnd = Date.UTC(year, monthNumber, 0) / DAY;
-      const day = lastObservationDate ? Math.min(monthEnd, toDayNumber(lastObservationDate)) : monthEnd;
+    .map((date) => {
+      const price = series[date];
+      const day = toDayNumber(date);
       return { day, logPrice: Math.log10(Math.max(price, PRICE_FLOOR)), price };
     });
 }
@@ -161,8 +161,13 @@ function logPriceAt(knots: PriceKnot[], day: number): number | null {
   if (!knots.length || day < knots[0].day) return null;
   if (day >= knots[knots.length - 1].day) return knots[knots.length - 1].logPrice;
 
-  let high = 1;
-  while (high < knots.length && knots[high].day <= day) high += 1;
+  // Binary search keeps rebuilding a full daily-data ride inexpensive.
+  let low = 1, high = knots.length - 1;
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2);
+    if (knots[middle].day <= day) low = middle + 1;
+    else high = middle;
+  }
   const index = high - 1;
   const current = knots[index];
   const next = knots[Math.min(index + 1, knots.length - 1)];

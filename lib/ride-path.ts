@@ -70,7 +70,10 @@ export function createRidePath(track: Track, sample: (track: Track, u: number) =
   for (let i = 1; i <= speedCount; i++) speedLimits[i] = Math.min(speedLimits[i], Math.sqrt(speedLimits[i - 1] ** 2 + 2 * 30 * speedStep));
   const speedLimitAt = (distance: number) => {
     const n = clamp(distance / speedStep, 0, speedCount), i = Math.min(speedCount - 1, Math.floor(n));
-    return speedLimits[i] + (speedLimits[i + 1] - speedLimits[i]) * (n - i);
+    // Braking distance is linear in v², not v. Interpolating speeds directly can
+    // demand excessive deceleration between sharp daily-price bends even when
+    // both stored endpoints satisfy the envelope.
+    return Math.sqrt(speedLimits[i] ** 2 + (speedLimits[i + 1] ** 2 - speedLimits[i] ** 2) * (n - i));
   };
   return { point, frame, distanceAt, uAtDistance, speedLimitAt, length, height, floor, base, totalDistance: distances[count] };
 }

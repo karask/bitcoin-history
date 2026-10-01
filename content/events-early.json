@@ -1329,6 +1329,12 @@
     "date": "2011-02-09",
     "precision": "day",
     "title": "Bitcoin reaches U.S. dollar parity",
+    "priceMilestone": {
+      "usd": 1,
+      "label": "Mt. Gox parity threshold",
+      "approximate": false,
+      "source": { "title": "Bitcoin history: dollar parity", "publisher": "Bitcoin Wiki", "url": "https://en.bitcoin.it/wiki/History", "type": "secondary" }
+    },
     "summary": "One bitcoin traded for one U.S. dollar on Mt. Gox for the first time.",
     "details": "The quote was a market milestone rather than a change to the protocol or a guarantee of sustained value. News of parity nevertheless brought a surge of attention and traffic to Bitcoin websites.",
     "whyItMatters": "Dollar parity gave a global audience an intuitive signal that the experiment had acquired market value.",
@@ -1670,6 +1676,12 @@
     "date": "2011-06-08",
     "precision": "day",
     "title": "Bitcoin’s first major market bubble peaks",
+    "priceMilestone": {
+      "usd": 31.91,
+      "label": "Mt. Gox intraday high",
+      "approximate": false,
+      "source": { "title": "Bitcoin history: June 2011 peak", "publisher": "Bitcoin Wiki", "url": "https://en.bitcoin.it/wiki/History", "type": "secondary" }
+    },
     "summary": "The Mt. Gox price reached about $31.91 before falling steeply over the following days and months.",
     "details": "The move followed rapid growth in attention, exchange participation, and speculative demand. Thin liquidity and immature infrastructure magnified both the advance and the decline.",
     "whyItMatters": "The cycle established the boom-and-bust pattern that would repeatedly shape Bitcoin’s public history.",
@@ -3352,9 +3364,15 @@
   },
   {
     "slug": "bitcoin-price-reaches-1000-dollars",
-    "date": "2013-11-28",
+    "date": "2013-11-27",
     "precision": "day",
     "title": "Bitcoin trades above $1,000",
+    "priceMilestone": {
+      "usd": 1000,
+      "label": "Mt. Gox threshold crossed",
+      "approximate": false,
+      "source": { "title": "The Magic Number: Bitcoin Prices Top $1,000", "publisher": "WIRED", "url": "https://www.wired.com/2013/11/bitcoin-one-thousand/", "type": "secondary" }
+    },
     "summary": "Bitcoin’s quoted price crossed $1,000 on Mt. Gox during a rapid global market expansion.",
     "details": "Demand from China and growing international coverage contributed to the rise, while prices varied significantly among exchanges. The market remained highly volatile and retreated after its late-year peak.",
     "whyItMatters": "The four-digit price made Bitcoin a major global financial story.",

@@ -12,11 +12,12 @@ import {
   type CategoryId,
   type PresentationEvent,
 } from "@/lib/event-schema";
-import { categoryColors, districtNames, formatPrice } from "@/lib/palette";
+import { categoryColors, districtNames } from "@/lib/palette";
 import { buildTrack, dwellFor, type Track } from "@/lib/track";
 import { createRideAudio, type RideAudio } from "./ride/audio";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 import priceContext from "@/content/price-context.json";
+import { formatDailyPrice } from "@/lib/prices";
 import RailMode from "./RailMode";
 import RideHUD from "./ride/RideHUD";
 import type { RideTelemetry, RideView } from "@/lib/ride-path";
@@ -322,7 +323,7 @@ export default function PresentationExperience({
 
     context.fillStyle = "#8f887d";
     context.font = '400 20px ui-monospace, SFMono-Regular, monospace';
-    const altitudeText = currentEvent.priceUsd === null ? "NO MARKET YET" : `BTC ${formatPrice(currentEvent.priceUsd)}`;
+    const altitudeText = currentEvent.priceUsd === null ? "NO DAILY QUOTE" : `BTC ${formatDailyPrice(currentEvent.priceUsd)}`;
     context.fillText(`${altitudeText}   ·   ${districtNames[currentEvent.category].toUpperCase()}   ·   BITCOIN TIMECHAIN`, 54, height + 152);
 
     out.toBlob((blob) => {
@@ -487,7 +488,7 @@ export default function PresentationExperience({
               </button>
               <p className="launch-note">
                 Sound remains off until you choose to enable it.
-                {" Track: interpolated monthly closes on a logarithmic scale, not daily or live prices."}
+                {" Track: daily UTC reference prices, smoothly interpolated on a logarithmic scale. Event prices use recorded daily observations; intraday milestones are shown separately. Not live quotes."}
                 {reducedMotion && " Comfort starts on for your reduced-motion preference. Ride still travels; choose Reader for the calmer 2D view."}
               </p>
 
@@ -530,7 +531,7 @@ export default function PresentationExperience({
             </p>
           </header>
 
-          {mode === "ride" && <RideHUD track={track} telemetry={telemetry} view={rideView} onView={setRideView} stationaryDate={formatEventRange(currentEvent)} />}
+          {mode === "ride" && <RideHUD track={track} telemetry={telemetry} view={rideView} onView={setRideView} event={currentEvent} />}
           {rideUnavailable && <p className="ride-fallback" role="status">3D is unavailable on this device. Reader shows the 2D chart and historical records.</p>}
 
           <main className="presentation-stage">
@@ -562,7 +563,8 @@ export default function PresentationExperience({
                     </Link>
                   </div>
                   <div className="scene-readout">
-                    <span><b>MONTHLY PRICE CONTEXT</b>{currentEvent.priceUsd === null ? "no quote in series" : formatPrice(currentEvent.priceUsd)}</span>
+                    <span><b>DAILY REFERENCE · 00:00 UTC</b>{formatDailyPrice(currentEvent.priceUsd)}</span>
+                    {currentEvent.priceMilestone && <span><b>EVENT PRICE MILESTONE</b><a href={currentEvent.priceMilestone.source.url} target="_blank" rel="noreferrer">{currentEvent.priceMilestone.approximate ? "≈ " : ""}{formatDailyPrice(currentEvent.priceMilestone.usd)} · {currentEvent.priceMilestone.label} ↗</a></span>}
                     <span><b>EVIDENCE</b>{currentEvent.evidence.replace("-", " ")}</span>
                     {currentEvent.blockHeight !== undefined && (
                       <span><b>BLOCK</b>{currentEvent.blockHeight.toLocaleString("en-US")}</span>
@@ -584,6 +586,8 @@ export default function PresentationExperience({
             <p className="micro-label">{formatEventRange(currentEvent)} / {currentEvent.evidence}</p>
             <h2 id="exhibit-story-title">{currentEvent.title}</h2>
             <p>{currentEvent.details}</p>
+            <h3>Price context</h3><p>Daily reference (00:00 UTC): {formatDailyPrice(currentEvent.priceUsd)}. This observation is not an event-time trade or an intraday high.</p>
+            {currentEvent.priceMilestone && <p>Event milestone: {currentEvent.priceMilestone.approximate ? "≈ " : ""}{formatDailyPrice(currentEvent.priceMilestone.usd)} · {currentEvent.priceMilestone.label}. <a href={currentEvent.priceMilestone.source.url} target="_blank" rel="noreferrer">{currentEvent.priceMilestone.source.publisher} ↗</a></p>}
             <h3>Why it matters</h3><p>{currentEvent.whyItMatters}</p>
             {currentEvent.technicalNote && <><h3>Technical context</h3><p>{currentEvent.technicalNote}</p></>}
             {!!currentEvent.actors.length && <p className="exhibit-actors">People & organizations: {currentEvent.actors.join(", ")}</p>}
