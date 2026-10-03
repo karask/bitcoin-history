@@ -4059,11 +4059,11 @@
   },
   {
     "slug": "tether-launched",
-    "date": "2014-11-01",
-    "precision": "month",
+    "date": "2014-10-06",
+    "precision": "day",
     "title": "Tether issues a dollar-denominated token",
-    "summary": "A token claiming one-to-one backing by U.S. dollars launched, initially under the name Realcoin.",
-    "details": "Traders gained a way to hold dollar exposure on exchanges that had no banking relationships, which is much of why offshore crypto markets could function at all. The composition and sufficiency of its reserves were disputed for years and drew regulatory settlements in 2021.",
+    "summary": "Realcoin, later renamed Tether, issued its first dollar-denominated tokens on Bitcoin through the Mastercoin protocol, now known as Omni Layer.",
+    "details": "The tokens were presented as backed one-to-one by U.S. dollars. Realcoin was renamed Tether and entered private beta on November 20, 2014. Traders gained a way to hold dollar exposure on exchanges that had no banking relationships, which is much of why offshore crypto markets could function at all. The composition and sufficiency of its reserves were disputed for years and drew regulatory settlements in 2021.",
     "whyItMatters": "Most bitcoin trading volume is denominated against this token, so its solvency became a systemic question for bitcoin's price.",
     "category": "infrastructure",
     "categories": [
@@ -4090,9 +4090,15 @@
     "evidence": "well-supported",
     "sources": [
       {
-        "title": "Tether — About",
+        "title": "Eight Years of Stability and Innovation",
         "publisher": "Tether",
-        "url": "https://tether.to/en/about-us/",
+        "url": "https://tether.io/news/eight-years-of-stability-and-innovation/",
+        "type": "primary"
+      },
+      {
+        "title": "Realcoin Rebrands as Tether and Enters Private Beta",
+        "publisher": "Tether / Marketwired",
+        "url": "https://www.marketscreener.com/news/latest/Realcoin-Rebrands-as-Tether-and-Enters-Private-Beta-19430207/",
         "type": "primary"
       }
     ],
