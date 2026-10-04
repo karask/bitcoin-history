@@ -59,7 +59,7 @@ test("landscape and railway use finite, bounded geometry and release shared reso
     if (!resources.has(g)) uniqueVertices += g.getAttribute("position").count;
     watch(g);
     for (const n of g.getAttribute("position").array) assert.ok(Number.isFinite(n));
-    for (const m of Array.isArray(object.material) ? object.material : [object.material]) { watch(m); for (const key of ["map", "bumpMap"]) watch(m[key]); }
+    for (const m of Array.isArray(object.material) ? object.material : [object.material]) { watch(m); for (const key of ["map", "bumpMap", "normalMap"]) watch(m[key]); }
   });
   assert.ok(instances > 3000, "the complete landscape, not just the first vegetation batch, is present");
   assert.ok(uniqueVertices < 1300000, `shared geometry exceeds budget: ${uniqueVertices}`);

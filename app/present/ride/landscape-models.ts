@@ -31,38 +31,145 @@ export class ModelBuilder {
   }
 }
 
-export function makeTree(kind: "oak" | "pine" | "birch" | "autumn" | "willow" | "orchard", seed: number, distant = false) {
-  const b = new ModelBuilder(), rand = landscapeRandom(seed), bark = kind === "birch" ? 0xc6c5ad : 0x65513c;
-  const height = kind === "pine" ? 23 : kind === "birch" ? 19 : kind === "orchard" ? 10 : 17;
-  b.rod([0, 0, 0], [.3, height * .8, -.25], kind === "birch" ? .4 : .85, bark, .16);
-  if (!distant) for (let i = 0; i < 5; i++) { const a = i * 1.26; b.rod([0, 1.8, 0], [Math.cos(a) * 2, 0, Math.sin(a) * 2], .28, bark, .14); }
-  if (kind === "pine") {
-    for (let level = 0; level < 7; level++) {
-      const y = 5 + level * 2.45, radius = 6.2 - level * .68;
-      b.cone([0, y + 2.5, 0], radius, 6.2, [0x294e42, 0x356552, 0x427457][level % 3]);
-      if (!distant) for (let branch = 0; branch < 5; branch++) {
-        const a = branch * 1.26 + level * .7;
-        b.rod([0, y, 0], [Math.cos(a) * radius * .83, y + .7, Math.sin(a) * radius * .83], .12, bark, .045);
-        b.cone([Math.cos(a) * radius * .67, y + 1.8, Math.sin(a) * radius * .67], radius * .38, 3.1, [0x356552, 0x427457, 0x517f58][branch % 3], .05, 6);
-      }
-    }
-  } else {
-    const palette = kind === "autumn" ? [0xc58a36, 0xb4512d, 0xdda844, 0x967535] : kind === "willow" ? [0x7e9953, 0x648342, 0x9bab65] : [0x436d37, 0x5f873f, 0x7e9b4e, 0x527e42];
-    const radius = kind === "birch" ? 3.5 : kind === "orchard" ? 4.2 : 7;
-    for (let i = 0; i < (distant ? 8 : 18); i++) {
-      const a = i * 2.399, reach = radius * (.35 + rand() * .6), y = height * (.48 + rand() * .48);
-      const x = Math.cos(a) * reach, z = Math.sin(a) * reach;
-      if (!distant) b.rod([0, height * .35, 0], [x, y, z], .24, bark, .07);
-      b.ball([x, y, z], [radius * .42, kind === "willow" ? 5.6 : radius * .38, radius * .4], palette[i % palette.length], distant ? 0 : 1);
-      if (!distant) {
-        b.ball([x + radius * .2, y + 1.1, z - radius * .22], [radius * .25, radius * .22, radius * .26], palette[(i + 1) % palette.length], 0);
-        if (kind === "willow") for (let j = 0; j < 3; j++) b.rod([x + j * .5, y, z], [x + j * .7, y - 5, z + .9], .055, 0x8c9e57, .035);
-        if (kind === "orchard") b.ball([x, y - 1.2, z + 1.8], [.23, .25, .23], 0xb85032, 0);
-      }
-    }
-    if (kind === "birch" && !distant) for (let i = 0; i < 11; i++) b.box([.02, 1 + i * 1.2, .38], [.48, .16, .05], 0x49493d);
+type TreeKind = "oak" | "pine" | "birch" | "autumn" | "willow" | "orchard";
+const tau = Math.PI * 2;
+const crownBounds = new Map<string, { minX: number; maxX: number; minZ: number; maxZ: number }>();
+
+// Closed, opaque leafy sprays: silhouette detail without alpha cards, textures,
+// extra materials or draw calls. The same centres are retained in the far model.
+function spray(radius: number, depth: number, seed: number, distant = false) {
+  const rand = landscapeRandom(seed), n = distant ? 4 : 12;
+  const pos: number[] = [0, depth * .68, 0, 0, -depth * .32, 0], index: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const a = i * tau / n, r = radius * (distant ? .98 : (i % 3 === 0 ? 1.1 : .78 + rand() * .19));
+    pos.push(Math.cos(a) * r, depth * ((i % 2 ? -.06 : .09) + (rand() - .5) * .18), Math.sin(a) * r);
   }
-  return b.finish();
+  for (let i = 0; i < n; i++) {
+    const a = 2 + i, b = 2 + (i + 1) % n;
+    index.push(0, b, a, 1, a, b);
+  }
+  const g = new T.BufferGeometry(); g.setAttribute("position", new T.Float32BufferAttribute(pos, 3)); g.setIndex(index); g.computeVertexNormals(); return g;
+}
+
+function foliage(b: ModelBuilder, p: P, scale: P, color: number, seed: number, distant = false, rotation: P = [0, 0, 0]) {
+  b.add(spray(1, 1, seed, distant), color, p, scale, rotation);
+  const g = b.parts[b.parts.length - 1], c = g.getAttribute("color"), positions = g.getAttribute("position");
+  for (let i = 0; i < c.count; i++) {
+    // A slight baked canopy gradient keeps overlapping sprays legible in shade.
+    const shade = .78 + .22 * T.MathUtils.clamp((positions.getY(i) - p[1]) / Math.max(.1, scale[1]) + .5, 0, 1);
+    c.setXYZ(i, c.getX(i) * shade, c.getY(i) * shade, c.getZ(i) * shade);
+  }
+}
+
+function stem(b: ModelBuilder, from: P, to: P, radius: number, tip: number, color: number, sides = 5) {
+  const a = new T.Vector3(...from), d = new T.Vector3(...to).sub(a), g = new T.CylinderGeometry(tip, radius, d.length(), sides);
+  g.applyQuaternion(new T.Quaternion().setFromUnitVectors(new T.Vector3(0, 1, 0), d.clone().normalize()));
+  b.add(g, color, a.addScaledVector(d, .5).toArray() as P);
+}
+
+function pine(b: ModelBuilder, seed: number, distant: boolean) {
+  const rand = landscapeRandom(seed), bark = 0x625345;
+  stem(b, [0, 0, 0], [.18, 21.8, -.2], .52, .05, bark, distant ? 4 : 7);
+  const palette = [0x244b3e, 0x2f5945, 0x3d674d, 0x487456];
+  if (!distant) {
+    for (let i = 0; i < 5; i++) { const a = i * tau / 5; stem(b, [0, 1.1, 0], [Math.cos(a) * 1.3, 0, Math.sin(a) * 1.3], .2, .08, bark, 4); }
+  }
+  for (let tier = 0; tier < 8; tier++) {
+      const y = 5.3 + tier * 2.25, reach = 5.8 - tier * .64;
+      for (let branch = 0; branch < 5; branch++) {
+        const a = branch * tau / 5 + tier * 1.1 + (rand() - .5) * .2;
+        const r = reach * (.87 + rand() * .18), x = Math.cos(a), z = Math.sin(a);
+        if (distant) {
+          // Twenty-six closed boughs occupy the same seeded branch centres as the
+          // full model, rather than changing the crown to unrelated broad tiers.
+          if (tier < 6 ? branch !== 2 : branch === (tier === 6 ? 1 : 4)) {
+            const g = new T.BufferGeometry();
+            g.setAttribute("position", new T.Float32BufferAttribute([-1, -.18, -.65, 1, -.18, -.65, 0, -.18, 1, 0, .75, 0], 3));
+            g.setIndex([0, 1, 2, 0, 3, 1, 1, 3, 2, 2, 3, 0]); g.computeVertexNormals();
+            b.add(g, palette[(tier + branch) % 4], [x * r * .62, y + 1, z * r * .62], [r * .66, 1.9, r * .46], [0, -a, .12]);
+          }
+          continue;
+        }
+        stem(b, [0, y, 0], [x * r, y + .52, z * r], .105, .025, bark, 3);
+        foliage(b, [x * r * .62, y + 1, z * r * .62], [r * .49, 1.55, r * .34], palette[(tier + branch) % 4], seed + tier * 11 + branch, false, [0, -a, .12]);
+        // Small upward tips interrupt the regular tier outline.
+        foliage(b, [x * r * .87, y + 1.12, z * r * .87], [.65 + r * .15, 1.3, .7], palette[(tier + branch + 1) % 4], seed + 311 + tier * 11 + branch, true, [0, -a, .24]);
+      }
+  }
+  foliage(b, [.15, 23.1, -.12], [1.05, 2.8, 1.05], palette[2], seed + 411, distant);
+}
+
+function finishTree(b: ModelBuilder, kind: TreeKind, seed: number, distant: boolean) {
+  const g = b.finish(), key = `${kind}:${seed}`;
+  g.computeBoundingBox();
+  if (!distant) {
+    const box = g.boundingBox!;
+    crownBounds.set(key, { minX: box.min.x, maxX: box.max.x, minZ: box.min.z, maxZ: box.max.z });
+    return g;
+  }
+  if (!crownBounds.has(key)) {
+    // Normally the shared full prototype has already been built. Keep this
+    // constructor independently usable without retaining a second geometry.
+    const reference = makeTree(kind, seed, false); reference.dispose();
+  }
+  const full = crownBounds.get(key)!, box = g.boundingBox!;
+  const xNeg = full.minX / box.min.x, xPos = full.maxX / box.max.x;
+  const zNeg = full.minZ / box.min.z, zPos = full.maxZ / box.max.z;
+  const p = g.getAttribute("position"), n = g.getAttribute("normal"), normal = new T.Vector3();
+  // Fit each side of the canopy separately: exact full-detail envelope, while
+  // retaining the trunk at the identical world-space planting point.
+  for (let i = 0; i < p.count; i++) {
+    const sx = p.getX(i) < 0 ? xNeg : xPos, sz = p.getZ(i) < 0 ? zNeg : zPos;
+    p.setXYZ(i, p.getX(i) * sx, p.getY(i), p.getZ(i) * sz);
+    normal.set(n.getX(i) / sx, n.getY(i), n.getZ(i) / sz).normalize(); n.setXYZ(i, normal.x, normal.y, normal.z);
+  }
+  g.computeBoundingBox(); g.computeBoundingSphere(); return g;
+}
+
+export function makeTree(kind: TreeKind, seed: number, distant = false) {
+  const b = new ModelBuilder();
+  if (kind === "pine") { pine(b, seed, distant); return finishTree(b, kind, seed, distant); }
+  const rand = landscapeRandom(seed), birch = kind === "birch", willow = kind === "willow", orchard = kind === "orchard";
+  const h = birch ? 19 : orchard ? 10 : 17, radius = birch ? 3.5 : orchard ? 4.2 : 7;
+  const bark = birch ? 0xd1cdbc : 0x6b5540;
+  const palette = kind === "autumn" ? [0x9d5030, 0xb57334, 0xc58c40, 0xcb9f51] : willow ? [0x5c7c45, 0x6e8d51, 0x829b5e, 0x74894e] : [0x345733, 0x476b38, 0x628348, 0x54753d];
+  const leanX = birch ? .7 : .35, leanZ = -.3;
+  stem(b, [0, 0, 0], [leanX, h * .81, leanZ], birch ? .33 : orchard ? .55 : .79, .1, bark, distant ? 4 : 7);
+  if (!distant) {
+    for (let i = 0; i < 5; i++) { const a = i * tau / 5; stem(b, [0, 1.4, 0], [Math.cos(a) * 1.8, 0, Math.sin(a) * 1.8], .25, .09, bark, 4); }
+    // Bark seams and birch scars are real geometry, shared by every instance.
+    if (birch) for (let i = 0; i < 10; i++) b.box([leanX * (i / 14), 1.1 + i * 1.15, .31 - i * .022], [.31 + (i % 3) * .075, .075, .025], 0x57594a, [0, 0, -.13]);
+    else for (let i = 0; i < 5; i++) { const a = i * tau / 5; stem(b, [Math.cos(a) * .7, .6, Math.sin(a) * .7], [leanX + Math.cos(a) * .15, h * .65, leanZ + Math.sin(a) * .15], .05, .015, 0x514538, 3); }
+  }
+  // Layered, irregular boughs leave windows through the crown and visible forks.
+  // The far tree uses all twenty centres rather than a different random crown.
+  const count = 20;
+  for (let i = 0; i < count; i++) {
+    const tier = Math.floor(i / 5), a = i * 2.39996 + .22 * rand();
+    const reach = radius * (tier === 3 ? .2 + rand() * .24 : .42 + rand() * .32);
+    const y = h * (.5 + tier * .125) + (rand() - .5) * h * .07;
+    const p: P = [Math.cos(a) * reach + leanX, y, Math.sin(a) * reach + leanZ];
+    const extent = radius * (birch ? .56 : tier === 3 ? .44 : .49);
+    const size: P = [extent, willow ? 6.5 : birch ? 2.9 : extent * .97, extent * (.85 + rand() * .2)];
+    if (!distant && i < 15) {
+      const fork: P = [p[0] * .49, h * (.33 + tier * .1), p[2] * .49];
+      stem(b, [leanX * .4, h * .32, 0], fork, birch ? .095 : .2, .08, bark, 5);
+      stem(b, fork, [p[0], p[1] - .3, p[2]], .075, .025, bark, 4);
+    }
+    foliage(b, p, size, palette[(i + tier) % 4], seed + i * 13, distant, [0, a, (rand() - .5) * .22]);
+    if (!distant) {
+      for (let leaf = 0; leaf < 2; leaf++) {
+        const angle = a + leaf * 2.1, spread = extent * .69;
+        foliage(b, [p[0] + Math.cos(angle) * spread, p[1] + size[1] * .21 + (leaf % 2) * .25, p[2] + Math.sin(angle) * spread], [extent * .49, size[1] * .5, extent * .42], palette[(i + leaf + 1) % 4], seed + 991 + i * 7 + leaf, false, [0, angle, .16]);
+      }
+      if (willow) for (let droop = 0; droop < 3; droop++) {
+        const d = a + droop * .6, px = p[0] + Math.cos(d) * extent * .5, pz = p[2] + Math.sin(d) * extent * .5;
+        foliage(b, [px, p[1] - 2.9, pz], [.3, 5, .45], palette[(i + droop) % 4], seed + 775 + i + droop, true, [0, d, .13]);
+      }
+      if (orchard && i < 12) for (let apple = 0; apple < 2; apple++) b.ball([p[0] + apple * .6, p[1] - .5, p[2] + extent * .6], [.17, .19, .17], 0xa65032, 0);
+    }
+  }
+  return finishTree(b, kind, seed, distant);
 }
 
 export type AnimalKind = "sheep" | "deer" | "wolf" | "fox" | "goat" | "dog";
@@ -172,6 +279,13 @@ export function makeHeron() {
   b.rod([.65, 2.8, 0], [1.25, 2.65, 0], .08, 0xc59449, .005); return b.finish();
 }
 
+function blade(b: ModelBuilder, base: P, tip: P, width: number, color: number, angle: number) {
+  const side = new T.Vector3(Math.cos(angle) * width, 0, Math.sin(angle) * width), a = new T.Vector3(...base), t = new T.Vector3(...tip), mid = a.clone().lerp(t, .52);
+  const positions = [...a.clone().sub(side).toArray(), ...mid.clone().addScaledVector(side, .62).toArray(), ...t.toArray(), ...a.clone().sub(side).toArray(), ...t.toArray(), ...mid.clone().sub(side).toArray()];
+  // Opaque two-sided folded blade; four triangles, no alpha sorting.
+  const g = new T.BufferGeometry(); g.setAttribute("position", new T.Float32BufferAttribute([...positions, ...positions.slice(6, 9), ...positions.slice(3, 6), ...positions.slice(0, 3), ...positions.slice(15, 18), ...positions.slice(12, 15), ...positions.slice(9, 12)], 3)); g.computeVertexNormals(); b.add(g, color);
+}
+
 export function makeUnderstory(kind: "grass" | "flowers" | "reeds" | "rock" | "hay" | "fern") {
   const b = new ModelBuilder(), rand = landscapeRandom(553);
   if (kind === "rock") {
@@ -181,20 +295,24 @@ export function makeUnderstory(kind: "grass" | "flowers" | "reeds" | "rock" | "h
     b.add(new T.CylinderGeometry(2, 2, 3.1, 16), 0xc4ab67, [0, 2, 0], [1, 1, 1], [Math.PI / 2, 0, 0]);
     for (const z of [-1.1, 1.1]) b.add(new T.TorusGeometry(2.02, .055, 4, 20), 0x8b8450, [0, 2, z]);
   } else if (kind === "fern") {
-    for (let frond = 0; frond < 7; frond++) {
-      const a = frond / 7 * 6.28;
-      b.rod([0, 0, 0], [Math.cos(a) * 1.6, 1.2, Math.sin(a) * 1.6], .025, 0x658347, .01);
-      for (let j = 1; j <= 6; j++) for (const side of [-1, 1]) {
-        const d = j / 6 * 1.6, reach = (1 - j / 8) * .5;
-        b.rod([Math.cos(a) * d, j / 6 * 1.2, Math.sin(a) * d], [Math.cos(a) * d + Math.sin(a) * reach * side, j / 6 * 1.2 - .15, Math.sin(a) * d - Math.cos(a) * reach * side], .095, j % 2 ? 0x537643 : 0x78974c, .008);
+    for (let frond = 0; frond < 9; frond++) {
+      const a = frond / 9 * tau, r = 1.6 + rand() * .5;
+      for (let j = 0; j < 7; j++) {
+        const u = (j + 1) / 8, y = Math.sin(u * Math.PI * .8) * 1.55, x = Math.cos(a) * r * u, z = Math.sin(a) * r * u, len = Math.sin(u * Math.PI) * .5;
+        for (const s of [-1, 1]) blade(b, [x, y, z], [x + Math.sin(a) * len * s + Math.cos(a) * .22, y + .04, z - Math.cos(a) * len * s + Math.sin(a) * .22], .09, j % 2 ? 0x49703f : 0x67834a, a);
       }
     }
-  } else for (let i = 0; i < (kind === "reeds" ? 9 : 13); i++) {
-    const x = (rand() - .5) * 2.8, z = (rand() - .5) * 2.8, h = kind === "reeds" ? 2 + rand() * 1.5 : .6 + rand() * .8;
-    b.rod([x, 0, z], [x + .2, h, z + .14], .035, kind === "reeds" ? 0x85854b : 0x7e944f, .01);
-    if (kind === "reeds") b.rod([x + .2, h - .4, z + .14], [x + .2, h + .2, z + .14], .1, 0x7e5b3d);
-    else if (kind === "flowers") b.ball([x + .2, h, z + .14], [.19, .11, .19], [0xd8c4de, 0xeace84, 0xe4e0c4][i % 3], 0);
-    else b.box([x, h * .45, z], [.09, h * .85, .025], i % 2 ? 0x78914b : 0x9fa861, [0, rand() * 6.28, -.25]);
+  } else {
+    const count = kind === "reeds" ? 12 : 32;
+    for (let i = 0; i < count; i++) {
+      const a = rand() * tau, r = Math.sqrt(rand()) * 1.55, x = Math.cos(a) * r, z = Math.sin(a) * r, h = kind === "reeds" ? 2 + rand() * 1.5 : .45 + rand() * 1.05;
+      blade(b, [x, 0, z], [x + Math.cos(a) * .42, h, z + Math.sin(a) * .42], kind === "reeds" ? .065 : .055, [0x54773e, 0x6d8747, 0x8e9a57][i % 3], a + Math.PI / 2);
+      if (kind === "reeds") { stem(b, [x, 0, z], [x, h, z], .03, .015, 0x8b8b55, 3); stem(b, [x, h - .3, z], [x, h + .17, z], .075, .065, 0x78604a, 4); }
+      if (kind === "flowers" && i % 5 === 0) {
+        for (let petal = 0; petal < 5; petal++) { const q = petal / 5 * tau; foliage(b, [x + Math.cos(q) * .13, h + .01, z + Math.sin(q) * .13], [.11, .07, .11], [0xd6cadb, 0xe5cb8b, 0xe1daca][i % 3], 222 + petal, true); }
+        b.ball([x, h + .06, z], [.075, .055, .075], 0xab8847, 0);
+      }
+    }
   }
   return b.finish();
 }

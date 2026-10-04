@@ -1,12 +1,12 @@
 import * as T from "three";
 import type { Track } from "../../../lib/track";
-import { createLandscapeLayout, landscapeRandom, smooth, type LandscapePath, type LandscapeRegion } from "./landscape-layout.ts";
+import { createLandscapeLayout, landscapeRandom, type LandscapePath, type LandscapeRegion } from "./landscape-layout.ts";
 import { ModelBuilder, makeAnimal, makeBoat, makeHeron, makeHouse, makeShepherd, makeTree, makeUnderstory } from "./landscape-models.ts";
 import { freezeStaticTransforms, type StaticInstanceBatch } from "./instance-culling.ts";
+import { createLandscapeSurfaces } from "./landscape-surfaces.ts";
 
 type Placement = { x: number; y: number; z: number; scale: number; yaw: number; tint: number };
 type Chunk = { x: number; group: T.Group; detail: T.Group; placements: Map<string, Placement[]> };
-const groundColors = { pasture: 0x718746, forest: 0x526e3c, gorge: 0x6f8056, alpine: 0x617d67, autumn: 0x8c8548, coast: 0x919264, wetland: 0x69814d };
 
 export function createLandscape(path: LandscapePath, track: Track) {
   const layout = createLandscapeLayout(path, track), group = new T.Group(); group.name = "living-landscape";
@@ -26,13 +26,8 @@ export function createLandscape(path: LandscapePath, track: Track) {
   };
   treeMat.customProgramCacheKey = () => "landscape-breeze-v1";
   const groundMat = material({ vertexColors: true, roughness: 1 });
-  // Repeating fine grain is generated locally; no downloaded texture dependency.
-  const grain = new Uint8Array(128 * 128 * 4), grainRandom = landscapeRandom(4242);
-  for (let i = 0; i < grain.length; i += 4) { const v = 188 + Math.floor(grainRandom() * 66); grain[i] = v; grain[i + 1] = v; grain[i + 2] = v; grain[i + 3] = 255; }
-  const earthTexture = new T.DataTexture(grain, 128, 128); earthTexture.wrapS = earthTexture.wrapT = T.RepeatWrapping;
-  earthTexture.magFilter = T.LinearFilter; earthTexture.minFilter = T.LinearMipmapLinearFilter; earthTexture.generateMipmaps = true; earthTexture.needsUpdate = true;
-  groundMat.map = earthTexture; groundMat.bumpMap = earthTexture; groundMat.bumpScale = .14;
   const waterMat = material({ color: 0x4c9c9c, roughness: .24, metalness: .3, transparent: true, opacity: .86, depthWrite: false, side: T.DoubleSide });
+  const surfaces = createLandscapeSurfaces(layout, groundMat, waterMat);
   const foamMat = material({ color: 0xe0edda, roughness: .6, transparent: true, opacity: .44, depthWrite: false });
   const shadowPixels = new Uint8Array(32 * 32 * 4);
   for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) {
@@ -79,26 +74,18 @@ export function createLandscape(path: LandscapePath, track: Track) {
   for (let z = -90; z <= 90; z += 6) offsets.push(z);
   offsets.push(100, 120, 145, 180, 220);
   for (let z = 250; z <= 2600; z += 50) offsets.push(z);
-  const colour = new T.Color(), nextColour = new T.Color(), rockColour = new T.Color(0x7f8b7f), snowColour = new T.Color(0xe1e5dc);
   for (let c = 0; c < chunkCount; c++) {
     const start = c === 0 ? -500 : c * chunkSize, end = c === chunkCount - 1 ? path.length + 500 : (c + 1) * chunkSize;
     const columns = Math.ceil((end - start) / 8), rows = offsets.length;
-    const positions: number[] = [], colors: number[] = [], indices: number[] = [], uvs: number[] = [];
+    const positions: number[] = [], indices: number[] = [], uvs: number[] = [];
     for (let i = 0; i <= columns; i++) {
-      const x = start + i / columns * (end - start), p = layout.route(x), region = layout.regionAt(x);
-      const next = layout.regions[Math.min(layout.regions.length - 1, region.index + 1)];
-      const mix = smooth(region.x + layout.span * .18, region.x + layout.span * .5, x);
+      const x = start + i / columns * (end - start), p = layout.route(x);
       for (const offset of offsets) {
         const z = p.z + offset, y = layout.height(x, z); positions.push(x, y, z); uvs.push(x / 17, z / 17);
-        colour.set(groundColors[region.kind]).lerp(nextColour.set(groundColors[next.kind]), mix);
-        const stone = smooth(50, 300, y - p.y), snow = region.kind === "alpine" ? smooth(340, 510, y - p.y) : 0;
-        colour.lerp(rockColour, stone * .82).lerp(snowColour, snow);
-        const variance = .92 + Math.sin(x * .046 + z * .021) * .055 + Math.sin(x * .013 - z * .053) * .045;
-        colour.multiplyScalar(variance); colors.push(colour.r, colour.g, colour.b);
       }
     }
     for (let i = 0; i < columns; i++) for (let j = 0; j < rows - 1; j++) { const a = i * rows + j, b = a + rows; indices.push(a, a + 1, b, a + 1, b + 1, b); }
-    const g = own(new T.BufferGeometry()); g.setAttribute("position", new T.Float32BufferAttribute(positions, 3)); g.setAttribute("color", new T.Float32BufferAttribute(colors, 3)); g.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2)); g.setIndex(indices);
+    const g = own(new T.BufferGeometry()); g.setAttribute("position", new T.Float32BufferAttribute(positions, 3)); g.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2)); g.setIndex(indices);
     g.setAttribute("normal", new T.BufferAttribute(new Float32Array(positions.length), 3));
     const land = new T.Mesh(g, groundMat); land.receiveShadow = true; chunks[c].group.add(land);
   }
@@ -325,6 +312,8 @@ export function createLandscape(path: LandscapePath, track: Track) {
     transforms.forEach((m, i) => shadows.setMatrixAt(i, m)); shadows.instanceMatrix.needsUpdate = true; shadows.computeBoundingSphere(); chunk.detail.add(shadows); cullable.push({ mesh: shadows });
   }
   for (const chunk of chunks) chunk.placements.clear();
+  // Bake surface detail once, without changing the heightfield or adding meshes.
+  surfaces.apply(group);
   freezeStaticTransforms(group, animated);
   let disposed = false;
   return {
@@ -332,6 +321,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
     update(time: number, u: number, overview: boolean, quality: number) {
       const x = u * path.length, range = overview ? 6200 : quality > .4 ? 2900 : 2100;
       breeze.value = time;
+      surfaces.update(time);
       for (const chunk of chunks) { chunk.group.visible = Math.abs(chunk.x - x) < range; chunk.detail.visible = quality > .4 && Math.abs(chunk.x - x) < 750; }
       for (const trees of treeBatches) {
         const distance = Math.abs(trees.x - x);
@@ -350,7 +340,7 @@ export function createLandscape(path: LandscapePath, track: Track) {
     dispose() {
       if (disposed) return; disposed = true;
       group.traverse(o => { if (o instanceof T.InstancedMesh) o.dispose(); });
-      geometry.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); earthTexture.dispose(); shadowTexture.dispose(); group.clear();
+      geometry.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); surfaces.dispose(); shadowTexture.dispose(); group.clear();
     },
   };
 }
