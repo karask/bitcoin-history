@@ -10,6 +10,7 @@ import { installCanvasStub } from "./helpers/canvas.mjs";
 
 const all = (await Promise.all(["prehistory", "early", "late"].map(async name => JSON.parse(await readFile(new URL(`../content/events-${name}.json`, import.meta.url), "utf8"))))).flat();
 const record = slug => all.find(e => e.slug === slug);
+const prices = JSON.parse(await readFile(new URL("../content/price-context.json", import.meta.url), "utf8")).values;
 const design = slug => exhibitDesign(record(slug));
 
 test("all 292 records have explicit, non-orphaned editorial assignments", () => {
@@ -145,6 +146,31 @@ test("both Pizza Day lids physically clear the oven bricks, including angled edg
       assert.equal(lids.length, 2); assert.equal(ovenBricks.length, 17);
       for (const lid of lids) for (const brick of ovenBricks) assert.equal(bounds(lid).intersectsBox(bounds(brick)), false, `${slug}: masonry clips through a lid`);
       exhibit.dispose();
+    }
+  } finally { restore(); }
+});
+
+test("market lows are valleys with the price they claim; highs keep the sculpture", () => {
+  const restore = installCanvasStub();
+  try {
+    // As lib/events.ts derives it: the daily reference on the event's exact date, if any.
+    const priced = slug => { const event = record(slug); return { ...event, priceUsd: event.precision === "day" ? prices[event.date] ?? null : null }; };
+    const artifacts = slug => { const e = buildExhibit(priced(slug), 0xffaa66), list = e.group.userData.design.artifacts, bounds = new T.Box3().setFromObject(e.group); e.dispose(); return { list, bounds }; };
+    for (const slug of ["bitcoin-2018-cycle-low", "bitcoin-2022-cycle-low", "bitcoin-black-thursday", "april-2013-bitcoin-market-crash", "october-2025-liquidation-event"]) {
+      const { list, bounds } = artifacts(slug);
+      for (const part of ["descending-market-valley", "low-point-flag", "valley-lake", "daily-reference-price"]) assert.ok(list.includes(part), `${slug}: ${part}`);
+      assert.ok(bounds.min.x >= -23 && bounds.max.x <= 23 && bounds.max.y <= 27, `${slug} stays on its plinth`);
+    }
+    const low = artifacts("bitcoin-2018-cycle-low").list;
+    for (const part of ["descending-trail", "painted-sky:dusk"]) assert.ok(low.includes(part), part);
+    const crash = artifacts("bitcoin-black-thursday").list;
+    for (const part of ["rockslide-breaks-trail", "painted-sky:storm"]) assert.ok(crash.includes(part), part);
+    assert.ok(artifacts("october-2025-liquidation-event").list.includes("liquidation-dominoes"));
+    // Highs, first quotes and index listings keep the directional sculpture.
+    for (const slug of ["bitcoin-dollar-parity", "bitcoin-2017-cycle-high", "bitcoin-2025-all-time-high", "new-liberty-standard-exchange-rate", "microstrategy-added-nasdaq100"]) {
+      const { list } = artifacts(slug);
+      assert.ok(list.includes("ascending-market-sculpture"), slug);
+      assert.ok(!list.includes("descending-market-valley"), slug);
     }
   } finally { restore(); }
 });

@@ -145,8 +145,18 @@ lids no longer intersect the oven masonry.
 The ride uses one shared reflection environment and fixed lights; exhibits add
 no lights of their own. Each is material-batched to fewer than 65 meshes and
 700,000 vertices, with explicit geometry/material/texture cleanup on eviction.
-Market sculptures are labeled directional illustrations; the rail remains the
-smoothed price-trend visualization. Its mini-chart uses the same rounded curve.
+Market lows are a valley with a lake under a painted sky, and crashes break the
+trail down into it with a rockslide. Their plaques show the sourced price milestone,
+else the daily reference, else no figure, and are labelled "interpretive landscape ·
+not a price chart": the mountains are not data. Highs, first quotes and index listings
+keep the labelled directional sculpture. The rail remains the smoothed price-trend
+visualization; its mini-chart uses the same rounded curve.
+
+Every stop also gets a small grove ahead of its exhibit, where the stop's camera
+looks (`stationGroves` in `landscape-layout.ts`); scattered planting alone left some
+later stops, and the last one, framed by bare hillside. The coast's sea sits below the
+lowest rail across its bay, so it can no longer float above earlier regions or flood
+a station.
 
 ### Before/after captures
 

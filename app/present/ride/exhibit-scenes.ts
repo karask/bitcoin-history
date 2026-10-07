@@ -1,6 +1,7 @@
 import * as T from "three";
 import type { ExhibitKit } from "./exhibit-kit.ts";
 import { formatPlace } from "../../../lib/places.ts";
+import { formatDailyPrice } from "../../../lib/prices.ts";
 
 const words = (value: string) => value.replaceAll("-", " ").toUpperCase();
 const country = (k: ExhibitKit) => k.event.places.filter(p => p.country !== "XX").map(formatPlace).join(" / ") || "GLOBAL";
@@ -340,7 +341,146 @@ export function lightningScene(k: ExhibitKit) {
   stateCard(k, `${words(motif)} / ${words(state)}`);
 }
 
+// ------------------------------------------------------------ market landscapes
+
+type Sky = "clear" | "dusk" | "storm";
+
+/** A painted museum backdrop: banded sky and two ranges of distant ridges. */
+function skyBackdrop(k: ExhibitKit, sky: Sky) {
+  const bands = { clear: ["#7fb0d0", "#a9cadb", "#cfe0e2", "#e3ebe4"], dusk: ["#5b6f93", "#9a8fa7", "#d7a98b", "#ecc9a1"], storm: ["#4a5560", "#66717a", "#8a9197", "#a9aca9"] }[sky];
+  const map = k.texture(1024, 480, c => {
+    const steps = 48;
+    for (let i = 0; i < steps; i++) {
+      const t = i / (steps - 1), seg = Math.min(2, Math.floor(t * 3)), local = t * 3 - seg;
+      const mix = (a: string, b: string) => [1, 3, 5].map(o => Math.round(parseInt(a.slice(o, o + 2), 16) * (1 - local) + parseInt(b.slice(o, o + 2), 16) * local));
+      const [r, g, b] = mix(bands[seg], bands[seg + 1]);
+      c.fillStyle = `rgb(${r},${g},${b})`; c.fillRect(0, Math.floor(i * 480 / steps), 1024, Math.ceil(480 / steps) + 1);
+    }
+    for (const [fill, base, amp, freq] of [[sky === "storm" ? "#6d767c" : "#9fb4bd", 330, 90, 3], [sky === "storm" ? "#59626a" : "#7f969f", 390, 60, 5]] as const) {
+      c.fillStyle = fill; c.beginPath(); c.moveTo(0, 480);
+      for (let x = 0; x <= 1024; x += 32) c.lineTo(x, base - Math.abs(Math.sin(x / 1024 * Math.PI * freq + base)) * amp - k.random() * 14);
+      c.lineTo(1024, 480); c.fill();
+    }
+  });
+  const material = k.material(0xffffff, 1, 0, .3); material.map = map; material.emissiveMap = map; material.envMapIntensity = .04;
+  k.mesh(new T.PlaneGeometry(33, 15), material, 0, 8.4, -11.32);
+  k.mark(`painted-sky:${sky}`);
+}
+
+type Ground = { rock: T.MeshStandardMaterial; grass: T.MeshStandardMaterial; snow: T.MeshStandardMaterial; pine: T.MeshStandardMaterial; bark: T.MeshStandardMaterial };
+
+function groundMaterials(k: ExhibitKit): Ground {
+  const faceted = (color: number, roughness = .9) => { const m = k.material(color, roughness); m.flatShading = true; return m; };
+  return { rock: faceted(0x7a7469), grass: faceted(0x5d7d3a), snow: faceted(0xeceee9, .7), pine: faceted(0x3a6342), bark: faceted(0x6a4b33) };
+}
+
+/**
+ * A faceted mountain standing on the exhibit floor: rock with a grass skirt and an
+ * optional snow cap. Returns its summit. Shared seam vertices get the same jitter, so
+ * the faces stay closed.
+ */
+function mountain(k: ExhibitKit, g: Ground, x: number, z: number, radius: number, height: number, snow = true, segments = 7) {
+  const base = .32, geometry = new T.ConeGeometry(radius, height, segments, 3), position = geometry.getAttribute("position");
+  const jitter = new Map<string, number>();
+  for (let i = 0; i < position.count; i++) {
+    const vx = position.getX(i), vy = position.getY(i), vz = position.getZ(i);
+    if (Math.abs(vy) > height / 2 - 1e-4) continue; // the footprint and the apex stay put
+    const key = `${vx.toFixed(3)},${vy.toFixed(3)},${vz.toFixed(3)}`;
+    if (!jitter.has(key)) jitter.set(key, 1 + (k.random() - .5) * .14);
+    position.setX(i, vx * jitter.get(key)!); position.setZ(i, vz * jitter.get(key)!);
+  }
+  geometry.computeVertexNormals();
+  k.mesh(geometry, g.rock, x, base + height / 2, z);
+  k.mesh(new T.CylinderGeometry(radius * .64, radius * 1.03, height * .36, segments, 1, true), g.grass, x, base + height * .18, z);
+  if (snow) k.mesh(new T.ConeGeometry(radius * .33, height * .3, segments), g.snow, x, base + height * .85, z);
+  return { x, y: base + height, z, radius, height, base };
+}
+
+function pine(k: ExhibitKit, g: Ground, x: number, y: number, z: number, scale = 1) {
+  k.mesh(new T.CylinderGeometry(.16 * scale, .22 * scale, 1 * scale, 5), g.bark, x, y + .5 * scale, z);
+  k.mesh(new T.ConeGeometry(1 * scale, 2.2 * scale, 6), g.pine, x, y + 1.9 * scale, z);
+  k.mesh(new T.ConeGeometry(.7 * scale, 1.6 * scale, 6), g.pine, x, y + 2.9 * scale, z);
+}
+
+/** A point on a mountain's (unjittered) surface, a little proud of it. */
+function onSlope(peak: ReturnType<typeof mountain>, t: number, angle: number, lift = .18): [number, number, number] {
+  const y = peak.base + t * peak.height, r = peak.radius * (1 - t) * 1.07 + lift;
+  return [peak.x + Math.cos(angle) * r, y + lift, peak.z + Math.sin(angle) * r];
+}
+
+function markerFlag(k: ExhibitKit, top: { x: number; y: number; z: number }, text: string, color: string) {
+  k.cyl(top.x, top.y + 1.6, top.z, .08, 3.2, k.m.steel);
+  k.sphere(top.x, top.y + 3.25, top.z, .16, k.m.brass);
+  const flag = k.label(text, top.x + 1.7, top.y + 2.45, top.z, 3.2, 1.5, { bg: color, color: "#fff7e6", size: 130 });
+  (flag.material as T.Material).side = T.DoubleSide;
+}
+
+function pricePlaque(k: ExhibitKit, heading: string, x = 9.6, z = 8.4) {
+  // Records built outside the app (the station gallery, tests) may not carry the derived price.
+  const milestone = k.event.priceMilestone, priceUsd = typeof k.event.priceUsd === "number" ? k.event.priceUsd : null;
+  const figure = milestone ? `${milestone.approximate ? "≈ " : ""}${formatDailyPrice(milestone.usd)}` : priceUsd !== null ? formatDailyPrice(priceUsd) : "—";
+  const note = milestone ? milestone.label : priceUsd !== null ? "Daily reference · 00:00 UTC" : "No price on record";
+  k.box(x, 1.1, z, 9.8, 1.6, 1.4, k.m.stone);
+  k.box(x, 4.15, z, 9.6, 4.6, .28, k.m.brass);
+  const face = z + .151;
+  k.label(heading, x, 5.85, face, 9.2, 1, { size: 62 });
+  k.label(figure, x, 4.35, face, 9.2, 2, { size: 150, color: "#ffe2a8" });
+  k.label(note, x, 2.65, face, 9.2, 1.4, { size: 54, color: "#cfd8cf" });
+  k.label("INTERPRETIVE LANDSCAPE · NOT A PRICE CHART", x, 1.25, z + .72, 9.4, .7, { size: 40 });
+  k.mark(milestone ? "sourced-price-milestone" : priceUsd !== null ? "daily-reference-price" : "no-price-shown");
+}
+
+/** Lows and crashes: the trail runs down off a ridge into a valley; a crash breaks it. */
+function valleyScene(k: ExhibitKit) {
+  const g = groundMaterials(k), { state, motif } = k.design, crash = state === "crash" || state === "liquidation";
+  k.floor("gallery");
+  skyBackdrop(k, crash ? "storm" : "dusk");
+  const left = mountain(k, g, -9.8, -5, 7.6, 12.5);
+  mountain(k, g, 10.2, -6, 6.8, 9.5, !crash);
+  mountain(k, g, 1.2, -8.6, 4.6, 6, false);
+  // The valley floor and its lake.
+  const water = k.material(0x3f8a9c, .25, .1); water.flatShading = true;
+  const lake = k.mesh(new T.CircleGeometry(1, 9), water, 2.2, .36, 2.6); lake.rotation.x = -Math.PI / 2; lake.scale.set(6.2, 3.6, 1);
+  k.mark("valley-lake");
+  // Down the ridge toward the shore.
+  const descent: [number, number, number][] = [];
+  for (let i = 0; i <= 12; i++) {
+    const t = .9 - i / 12 * .9, angle = .75 + Math.sin((1 - t) * Math.PI * 2.4) * .38 + (1 - t) * .3;
+    descent.push(onSlope(left, t, angle));
+  }
+  descent.push([-.4, .5, 4.2], [.8, .5, 5.4]);
+  if (crash) {
+    // A rockslide takes out the middle of the trail.
+    k.tube(descent.slice(0, 6), .14, k.m.cream);
+    k.tube(descent.slice(9), .14, k.m.cream);
+    for (let i = 0; i < 9; i++) {
+      const [x, y, z] = descent[6 + (i % 3)], boulder = k.mesh(new T.DodecahedronGeometry(.45 + k.random() * .55), g.rock, x + (k.random() - .5) * 2.4, Math.max(.7, y - k.random() * 1.6), z + k.random() * 1.6);
+      boulder.rotation.set(k.random() * 3, k.random() * 3, 0);
+    }
+    k.mark("rockslide-breaks-trail");
+  } else {
+    k.tube(descent, .14, k.m.cream);
+    k.mark("descending-trail");
+  }
+  markerFlag(k, { x: 1.6, y: .4, z: 6.2 }, state === "low" ? "LOW" : "DROP", "#8a3a2c");
+  k.mark("low-point-flag");
+  if (motif === "leverage") {
+    for (let i = 0; i < 6; i++) k.box(-14 + i * 1.6, 1.6, 9, .8, 2.6, .35, k.m.cream).rotation.z = -.1 - i * .17;
+    k.mark("liquidation-dominoes");
+  }
+  for (const [x, z, sc] of [[-15.6, 3.2, .85], [6.4, 4.4, .7], [-3.6, 7.8, .6], [15.8, 1.6, .95], [13.6, -1.2, .8], [-1.4, 1.2, .55]] as const) pine(k, g, x, .32, z, sc);
+  pricePlaque(k, state === "low" ? "CYCLE LOW" : motif === "leverage" ? "LIQUIDATION CASCADE" : "SELL-OFF");
+  k.mark("descending-market-valley");
+}
+
 export function marketScene(k: ExhibitKit) {
+  const { state } = k.design;
+  if (state === "low" || state === "crash" || state === "liquidation") return valleyScene(k);
+  return marketSculptureScene(k);
+}
+
+/** Highs, first quotes and index listings: the directional sculpture. */
+function marketSculptureScene(k: ExhibitKit) {
   const { motif, state } = k.design, { m } = k;
   k.floor("gallery");
   const down = ["low", "crash", "liquidation"].includes(state);

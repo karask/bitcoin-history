@@ -33,10 +33,18 @@ export function createLandscapeLayout(path: LandscapePath, track: Track) {
     return { y: samples[i].y * (1 - t) + samples[i + 1].y * t, z: samples[i].z * (1 - t) + samples[i + 1].z * t };
   };
   const regionAt = (x: number) => regions[Math.min(regionCount - 1, Math.max(0, Math.floor(x / span)))];
+  // The lowest rail height across each region's bay. The sea is set below it: taken from
+  // the region's centre instead, a coast on a rising stretch of price sat above its own
+  // lower end and hung over the previous region like a ceiling.
+  const lowestRail = regions.map(r => {
+    let low = Infinity;
+    for (let x = r.x - span * .7; x <= r.x + span * .7; x += 10) low = Math.min(low, route(x).y);
+    return low;
+  });
   const riverX = (r: LandscapeRegion, z: number) => r.x + Math.sin((z - r.z) / 155) * 44;
   const water = (r: LandscapeRegion) => ({
     x: r.x + (r.kind === "autumn" ? 120 : 0), z: r.z - (r.kind === "coast" ? 1160 : r.kind === "wetland" ? 155 : r.kind === "autumn" ? 105 : 240),
-    y: r.kind === "autumn" ? route(r.x + 120).y - 15 : r.y - (r.kind === "gorge" ? 58 : r.kind === "coast" ? 36 : 25),
+    y: r.kind === "autumn" ? route(r.x + 120).y - 15 : r.kind === "coast" ? lowestRail[r.index] - 36 : r.y - (r.kind === "gorge" ? 58 : 25),
     rx: r.kind === "coast" ? span * .44 : r.kind === "alpine" ? 155 : r.kind === "autumn" ? 26 : 115,
     rz: r.kind === "coast" ? 1060 : r.kind === "alpine" ? 110 : r.kind === "autumn" ? 20 : 78,
   });
@@ -64,7 +72,10 @@ export function createLandscapeLayout(path: LandscapePath, track: Track) {
       } else if (feature.kind === "coast") {
         const w = water(feature), dx = Math.abs(x - feature.x);
         const shore = feature.z - 105 - (x - feature.x) ** 2 / (span * 1.6), depth = shore - z;
-        const influence = smooth(-35, 22, depth) * (1 - smooth(span * .55 + Math.max(0, depth) * .3, span * .65 + Math.max(0, depth) * .4, dx));
+        // The bay widens toward the horizon, but never past its own region: a wider cut
+        // flattened the neighbouring mountains, and the sea above it hung in their sky.
+        const inner = Math.min(span * .55 + Math.max(0, depth) * .3, span * .6), outer = Math.min(span * .65 + Math.max(0, depth) * .4, span * .72);
+        const influence = smooth(-35, 22, depth) * (1 - smooth(inner, outer, dx));
         y = y * (1 - influence) + (w.y - 9) * influence;
       } else if (["wetland", "alpine", "autumn"].includes(feature.kind)) {
         const w = water(feature), radius = Math.hypot((x - w.x) / w.rx, (z - w.z) / w.rz);
@@ -95,3 +106,33 @@ export function createLandscapeLayout(path: LandscapePath, track: Track) {
   return { regions, plots, span, route, regionAt, riverX, water, height, nearStation, dry };
 }
 export type LandscapeLayout = ReturnType<typeof createLandscapeLayout>;
+
+export type GroveTree = { x: number; z: number; kind: "oak" | "pine" | "birch" | "autumn" | "willow" | "orchard"; scale: number; yaw: number; tint: number };
+
+/**
+ * A stand of trees ahead of each exhibit, where the stop's camera looks. Scattered
+ * planting alone thins out along coasts and steep climbs, and stops at the end of the
+ * track, so several later exhibits were framed by bare hillside.
+ */
+export function stationGroves(layout: LandscapeLayout, target = 14): GroveTree[] {
+  const trees: GroveTree[] = [];
+  layout.plots.forEach((plot, index) => {
+    const random = landscapeRandom(5003 + index * 7919);
+    let placed = 0;
+    for (let attempt = 0; attempt < 48 && placed < target; attempt++) {
+      // Ahead of the exhibit (forward) and across the camera's view (side).
+      const f = 45 + Math.pow(random(), 1.3) * 290, s = -18 + (random() * 2 - 1) * (f + 50) * .62;
+      const x = plot.x + plot.sideX * s + plot.forwardX * f, z = plot.z + plot.sideZ * s + plot.forwardZ * f;
+      const r = layout.regionAt(x);
+      const kind = r.kind === "alpine" || r.kind === "gorge" || r.kind === "coast" ? "pine"
+        : r.kind === "autumn" ? (random() > .2 ? "autumn" : "orchard")
+          : r.kind === "wetland" ? (random() > .5 ? "willow" : "birch")
+            : random() > .65 ? "birch" : "oak";
+      const scale = .7 + random() * .7, yaw = random() * 6.28, tint = .86 + random() * .25;
+      if (Math.abs(z - layout.route(x).z) < 26 || layout.nearStation(x, z, 17) || !layout.dry(x, z)) continue;
+      if (Math.abs(layout.height(x + 5, z) - layout.height(x - 5, z)) > 15) continue;
+      trees.push({ x, z, kind, scale, yaw, tint }); placed++;
+    }
+  });
+  return trees;
+}

@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import * as T from "three";
 import { buildTrack, sampleTrack } from "../lib/track.ts";
 import { createRidePath } from "../lib/ride-path.ts";
-import { createLandscapeLayout, landscapes } from "../app/present/ride/landscape-layout.ts";
+import { createLandscapeLayout, landscapes, stationGroves } from "../app/present/ride/landscape-layout.ts";
 import { createLandscape } from "../app/present/ride/landscape.ts";
 import { createRailway } from "../app/present/ride/railway.ts";
 
@@ -83,4 +83,36 @@ test("landscape and railway use finite, bounded geometry and release shared reso
   world.dispose(); railway.dispose(); world.dispose(); railway.dispose();
   for (const [resource, count] of resources) assert.equal(count, 1, `${resource.type ?? resource.constructor.name} leaked or disposed twice`);
   assert.equal(world.group.children.length, 0); assert.equal(railway.group.children.length, 0);
+});
+
+test("every stop has trees in the view its exhibit camera frames", () => {
+  // Scattered planting thinned out on coasts and stopped at the end of the track; the
+  // last stop of the Grand Tour once had no tree in view at all.
+  for (const selection of [events.filter(e => e.significance === "landmark"), events.filter(e => e.categories.includes("finance"))]) {
+    const { track, path } = make(selection), land = createLandscapeLayout(path, track), grove = stationGroves(land);
+    for (const plot of land.plots) {
+      const inView = grove.filter(t => {
+        const dx = t.x - plot.x, dz = t.z - plot.z, s = dx * plot.sideX + dz * plot.sideZ, f = dx * plot.forwardX + dz * plot.forwardZ;
+        return f > 30 && f < 400 && Math.abs(s + 18) < (f + 50) * .72;
+      });
+      assert.ok(inView.length >= 8, `a stop has only ${inView.length} grove trees in view`);
+    }
+    for (const t of grove) {
+      assert.ok(Math.abs(t.z - land.route(t.x).z) >= 26, "grove trees keep clear of the rail");
+      assert.ok(!land.nearStation(t.x, t.z, 12), "grove trees keep clear of the exhibits");
+      assert.ok(land.dry(t.x, t.z), "grove trees do not stand in water");
+    }
+  }
+});
+
+test("the sea never sits above the rail beside it", () => {
+  // A coast on a rising stretch of price used its centre's height, so its lower end and
+  // the previous region looked up at a sheet of water overhead.
+  for (const selection of [events, events.filter(e => e.significance === "landmark")]) {
+    const { track, path } = make(selection), land = createLandscapeLayout(path, track);
+    for (const r of land.regions.filter(region => region.kind === "coast")) {
+      const sea = land.water(r).y;
+      for (let x = r.x - land.span * .7; x <= r.x + land.span * .7; x += 20) assert.ok(sea < land.route(x).y, `sea at ${Math.round(sea)} above the rail at ${Math.round(land.route(x).y)}`);
+    }
+  }
 });

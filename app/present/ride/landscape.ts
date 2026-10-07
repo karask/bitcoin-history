@@ -1,6 +1,6 @@
 import * as T from "three";
 import type { Track } from "../../../lib/track";
-import { createLandscapeLayout, landscapeRandom, type LandscapePath, type LandscapeRegion } from "./landscape-layout.ts";
+import { createLandscapeLayout, landscapeRandom, stationGroves, type LandscapePath, type LandscapeRegion } from "./landscape-layout.ts";
 import { ModelBuilder, makeAnimal, makeBoat, makeHeron, makeHouse, makeShepherd, makeTree, makeUnderstory } from "./landscape-models.ts";
 import { freezeStaticTransforms, type StaticInstanceBatch } from "./instance-culling.ts";
 import { createLandscapeSurfaces } from "./landscape-surfaces.ts";
@@ -121,6 +121,8 @@ export function createLandscape(path: LandscapePath, track: Track) {
     }
   }
 
+  stationGroves(layout).forEach((tree, i) => add(`${tree.kind}${i % 2}`, tree.x, tree.z, tree.scale, tree.yaw, layout.height(tree.x, tree.z) - .35, tree.tint));
+
   const animations: { x: number; update: (t: number) => void; lastTime?: number }[] = [];
   const meshObject = (g: T.BufferGeometry, m: T.Material, parent: T.Object3D) => { const o = new T.Mesh(own(g), m); parent.add(o); return o; };
   const ribbon = (r: LandscapeRegion) => {
@@ -139,7 +141,9 @@ export function createLandscape(path: LandscapePath, track: Track) {
     if (r.kind === "coast") {
       const vertices: number[] = [], indices: number[] = [];
       for (let i = 0; i <= 32; i++) {
-        const depth = i / 32 * 5500, width = layout.span * .65 + depth * .42;
+        // Capped with the shore cut in landscape-layout: the coast sits higher than the
+        // regions before it, so an ever-wider sea appeared overhead from there.
+        const depth = i / 32 * 5500, width = Math.min(layout.span * .65 + depth * .42, layout.span * .7);
         vertices.push(-width, 0, w.rz + 45 - depth, width, 0, w.rz + 45 - depth);
         if (i < 32) { const a = i * 2; indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
       }
