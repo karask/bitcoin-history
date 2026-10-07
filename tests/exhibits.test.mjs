@@ -5,7 +5,7 @@ import * as T from "three";
 import { exhibitDesigns, exhibitDesign } from "../app/present/ride/exhibit-design.ts";
 import { buildExhibit } from "../app/present/ride/exhibits.ts";
 import { ExhibitKit } from "../app/present/ride/exhibit-kit.ts";
-import { assemblyScene, protocolScene } from "../app/present/ride/exhibit-scenes.ts";
+import { assemblyScene, exchangeScene, protocolScene } from "../app/present/ride/exhibit-scenes.ts";
 import { installCanvasStub } from "./helpers/canvas.mjs";
 
 const all = (await Promise.all(["prehistory", "early", "late"].map(async name => JSON.parse(await readFile(new URL(`../content/events-${name}.json`, import.meta.url), "utf8"))))).flat();
@@ -171,6 +171,59 @@ test("market lows are valleys with the price they claim; highs keep the sculptur
       const { list } = artifacts(slug);
       assert.ok(list.includes("ascending-market-sculpture"), slug);
       assert.ok(!list.includes("descending-market-valley"), slug);
+    }
+  } finally { restore(); }
+});
+
+test("plinth captions are in front of the plinth and clear of the terrace steps", () => {
+  // The steps (railway.ts) are 8.5 wide and centred on the front face. A centred caption
+  // was hidden behind them, and the standard one sat inside the plinth altogether.
+  const restore = installCanvasStub();
+  try {
+    const sample = new Map();
+    for (const event of all) { const kind = exhibitDesign(event).kind; if (!sample.has(kind)) sample.set(kind, event); }
+    for (const [kind, event] of sample) {
+      const exhibit = buildExhibit(event, 0xffaa66), captions = [];
+      exhibit.group.traverse(o => {
+        if (!o.isMesh) return;
+        const b = new T.Box3().setFromObject(o);
+        if (b.max.y < .2 && b.min.z > 13.3) captions.push(b);
+      });
+      assert.ok(captions.length >= 2, `${kind}: no caption on the plinth's front face`);
+      for (const b of captions) {
+        assert.ok(b.min.z >= 13.5, `${kind}: caption inside the plinth`);
+        assert.ok(b.min.x >= 4.75 || b.max.x <= -4.75, `${kind}: caption behind the steps`);
+      }
+      exhibit.dispose();
+    }
+  } finally { restore(); }
+});
+
+test("a document board on the desk does not cover the wall sign from the stop's camera", () => {
+  // The ride's exhibit camera (rideScene): yaw -0.35, pitch 0.25, radius 55 around a focus
+  // 10 above the floor; 1.45x farther on portrait screens. Exhibit-local coordinates.
+  const cameras = [55, 55 * 1.45].map(r => new T.Vector3(Math.sin(-.35) * r * Math.cos(.25), 10 + Math.sin(.25) * r, Math.cos(-.35) * r * Math.cos(.25)));
+  const restore = installCanvasStub();
+  try {
+    for (const slug of ["us-spot-bitcoin-etps-start-trading", "grayscale-bitcoin-trust-launched", "cme-bitcoin-futures-launch", "bakkt-bitcoin-futures-launch", "cme-bitcoin-options-launch"]) {
+      const k = new ExhibitKit(record(slug), design(slug), 0xffaa66), signs = [], boards = [];
+      const framed = k.framed.bind(k), folio = k.folio.bind(k);
+      k.framed = (text, x, y, z, w, h, ...rest) => { if (z < -10) signs.push({ x, y, z, w, h }); return framed(text, x, y, z, w, h, ...rest); };
+      k.folio = (x, y, z, ...rest) => { boards.push({ x, y, z }); return folio(x, y, z, ...rest); };
+      exchangeScene(k);
+      const sign = signs.find(item => item.y < 16); // the title board sits above at 17.9
+      assert.ok(sign && boards.length, slug);
+      for (const camera of cameras) for (const board of boards) {
+        // Project the board (7.4 x 9.5) onto the wall plane through the camera.
+        const corners = [-3.7, 3.7].flatMap(dx => [-4.75, 4.75].map(dy => {
+          const p = new T.Vector3(board.x + dx, board.y + dy, board.z), t = (sign.z - camera.z) / (p.z - camera.z);
+          return { x: camera.x + t * (p.x - camera.x), y: camera.y + t * (p.y - camera.y) };
+        }));
+        const left = Math.min(...corners.map(c => c.x)), top = Math.max(...corners.map(c => c.y));
+        const covers = sign.x + sign.w / 2 > left && sign.y - sign.h / 2 < top;
+        assert.ok(!covers, `${slug}: the board covers the wall sign`);
+      }
+      k.finish().dispose();
     }
   } finally { restore(); }
 });

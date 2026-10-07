@@ -510,7 +510,11 @@ export function exchangeScene(k: ExhibitKit) {
   k.floor("office");
   const notTrading = ["filed", "rejected", "approved", "announced", "closed"].includes(state);
   const institution = event.actors.slice(0, 2).join(" / ");
-  k.framed(`${institution}\n${words(motif)} / ${words(state)}`, 0, 12.8, -10.9, 26, 4);
+  // Fund and derivative stops stand a document board on the right of the desk; from the
+  // stop's camera it covers the right of a full-width wall sign, which read "SPOT ETF / O".
+  const boardOnDesk = motif.includes("etf") || ["trust", "futures", "delivery", "options"].includes(motif);
+  if (boardOnDesk) k.framed(`${institution}\n${words(motif)} / ${words(state)}`, -6, 12.8, -10.9, 14, 4);
+  else k.framed(`${institution}\n${words(motif)} / ${words(state)}`, 0, 12.8, -10.9, 26, 4);
   k.desk(-1, 1, 26, 5.2);
   k.monitor(-8, 8.9, -.2, `${motif.includes("etf") ? "FUND SHARES" : "BTC / USD"}\n${notTrading ? words(state) : "MARKET ACCESS"}`, true);
   k.keyboard(-8, 5.7, 3.8, .85);

@@ -339,7 +339,9 @@ export function buildPizzaExhibit(event: PresentationEvent) {
         ball(x, 16.85, -1, .24, lampGlow);
     }
     // Quiet typography on the plinth anchors the miniature in the historical record.
-    sign([{ text: `${event.date}     •     ${offer ? 'THE PIZZA OFFER' : 'BITCOIN PIZZA DAY'}     •     INTERPRETIVE DIORAMA`, size: 52, color: '#d2c6a7' }], 25, .9, 0, -.67, 13.515, '#101a1a');
+    // Either side of the terrace steps, which hide the middle of the plinth's face.
+    sign([{ text: `${event.date}   •   ${offer ? 'THE PIZZA OFFER' : 'BITCOIN PIZZA DAY'}`, size: 96, color: '#d2c6a7' }], 11.5, .9, -11, -.67, 13.515, '#101a1a');
+    sign([{ text: 'INTERPRETIVE DIORAMA', size: 96, color: '#d2c6a7' }], 11.5, .9, 11, -.67, 13.515, '#101a1a');
     // Merge all stationary objects by material to keep detail affordable at runtime.
     root.updateMatrixWorld(true);
     // Keep actual pre-bake world bounds for the regression: no renderer ordering

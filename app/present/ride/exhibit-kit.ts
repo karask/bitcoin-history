@@ -124,7 +124,10 @@ export class ExhibitKit {
     this.box(0, 20, -12, 34.5, .5, 1, m.wood);
     this.box(0, 1, -11.48, 34, .5, .3, m.brass);
     this.framed(this.event.title, 0, 17.9, -11.38, 30, 3.15);
-    this.label(`${this.event.date}   •   ${this.event.evidence.toUpperCase()}   •   INTERPRETIVE DIORAMA`, 0, -.8, 13.015, 31, 1.1, { size: 37 });
+    // On the plinth's front face, in two halves either side of the terrace steps, which
+    // stand in front of its middle. (A single centred caption sat inside the plinth.)
+    this.label(`${this.event.date}   •   ${this.event.evidence.toUpperCase()}`, -11, -.8, 13.52, 11.5, 1.1, { size: 57 });
+    this.label("INTERPRETIVE DIORAMA", 11, -.8, 13.52, 11.5, 1.1, { size: 57 });
     // Visible fixtures, not per-exhibit lights: the ride has a fixed light budget.
     for (const x of [-12, 12]) {
       this.tube([[x, 20, -11], [x, 21, -8.5], [x, 19.4, -7.5]], .07, m.brass);
