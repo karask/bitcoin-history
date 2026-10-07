@@ -103,5 +103,6 @@ test("robots and sitemap use absolute canonical URLs and archive revision dates"
   assert.equal(sitemap.status, 200);
   const xml = await sitemap.text();
   assert.match(xml, /<loc>https:\/\/kkarasavvas\.com\/bitcoin-history\/events\//i);
-  assert.match(xml, /<lastmod>2026-08-24T00:00:00\.000Z<\/lastmod>/i);
+  const { source } = JSON.parse(await readFile(new URL("../content/price-context.json", import.meta.url), "utf8"));
+  assert.match(xml, new RegExp(`<lastmod>${source.retrievedOn}T00:00:00\\.000Z</lastmod>`, "i"));
 });

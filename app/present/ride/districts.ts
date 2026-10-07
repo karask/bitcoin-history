@@ -4,7 +4,7 @@ import type { CategoryId } from "@/lib/event-schema";
 /**
  * Eight districts, one system.
  *
- * Hand-modelling a scene per event is impossible at 275 records and would read as
+ * Hand-modelling a scene per event is impossible at nearly 300 records and would read as
  * filler anyway. Instead each category gets an archetype whose instances are placed
  * from the event's own data, so no two stations resolve the same way.
  */

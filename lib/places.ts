@@ -65,6 +65,7 @@ export const countries = {
   NG: { name: "Nigeria", continent: "africa" },
   NL: { name: "Netherlands", continent: "europe", blocs: ["eu", "eea"] },
   NO: { name: "Norway", continent: "europe", blocs: ["eea"] },
+  PK: { name: "Pakistan", continent: "asia" },
   RU: { name: "Russia", continent: "europe" },
   SE: { name: "Sweden", continent: "europe", blocs: ["eu", "eea"] },
   SG: { name: "Singapore", continent: "asia" },

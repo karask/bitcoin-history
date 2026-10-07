@@ -86,7 +86,12 @@ export type SignificanceId = (typeof significanceIds)[number];
  * also drives presentation pacing, so an inflated tier flattens the whole ride.
  */
 export const LANDMARK_LIMIT = 32;
-export const MAJOR_LIMIT = 120;
+/**
+ * Major is the middle tier, so it is capped as a share of the archive rather than an
+ * absolute count: a fixed number would force demotions every time the corpus grows.
+ * Landmarks stay absolute because they are a documentary-length set.
+ */
+export const MAJOR_SHARE = 0.45;
 
 const sourceSchema = z.object({
   title: z.string().min(2),

@@ -159,7 +159,7 @@ export function miningScene(k: ExhibitKit) {
     k.framed("20,000,000 BTC\nMINED SUPPLY MILESTONE", 5, 12, -7, 18, 4); k.mark("supply-display");
   } else {
     miningUnit(-8, -4, !off, gpu ? 3 : 5); miningUnit(1, -4, !off, gpu ? 3 : 5);
-    if (motif === "difficulty") {
+    if (motif === "difficulty" || motif === "hashrate") {
       k.ring(11, 9, -1, 3, .25, m.brass); k.box(11, 9, -1, .14, 5, .1, m.red).rotation.z = -.8; k.mark("difficulty-gauge");
     } else if (motif === "asic") {
       k.box(10, 2, 2, 6, 3, 5, m.wood); k.box(10, 4.4, 2, 4.7, 1.6, 3.4, m.steel);
@@ -504,7 +504,7 @@ export function lawScene(k: ExhibitKit) {
       for (const [x, text] of [[5, "ACCEPT"], [11, "DECLINE"]] as const) { k.box(x, 6, 3, 4.8, .5, 3, m.panel); k.label(text, x, 6.4, 4.1, 4.1, 1.2); }
       k.mark("merchant-choice-not-mandatory");
     } else { stamp(k, 8, 5.4, 4, words(state), state === "passed"); k.mark(`tender-${state}`); }
-  } else if (motif === "mica" || motif === "house-bill" || motif === "committee-bill") {
+  } else if (motif === "mica" || motif === "house-bill" || motif === "committee-bill" || motif === "senate-bill") {
     const stages = motif === "mica" ? ["AGREEMENT", "ADOPTED", "APPLIES", "DEADLINE"] : ["COMMITTEE", "HOUSE", "SENATE", "LAW"];
     const active = motif === "mica" ? ["agreement", "adopted", "effective", "deadline"].indexOf(state) : state === "advanced" ? 0 : 1;
     for (let i = 0; i < 4; i++) {
@@ -525,7 +525,7 @@ export function lawScene(k: ExhibitKit) {
     k.coin(8, 10.5, 0, 2.6, motif === "stablecoin" ? "USD" : "TOKEN");
     stamp(k, 8, 5.4, 4, words(state), state === "enacted"); k.mark("token-policy-not-bitcoin-tender");
   } else {
-    shelf(k, 9, -7, 9); stamp(k, 7, 5.4, 4, words(state), ["enacted", "effective", "permitted"].includes(state));
+    shelf(k, 9, -7, 9); stamp(k, 7, 5.4, 4, words(state), ["enacted", "effective", "permitted", "pardoned"].includes(state));
     if (motif === "network") for (let i = 0; i < 3; i++) { k.box(4 + i * 3, 8, 2, 1.5, 1.5, 1.5, m.blue); if (i) k.tube([[1 + i * 3, 8, 2], [4 + i * 3, 8, 2]], .08); }
     k.mark(`policy:${motif}`);
   }

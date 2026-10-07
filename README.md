@@ -46,8 +46,8 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
 
 ### Data and interpretation
 
-The rail follows a **smoothed price trend**, derived from 5,881 bundled Coin Metrics
-daily PriceUSD observations (18 July 2010–23 August 2026). Centered Gaussian weighting
+The rail follows a **smoothed price trend**, derived from 5,925 bundled Coin Metrics
+daily PriceUSD observations (18 July 2010–6 October 2026). Centered Gaussian weighting
 over ±7 days in log-price space removes small daily oscillations. After calendar
 compression, positive-weight spatial filtering rounds the rail with a minimum
 100-world-unit Gaussian sigma, widened adaptively for tight curvature. Vertical
@@ -104,7 +104,7 @@ npm run preview:stations
 ```
 
 Open `http://localhost:4178/` (or `http://100.96.113.72:4178/` on Tailscale).
-Search all 275 events, filter the 24 scene families, and orbit/zoom each actual
+Search all 292 events, filter the 24 scene families, and orbit/zoom each actual
 production model. This is a local review tool, not an extra published site route.
 The gallery's main-site link expects the ride on port 4173:
 `npm run dev -- --hostname 0.0.0.0 --port 4173`.

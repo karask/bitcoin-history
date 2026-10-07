@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getAllEvents } from "@/lib/events";
 import { setlists } from "@/lib/setlists";
+import priceContext from "@/content/price-context.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://kkarasavvas.com/bitcoin-history";
-  const archiveUpdated = new Date("2026-08-24T00:00:00Z");
+  // The bundled data is refreshed together, so its retrieval date is the archive's revision date.
+  const archiveUpdated = new Date(`${priceContext.source.retrievedOn}T00:00:00Z`);
   return [
     { url: base, lastModified: archiveUpdated, changeFrequency: "monthly", priority: 1 },
     { url: `${base}/present`, lastModified: archiveUpdated, changeFrequency: "monthly", priority: 0.8 },

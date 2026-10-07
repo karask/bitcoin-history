@@ -5801,6 +5801,58 @@
     ]
   },
   {
+    "slug": "hbo-money-electric-names-peter-todd",
+    "date": "2024-10-08",
+    "precision": "day",
+    "title": "An HBO documentary names Peter Todd as Satoshi",
+    "summary": "Money Electric: The Bitcoin Mystery argued that the Bitcoin developer Peter Todd was Satoshi Nakamoto; Todd denied it before the film aired.",
+    "details": "Directed by Cullen Hoback, the film drew on interviews with early figures including Adam Back, Roger Ver and Samson Mow. Todd rejected the claim hours before release.",
+    "whyItMatters": "A decade after Newsweek, the search for Satoshi was still producing named suspects and denials rather than proof.",
+    "category": "origins",
+    "categories": [
+      "origins"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Satoshi Nakamoto",
+      "HBO",
+      "documentary",
+      "identity"
+    ],
+    "actors": [
+      "HBO",
+      "Cullen Hoback",
+      "Peter Todd"
+    ],
+    "evidence": "disputed",
+    "sources": [
+      {
+        "title": "Who invented Bitcoin? HBO says Peter Todd",
+        "publisher": "Fortune",
+        "url": "https://fortune.com/crypto/2024/10/08/who-invented-bitcoin-hbo-peter-todd",
+        "type": "secondary"
+      },
+      {
+        "title": "Money Electric: The Bitcoin Mystery",
+        "publisher": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Money_Electric:_The_Bitcoin_Mystery",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "newsweek-names-dorian-nakamoto",
+      "copa-v-wright-identity-ruling"
+    ]
+  },
+  {
     "slug": "us-bitcoin-etf-options-trading-begins",
     "date": "2024-11-19",
     "precision": "day",
@@ -6116,6 +6168,59 @@
         "url": "https://www.sec.gov/newsroom/press-releases/2025-30",
         "type": "primary"
       }
+    ]
+  },
+  {
+    "slug": "ross-ulbricht-pardoned",
+    "date": "2025-01-21",
+    "precision": "day",
+    "title": "Ross Ulbricht is pardoned",
+    "summary": "President Trump granted a full pardon to the Silk Road founder, who had served more than eleven years of a life sentence.",
+    "details": "The pardon fulfilled a promise made at the 2024 Libertarian National Convention to act on the first day in office. Ulbricht had been convicted in 2015 of running the marketplace, on charges including narcotics trafficking conspiracy and money laundering.",
+    "whyItMatters": "It closed the case that, more than any other, had tied Bitcoin's early reputation to the darknet.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "crisis"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Ross Ulbricht",
+      "Silk Road",
+      "pardon",
+      "clemency"
+    ],
+    "actors": [
+      "Donald Trump",
+      "Ross Ulbricht"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Ross Ulbricht, Silk Road founder, gets pardon",
+        "publisher": "The Washington Times",
+        "url": "https://www.washingtontimes.com/news/2025/jan/21/ross-ulbricht-silk-road-founder-gets-pardon-fulfil/",
+        "type": "secondary"
+      },
+      {
+        "title": "Why Trump Pardoned 'Silk Road' Founder Ross Ulbricht",
+        "publisher": "Bloomberg Law",
+        "url": "https://news.bloomberglaw.com/ip-law/why-trump-pardoned-silk-road-founder-ross-ulbricht-quicktake",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "silk-road-seized",
+      "gawker-silk-road-bitcoin-story",
+      "us-seizes-silk-road-bitcoin"
     ]
   },
   {
@@ -6458,6 +6563,113 @@
     ]
   },
   {
+    "slug": "bitcoin-hashrate-one-zettahash",
+    "date": "2025-04-05",
+    "precision": "day",
+    "title": "Network hashrate passes one zettahash",
+    "summary": "Bitcoin's estimated hashrate crossed 10^21 hashes per second for the first time.",
+    "details": "A zettahash is a thousand exahashes, and the network had reached its first exahash per second less than a decade earlier. Because hashrate is inferred from block times and difficulty rather than measured directly, trackers placed the crossing anywhere from late March to 5 April.",
+    "whyItMatters": "It marked a roughly thousandfold rise in the work securing the chain in under ten years, most of it after mining's 2021 relocation out of China.",
+    "category": "mining",
+    "categories": [
+      "mining",
+      "protocol"
+    ],
+    "kind": "record",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "hashrate",
+      "zettahash",
+      "mining",
+      "network security"
+    ],
+    "actors": [
+      "Bitcoin miners"
+    ],
+    "evidence": "estimated",
+    "technicalNote": "Mempool.space recorded a peak of about 1.025 ZH/s on 5 April 2025; other trackers report 24 March or 4 April depending on the averaging window.",
+    "sources": [
+      {
+        "title": "Bitcoin hashrate hits 1 zetahash for the first time ever",
+        "publisher": "Cointelegraph",
+        "url": "https://cointelegraph.com/news/bitcoin-hashrate-one-zetahash-first-time-ever",
+        "type": "secondary"
+      },
+      {
+        "title": "Hashrate and difficulty",
+        "publisher": "mempool.space",
+        "url": "https://mempool.space/graphs/mining/hashrate-difficulty",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "great-mining-migration-difficulty-drop",
+      "first-bitcoin-asics-ship"
+    ]
+  },
+  {
+    "slug": "twenty-one-capital-launched",
+    "date": "2025-04-23",
+    "precision": "day",
+    "title": "Twenty One Capital launches with 42,000 BTC",
+    "summary": "Tether, Bitfinex and SoftBank backed a new bitcoin-treasury company set to go public through a Cantor Fitzgerald SPAC.",
+    "details": "Led by Strike founder Jack Mallers, it was set to start with roughly 42,000 BTC, which would have made it the third-largest corporate holder, and to raise $585 million in convertible notes and equity to buy more. It was among the largest of a 2025 wave of companies formed or repurposed to hold bitcoin on their balance sheets.",
+    "whyItMatters": "The treasury-company model Strategy pioneered became an industry in 2025, which is why Strategy's turn to selling in 2026 concerned far more than one company.",
+    "category": "finance",
+    "categories": [
+      "finance",
+      "adoption"
+    ],
+    "kind": "launch",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Twenty One Capital",
+      "corporate treasury",
+      "SPAC",
+      "Tether"
+    ],
+    "actors": [
+      "Twenty One Capital",
+      "Tether",
+      "SoftBank Group",
+      "Cantor Fitzgerald",
+      "Jack Mallers"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Press release, dated April 23, 2025 (Exhibit 99.1)",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/Archives/edgar/data/0001865602/000121390025034374/ea023922201ex99-1_cantor.htm",
+        "type": "primary"
+      },
+      {
+        "title": "Cantor Starts Crypto Firm With Backing From Tether, SoftBank",
+        "publisher": "Bloomberg",
+        "url": "https://www.bloomberg.com/news/articles/2025-04-23/cantor-to-start-crypto-firm-with-backing-from-tether-softbank",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "microstrategy-first-bitcoin-treasury-purchase",
+      "strategy-sells-bitcoin"
+    ]
+  },
+  {
     "slug": "new-hampshire-bitcoin-investment-law",
     "date": "2025-05-06",
     "precision": "day",
@@ -6546,6 +6758,57 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1679788/000167978825000094/coin-20250514.htm",
         "type": "primary"
       }
+    ]
+  },
+  {
+    "slug": "pakistan-strategic-bitcoin-reserve",
+    "date": "2025-05-29",
+    "precision": "day",
+    "title": "Pakistan announces a strategic bitcoin reserve",
+    "summary": "The prime minister's special assistant on blockchain and crypto unveiled a government-backed bitcoin reserve at the Bitcoin 2025 conference.",
+    "details": "Bilal Bin Saqib made the announcement in a Las Vegas keynote attended by U.S. Vice President JD Vance. It set out the government's intent rather than disclosing holdings or a purchase schedule.",
+    "whyItMatters": "It carried the reserve idea beyond the United States to a large emerging economy, at least on paper.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "PK"
+      }
+    ],
+    "tags": [
+      "Pakistan",
+      "strategic reserve",
+      "sovereign adoption"
+    ],
+    "actors": [
+      "Government of Pakistan",
+      "Bilal Bin Saqib"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Pakistan unveils first govt-led Strategic Bitcoin Reserve",
+        "publisher": "Dawn",
+        "url": "https://www.dawn.com/news/1914060/",
+        "type": "secondary"
+      },
+      {
+        "title": "Pakistan unveils first government-backed strategic bitcoin reserve",
+        "publisher": "Profit by Pakistan Today",
+        "url": "https://profit.pakistantoday.com.pk/2025/05/29/pakistan-unveils-first-government-backed-strategic-bitcoin-reserve/",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "us-strategic-bitcoin-reserve",
+      "czech-national-bank-bitcoin-test-portfolio"
     ]
   },
   {
@@ -6686,6 +6949,112 @@
     ]
   },
   {
+    "slug": "roman-storm-tornado-cash-verdict",
+    "date": "2025-08-06",
+    "precision": "day",
+    "title": "Roman Storm is convicted on one count",
+    "summary": "A New York jury found the Tornado Cash co-founder guilty of conspiring to operate an unlicensed money-transmitting business and deadlocked on money-laundering and sanctions charges.",
+    "details": "The conviction carries a maximum of five years, far below what he faced had he been convicted on every count. The split verdict left open whether writing and publishing privacy software makes a developer liable for how others use it.",
+    "whyItMatters": "Its ambiguity mattered as much as its result for anyone writing privacy or self-custody software.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "protocol"
+    ],
+    "kind": "ruling",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Tornado Cash",
+      "Roman Storm",
+      "privacy",
+      "money transmission"
+    ],
+    "actors": [
+      "Roman Storm",
+      "U.S. Department of Justice"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Jury finds Tornado Cash developer Storm guilty of money transmitting",
+        "publisher": "Decrypt",
+        "url": "https://decrypt.co/333790/jury-tornado-cash-developer-storm-guilty-money-transmitting",
+        "type": "secondary"
+      },
+      {
+        "title": "Tornado Cash co-founder convicted for conspiring to operate an unlicensed money transmitting business",
+        "publisher": "Willkie Farr & Gallagher",
+        "url": "https://complianceconcourse.willkie.com/articles/tornado-cash-cofounder-convicted-for-conspiring-to-operate-an-unlicensed-money-transmitting-business/",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "tornado-cash-sanctioned",
+      "samourai-wallet-founders-charged"
+    ]
+  },
+  {
+    "slug": "us-401k-alternative-assets-order",
+    "date": "2025-08-07",
+    "precision": "day",
+    "title": "An executive order opens 401(k) plans to crypto",
+    "summary": "President Trump directed the Labor Department and the SEC to ease the way for digital assets and other alternatives in workplace retirement plans.",
+    "details": "The order also called for withdrawing earlier guidance that had discouraged crypto in retirement plans, and asked regulators to clarify fiduciary duties. It did not itself add bitcoin to any plan; employers and plan providers still had to choose to offer it.",
+    "whyItMatters": "Retirement plans hold trillions of dollars, so even small allocations through them would reach savers who had never bought bitcoin directly.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption",
+      "finance"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "401(k)",
+      "retirement",
+      "ERISA",
+      "executive order"
+    ],
+    "actors": [
+      "Donald Trump",
+      "U.S. Department of Labor",
+      "U.S. Securities and Exchange Commission"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Trump signs executive order allowing 401(k) plans to include digital assets",
+        "publisher": "The Block",
+        "url": "https://www.theblock.co/post/366046/trump-signs-executive-order-allowing-401k-plans-to-include-digital-assets",
+        "type": "secondary"
+      },
+      {
+        "title": "Crypto, private equity, and real estate in your 401(k)",
+        "publisher": "Morgan Lewis",
+        "url": "https://www.morganlewis.com/pubs/2025/08/crypto-private-equity-and-real-estate-in-your-401k-latest-executive-order-could-redefine-retirement-investing",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "fidelity-bitcoin-401k-option",
+      "us-digital-financial-technology-order"
+    ]
+  },
+  {
     "slug": "bitcoin-2025-all-time-high",
     "date": "2025-10-06",
     "precision": "day",
@@ -6740,6 +7109,51 @@
       "october-2025-liquidation-event",
       "bitcoin-2026-drawdown",
       "bitcoin-crosses-one-hundred-thousand"
+    ]
+  },
+  {
+    "slug": "uk-retail-crypto-etn-access",
+    "date": "2025-10-08",
+    "precision": "day",
+    "title": "The UK reopens crypto ETNs to retail investors",
+    "summary": "The Financial Conduct Authority lifted its ban on retail access to exchange-traded notes backed by crypto assets.",
+    "details": "Retail investors could buy the notes only on an FCA-recognised UK investment exchange, and the products were classed as restricted mass-market investments subject to promotion rules.",
+    "whyItMatters": "It gave UK savers a regulated, exchange-listed route to bitcoin exposure almost two years after U.S. spot funds began trading.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "GB"
+      }
+    ],
+    "tags": [
+      "FCA",
+      "ETN",
+      "retail access",
+      "United Kingdom"
+    ],
+    "actors": [
+      "Financial Conduct Authority"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "FCA opens retail access to crypto ETNs",
+        "publisher": "Financial Conduct Authority",
+        "url": "https://www.fca.org.uk/news/press-releases/fca-opens-retail-access-crypto-etns",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "us-spot-bitcoin-etps-start-trading",
+      "blackrock-europe-bitcoin-etp"
     ]
   },
   {
@@ -6843,6 +7257,162 @@
     ]
   },
   {
+    "slug": "changpeng-zhao-pardoned",
+    "date": "2025-10-23",
+    "precision": "day",
+    "title": "Changpeng Zhao is pardoned",
+    "summary": "The Binance founder received a full pardon, erasing the conviction that followed his 2023 guilty plea.",
+    "details": "Zhao had served four months in 2024 after admitting that Binance failed to maintain an adequate anti-money-laundering programme. The pardon applied to him personally, not to the company's own plea and settlement.",
+    "whyItMatters": "Within two years, one of the largest enforcement actions the industry had faced was followed by clemency for its central figure.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "infrastructure"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Changpeng Zhao",
+      "Binance",
+      "pardon",
+      "clemency"
+    ],
+    "actors": [
+      "Donald Trump",
+      "Changpeng Zhao"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Trump pardons Binance's Changpeng Zhao",
+        "publisher": "Business Standard",
+        "url": "https://www.business-standard.com/world-news/donald-trump-pardons-binance-ceo-changpeng-zhao-crypto-market-surges-125102400220_1.html",
+        "type": "secondary"
+      },
+      {
+        "title": "Trump pardons Binance founder Changpeng Zhao",
+        "publisher": "Payment Expert",
+        "url": "https://paymentexpert.com/2025/10/24/trump-pardons-binance-founder-changpeng-zhao/",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "binance-us-criminal-settlement",
+      "binance-founded"
+    ]
+  },
+  {
+    "slug": "samourai-founders-sentenced",
+    "date": "2025-11-06",
+    "precision": "day",
+    "title": "Samourai Wallet's founders are sentenced",
+    "summary": "Keonne Rodriguez received five years in prison and William Lonergan Hill four, after both pleaded guilty to operating an unlicensed money-transmitting business.",
+    "details": "Prosecutors said more than $237 million in criminal proceeds had passed through the service, and the pair agreed to forfeit almost $238 million between them. Hill was sentenced on 19 November, about two weeks after Rodriguez.",
+    "whyItMatters": "The guilty pleas meant the question of whether non-custodial coordination counts as money transmission was never tested before a jury.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "protocol"
+    ],
+    "kind": "ruling",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Samourai Wallet",
+      "sentencing",
+      "privacy",
+      "money transmission"
+    ],
+    "actors": [
+      "Keonne Rodriguez",
+      "William Lonergan Hill",
+      "U.S. Department of Justice"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Founders of Samourai Wallet cryptocurrency mixing service sentenced to five and four years in prison",
+        "publisher": "IRS Criminal Investigation",
+        "url": "https://www.irs.gov/node/153676",
+        "type": "primary"
+      },
+      {
+        "title": "Samourai Wallet",
+        "publisher": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Samourai_Wallet",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "samourai-wallet-founders-charged",
+      "roman-storm-tornado-cash-verdict"
+    ]
+  },
+  {
+    "slug": "czech-national-bank-bitcoin-test-portfolio",
+    "date": "2025-11-13",
+    "precision": "day",
+    "title": "The Czech National Bank buys bitcoin",
+    "summary": "The central bank set up a $1 million test portfolio holding bitcoin, a dollar stablecoin and a tokenized deposit.",
+    "details": "Approved by the board on 30 October, the portfolio sits outside the bank's international reserves and will not be added to; its purpose is to rehearse custody, settlement, accounting and audit. The bank said it would publish an assessment in two to three years.",
+    "whyItMatters": "It put bitcoin on a European Union central bank's balance sheet, even if only as an experiment.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "adoption",
+      "finance"
+    ],
+    "kind": "adoption",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "CZ"
+      }
+    ],
+    "tags": [
+      "Czech National Bank",
+      "central bank",
+      "test portfolio"
+    ],
+    "actors": [
+      "Czech National Bank"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Czech central bank buys bitcoin for first time as part of digital asset 'test portfolio'",
+        "publisher": "The Block",
+        "url": "https://www.theblock.co/post/378748/czech-central-bank-bitcoin",
+        "type": "secondary"
+      },
+      {
+        "title": "Czech Central Bank Buys $1 Million of Crypto in Test Fund",
+        "publisher": "Bloomberg Law",
+        "url": "https://news.bloomberglaw.com/crypto/czech-central-bank-buys-1-million-of-crypto-in-test-fund-2",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "pakistan-strategic-bitcoin-reserve",
+      "us-strategic-bitcoin-reserve"
+    ]
+  },
+  {
     "slug": "bitcoin-2026-drawdown",
     "date": "2026-02-06",
     "precision": "day",
@@ -6895,6 +7465,58 @@
     ]
   },
   {
+    "slug": "bip360-post-quantum-output-type",
+    "date": "2026-02-11",
+    "precision": "day",
+    "title": "BIP 360 proposes a quantum-resistant output type",
+    "summary": "A proposal for a new output type that avoids exposing public keys was merged into the BIP repository as a draft.",
+    "details": "Pay-to-Merkle-Root commits only to script paths, removing the key-path spend that leaves Taproot outputs' public keys visible on-chain, and leaves room for post-quantum signature schemes to be added by later soft forks. Merging records the proposal for review; it activates nothing.",
+    "whyItMatters": "It turned the quantum-computing question from mailing-list speculation into a concrete consensus change that wallets and reviewers can examine line by line.",
+    "category": "protocol",
+    "categories": [
+      "protocol"
+    ],
+    "kind": "research",
+    "scope": "protocol",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "BIP 360",
+      "quantum resistance",
+      "P2MR",
+      "Taproot"
+    ],
+    "actors": [
+      "Bitcoin developers"
+    ],
+    "evidence": "documented",
+    "bip": 360,
+    "technicalNote": "Status remained Draft. A test network running the proposal mined more than 100,000 blocks in March 2026, which exercises the design but says nothing about consensus support for activating it.",
+    "sources": [
+      {
+        "title": "BIP 360",
+        "publisher": "Bitcoin BIPs",
+        "url": "https://github.com/bitcoin/bips/blob/master/bip-0360.mediawiki",
+        "type": "primary"
+      },
+      {
+        "title": "Bitcoin advances toward quantum resistance",
+        "publisher": "Bitcoin Magazine",
+        "url": "https://bitcoinmagazine.com/news/bitcoin-advances-toward-quantum-resistance",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "taproot-bips-published",
+      "taproot-activates"
+    ]
+  },
+  {
     "slug": "bitcoin-twenty-million-mined",
     "date": "2026-03-09",
     "precision": "day",
@@ -6943,6 +7565,50 @@
     ],
     "technicalNote": "Scheduled issuance reaches exactly 20,000,000 BTC at block 940,000 (10,500,000 + 5,250,000 + 2,625,000 + 1,312,500 + 100,000 × 3.125). Actual issuance trails the schedule by roughly 200 BTC because some coinbase transactions claimed less than the available subsidy or are unspendable, so the economic crossing came a few dozen blocks later. The figure describes consensus issuance, not spendable supply.",
     "blockHeight": 940000
+  },
+  {
+    "slug": "bitcoin-core-31-cluster-mempool",
+    "date": "2026-04-20",
+    "precision": "day",
+    "title": "Bitcoin Core 31.0 ships cluster mempool",
+    "summary": "The release reorganised how nodes track unconfirmed transactions, judging replacements across whole clusters of related transactions.",
+    "details": "A replacement is now accepted only if it makes the mempool better for miners once every linked transaction is taken into account, replacing piecemeal rules that could produce inconsistent results. The release also raised the default database cache on machines with enough memory.",
+    "whyItMatters": "It is a long-planned overhaul of node policy that makes fee-bumping and block building more predictable without touching consensus.",
+    "category": "protocol",
+    "categories": [
+      "protocol"
+    ],
+    "kind": "release",
+    "scope": "protocol",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Bitcoin Core",
+      "cluster mempool",
+      "replace-by-fee",
+      "mempool policy"
+    ],
+    "actors": [
+      "Bitcoin Core contributors"
+    ],
+    "evidence": "documented",
+    "technicalNote": "Mempool policy is local to each node, not a consensus rule; blocks built under either policy remain valid everywhere.",
+    "sources": [
+      {
+        "title": "Bitcoin Core 31.0",
+        "publisher": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/releases/31.0/",
+        "type": "primary"
+      }
+    ],
+    "related": [
+      "bitcoin-core-v30-op-return-policy"
+    ]
   },
   {
     "slug": "clarity-act-senate-banking-advances",
@@ -7167,6 +7833,168 @@
         "url": "https://www.esma.europa.eu/sites/default/files/2026-04/ESMA75-113276571-1679_Statement_on_the_end_of_transitional_periods_under_MiCA.pdf",
         "type": "primary"
       }
+    ]
+  },
+  {
+    "slug": "coldcard-seed-generation-exploit",
+    "date": "2026-07-30",
+    "endDate": "2026-08-03",
+    "precision": "day",
+    "title": "Weak seeds drain Coldcard hardware wallets",
+    "summary": "An attacker swept about 1,816 BTC from more than 5,200 addresses whose seeds had been generated with predictable randomness.",
+    "details": "A March 2021 firmware change had routed seed generation through a software random-number generator seeded from public constants rather than the device's hardware source, so the affected seeds could be recomputed by anyone who found the flaw. The secure element protected the keys as designed; it could not protect seeds that were weak before they reached it.",
+    "whyItMatters": "It was a self-custody failure rather than an exchange hack, and it showed that hardware isolation is only as strong as the randomness behind it.",
+    "category": "crisis",
+    "categories": [
+      "crisis",
+      "infrastructure"
+    ],
+    "kind": "failure",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "XX"
+      }
+    ],
+    "tags": [
+      "Coldcard",
+      "hardware wallet",
+      "entropy",
+      "self-custody",
+      "seed generation"
+    ],
+    "actors": [
+      "Coinkite"
+    ],
+    "evidence": "well-supported",
+    "technicalNote": "Loss estimates rose as later waves were traced: about 594 BTC moved in the first 25 minutes on 30 July, and TRM Labs put the total near 1,816 BTC (about $116 million) by 3 August.",
+    "sources": [
+      {
+        "title": "The Largest Hardware Wallet Exploit of 2026: Inside the USD 116 Million Coldcard Hack",
+        "publisher": "TRM Labs",
+        "url": "https://www.trmlabs.com/resources/blog/the-largest-hardware-wallet-exploit-of-2026-inside-the-usd-116-million-coldcard-hack",
+        "type": "secondary"
+      },
+      {
+        "title": "Explained: The Coldcard Hack (July 2026)",
+        "publisher": "Halborn",
+        "url": "https://www.halborn.com/blog/post/explained-the-coldcard-hack-july-2026",
+        "type": "secondary"
+      },
+      {
+        "title": "Coldcard exploit reignites Bitcoin self-custody debate",
+        "publisher": "CoinDesk",
+        "url": "https://www.coindesk.com/business/2026/07/31/coldcard-s-usd38-million-so-far-exploit-shakes-faith-in-self-custody-may-push-investors-to-etfs",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "bip39-mnemonic-seed-phrases",
+      "bip32-hierarchical-deterministic-wallets"
+    ]
+  },
+  {
+    "slug": "sec-proposes-regulation-crypto-assets",
+    "date": "2026-08-18",
+    "precision": "day",
+    "title": "The SEC proposes Regulation Crypto Assets",
+    "summary": "The agency proposed a dedicated offering and disclosure regime for crypto assets sold as investment contracts.",
+    "details": "The rule would add a startup exemption of up to $5 million over four years and a fundraising exemption of up to $75 million a year, and would codify when an asset sold through an investment contract stops being subject to SEC oversight. Comments were due by 20 October 2026.",
+    "whyItMatters": "After years of regulation by enforcement, the SEC put a written path for token offerings out for comment, though one that does not apply to bitcoin itself.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "guidance",
+    "scope": "ecosystem",
+    "significance": "context",
+    "curated": false,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "SEC",
+      "Regulation Crypto Assets",
+      "rulemaking"
+    ],
+    "actors": [
+      "U.S. Securities and Exchange Commission",
+      "Paul Atkins"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "Statement on Regulation Crypto Assets",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/newsroom/speeches-statements/uyeda-statement-regulation-crypto-assets-081826",
+        "type": "primary"
+      },
+      {
+        "title": "SEC Proposes \"Regulation Crypto Assets\"",
+        "publisher": "Congressional Research Service",
+        "url": "https://www.congress.gov/crs-product/LSB11480",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "sec-crypto-task-force",
+      "sec-sues-binance-and-coinbase"
+    ]
+  },
+  {
+    "slug": "clarity-act-senate-cloture-fails",
+    "date": "2026-09-15",
+    "precision": "day",
+    "title": "The CLARITY Act stalls on the Senate floor",
+    "summary": "A motion to begin debate on the market-structure bill failed 49 to 50, short of the 60 votes cloture requires.",
+    "details": "The sticking point was ethics language on officials' crypto holdings rather than the market-structure provisions themselves. The failure left the bill stalled rather than formally dead, with any revival pushed past the November 2026 midterm elections.",
+    "whyItMatters": "A decade of lobbying for a statutory framework has so far produced House passage and a committee vote, but no law.",
+    "category": "policy",
+    "categories": [
+      "policy",
+      "finance"
+    ],
+    "kind": "law",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "CLARITY Act",
+      "Senate",
+      "cloture",
+      "market structure"
+    ],
+    "actors": [
+      "U.S. Senate"
+    ],
+    "evidence": "documented",
+    "sources": [
+      {
+        "title": "H.R.3633 — Digital Asset Market Clarity Act of 2025",
+        "publisher": "U.S. Congress",
+        "url": "https://www.congress.gov/bill/119th-congress/house-bill/3633",
+        "type": "primary"
+      },
+      {
+        "title": "US Crypto Policy Tracker: Legislative Developments",
+        "publisher": "Latham & Watkins",
+        "url": "https://www.lw.com/en/us-crypto-policy-tracker/legislative-developments",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "clarity-act-passes-house",
+      "clarity-act-senate-banking-advances"
     ]
   }
 ]

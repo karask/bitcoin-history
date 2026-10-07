@@ -16,9 +16,9 @@ const kinds = new Set([
 ]);
 const evidenceStates = new Set(["documented", "well-supported", "disputed", "estimated"]);
 
-// Kept in step with LANDMARK_LIMIT / MAJOR_LIMIT in lib/event-schema.ts.
+// Kept in step with LANDMARK_LIMIT / MAJOR_SHARE in lib/event-schema.ts.
 const LANDMARK_LIMIT = 32;
-const MAJOR_LIMIT = 120;
+const MAJOR_SHARE = 0.45;
 
 const bySignificance = (level) => events.filter((event) => event.significance === level);
 
@@ -26,7 +26,11 @@ test("ships a substantial, unique and chronologically bounded archive", () => {
   assert.ok(events.length >= 240 && events.length <= 340, `expected 240–340 events, found ${events.length}`);
   const slugs = new Set(events.map((event) => event.slug));
   assert.equal(slugs.size, events.length, "event slugs must be unique");
-  assert.ok(events.every((event) => event.date >= "1980-01-01" && event.date <= "2026-08-28"));
+  // No future-dated records: the bound is today rather than a fixed date, which went
+  // stale the first time the archive was extended.
+  const today = new Date().toISOString().slice(0, 10);
+  const outOfRange = events.filter((event) => event.date < "1980-01-01" || event.date > today);
+  assert.deepEqual(outOfRange.map((event) => `${event.slug} ${event.date}`), [], "records dated outside 1980–today");
 });
 
 test("significance tiers stay meaningful", () => {
@@ -37,7 +41,8 @@ test("significance tiers stay meaningful", () => {
     `landmark is a scarce tier: ${landmarks.length} exceeds the cap of ${LANDMARK_LIMIT}`,
   );
   assert.ok(landmarks.length >= 24, "the archive needs a full set of presentation landmarks");
-  assert.ok(majors.length <= MAJOR_LIMIT, `major inflated to ${majors.length}, cap is ${MAJOR_LIMIT}`);
+  const majorCap = Math.floor(events.length * MAJOR_SHARE);
+  assert.ok(majors.length <= majorCap, `major inflated to ${majors.length} of ${events.length}; cap is ${majorCap}`);
   for (const event of landmarks) {
     assert.equal(event.curated, true, `${event.slug} is a landmark but not curated`);
   }

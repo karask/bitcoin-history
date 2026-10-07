@@ -16,6 +16,11 @@ import {
 import { continentLabels, countries, matchesPlace, subdivisions, type ContinentId } from "@/lib/places";
 import priceContext from "@/content/price-context.json";
 
+// The bundled data is refreshed together, so its retrieval date is the archive's revision.
+// Formatted in UTC with a fixed locale so server and client render the same string.
+const ARCHIVE_UPDATED = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })
+  .format(new Date(`${priceContext.source.retrievedOn}T00:00:00Z`)).toUpperCase();
+
 type ViewPreset = "curious" | "enthusiast" | "classroom";
 type ScopePreset = "curated" | "all";
 
@@ -303,6 +308,6 @@ export default function TimelineExplorer({ events }: { events: TimelineEvent[] }
       <h2>History, with receipts.</h2>
       <div><p>Every record includes a direct source wherever one survives: blocks and transactions, BIPs and release notes, court records and enacted laws.</p><p>Claims are labelled when dates are estimated or interpretations are disputed. Exchange failures are never described as protocol failures.</p><p>The archive is editorially reviewed, versioned, and designed to accept corrections without silently rewriting the past.</p></div>
     </section>
-    <footer className="site-footer"><span>BITCOIN TIMECHAIN</span><span>ENGLISH · TRANSLATION READY</span><span>UPDATED 24 AUG 2026</span></footer>
+    <footer className="site-footer"><span>BITCOIN TIMECHAIN</span><span>ENGLISH · TRANSLATION READY</span><span>UPDATED {ARCHIVE_UPDATED}</span></footer>
   </main>;
 }

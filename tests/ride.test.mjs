@@ -9,7 +9,9 @@ import { installCanvasStub } from "./helpers/canvas.mjs";
 const read = async name => JSON.parse(await readFile(new URL(`../content/${name}.json`, import.meta.url), "utf8"));
 const all = [...await read("events-prehistory"), ...await read("events-early"), ...await read("events-late")].sort((a,b) => a.date.localeCompare(b.date));
 const prices = await read("price-context");
-const track = buildTrack(all, prices.values, { resolution: 2400, lastObservationDate: "2026-08-23" });
+// Same coverage the app reads from the bundle, so the test tracks every price refresh.
+const lastObservationDate = prices.source.coverage.match(/through (\d{4}-\d{2}-\d{2})/)[1];
+const track = buildTrack(all, prices.values, { resolution: 2400, lastObservationDate });
 const path = createRidePath(track, sampleTrack);
 
 test("3D height, rail position and price use the same chronological parameter", () => {

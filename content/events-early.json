@@ -3756,6 +3756,59 @@
     ]
   },
   {
+    "slug": "newsweek-names-dorian-nakamoto",
+    "date": "2014-03-06",
+    "precision": "day",
+    "title": "Newsweek names Dorian Nakamoto as Satoshi",
+    "summary": "A cover story identified a 64-year-old engineer in Temple City, California, as Bitcoin's creator.",
+    "details": "The case drew on his name, an engineering career that included classified defence contracting, and family members' descriptions of his temperament. He denied any connection to Bitcoin, and most of the community dismissed the evidence as circumstantial.",
+    "whyItMatters": "It became the cautionary example of the hunt for Satoshi: a private person's life upended by a circumstantial guess.",
+    "category": "origins",
+    "categories": [
+      "origins",
+      "crisis"
+    ],
+    "kind": "culture",
+    "scope": "ecosystem",
+    "significance": "major",
+    "curated": true,
+    "places": [
+      {
+        "country": "US"
+      }
+    ],
+    "tags": [
+      "Satoshi Nakamoto",
+      "Newsweek",
+      "identity",
+      "privacy"
+    ],
+    "actors": [
+      "Newsweek",
+      "Dorian Nakamoto",
+      "Leah McGrath Goodman"
+    ],
+    "evidence": "disputed",
+    "sources": [
+      {
+        "title": "'Newsweek' Says It Found Bitcoin's Founder: 4 Things To Know",
+        "publisher": "NPR",
+        "url": "https://www.npr.org/sections/alltechconsidered/2014/03/06/286833324/4-things-to-take-away-from-newsweek-s-report-on-the-founder-of-bitcoin",
+        "type": "secondary"
+      },
+      {
+        "title": "How the Hunt for Satoshi Turned Dorian Nakamoto's Life Upside Down",
+        "publisher": "Bitcoin Magazine",
+        "url": "https://bitcoinmagazine.com/culture/how-the-hunt-for-satoshi-turned-dorian-nakamoto-s-life-upside-down-the-inside-story",
+        "type": "secondary"
+      }
+    ],
+    "related": [
+      "craig-wright-claims-satoshi-identity",
+      "hbo-money-electric-names-peter-todd"
+    ]
+  },
+  {
     "slug": "bitcoin-core-version-0-9-released",
     "date": "2014-03-19",
     "precision": "day",

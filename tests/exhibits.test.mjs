@@ -12,8 +12,8 @@ const all = (await Promise.all(["prehistory", "early", "late"].map(async name =>
 const record = slug => all.find(e => e.slug === slug);
 const design = slug => exhibitDesign(record(slug));
 
-test("all 275 records have explicit, non-orphaned editorial assignments", () => {
-  assert.equal(all.length, 275);
+test("all 292 records have explicit, non-orphaned editorial assignments", () => {
+  assert.equal(all.length, 292);
   assert.deepEqual(Object.keys(exhibitDesigns).sort(), all.map(e => e.slug).sort());
   assert.equal(new Set(Object.values(exhibitDesigns).map(d => d.kind)).size, 24);
 });

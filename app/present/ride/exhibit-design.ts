@@ -28,7 +28,7 @@ assign("computer", "client", "running", `hal-finney-running-bitcoin`);
 assign("computer", "transaction", "sent", `first-person-to-person-bitcoin-transaction first-bitcoin-fiat-trade`);
 assign("computer", "forum", "published", `satoshi-p2p-foundation-announcement bitcointalk-forum-launched satoshi-last-public-forum-post hodl-post-written`);
 assign("computer", "wiki", "published", `bitcoin-wiki-founded`);
-assign("computer", "release", "released", `bitcoin-version-0-1-released bitcoin-version-0-2-released bitcoin-version-0-3-released bitcoin-qt-version-0-5-released bitcoin-qt-version-0-8-released bitcoin-core-version-0-9-released bitcoin-core-version-0-10-released bitcoin-core-version-0-12-released bitcoin-core-0-13-1-segwit-release`);
+assign("computer", "release", "released", `bitcoin-version-0-1-released bitcoin-version-0-2-released bitcoin-version-0-3-released bitcoin-qt-version-0-5-released bitcoin-qt-version-0-8-released bitcoin-core-version-0-9-released bitcoin-core-version-0-10-released bitcoin-core-version-0-12-released bitcoin-core-0-13-1-segwit-release bitcoin-core-31-cluster-mempool`);
 assign("genesis", "newspaper", "mined", `genesis-block-mined`);
 assign("pizza", "offer", "pending", `bitcoin-pizza-offer-posted`);
 assign("pizza", "purchase", "complete", `bitcoin-pizza-purchase`);
@@ -143,7 +143,7 @@ assign("law", "tender", "voluntary", `el-salvador-amends-bitcoin-law`);
 assign("law", "tender", "agreement", `el-salvador-imf-bitcoin-agreement`);
 assign("law", "reporting", "enacted", `us-infrastructure-act-crypto-broker-reporting`);
 assign("law", "account-gate", "frozen", `canada-emergencies-act-account-freezes`);
-assign("law", "order", "directed", `us-digital-assets-executive-order us-digital-financial-technology-order us-fintech-regulatory-integration-order`);
+assign("law", "order", "directed", `us-digital-assets-executive-order us-digital-financial-technology-order us-fintech-regulatory-integration-order us-401k-alternative-assets-order`);
 assign("law", "mica", "agreement", `eu-mica-political-agreement`);
 assign("law", "mica", "adopted", `eu-council-adopts-mica`);
 assign("law", "mica", "effective", `mica-fully-applies`);
@@ -179,7 +179,7 @@ assign("commerce", "marketplace", "open", `openbazaar-one-point-zero-launch`);
 assign("commerce", "games", "accepting", `steam-accepts-bitcoin`);
 assign("commerce", "games", "stopped", `steam-drops-bitcoin`);
 assign("commerce", "car", "stopped", `tesla-suspends-bitcoin-payments`);
-assign("treasury", "corporate", "buying", `microstrategy-first-bitcoin-treasury-purchase square-buys-bitcoin massmutual-bitcoin-purchase`);
+assign("treasury", "corporate", "buying", `microstrategy-first-bitcoin-treasury-purchase square-buys-bitcoin massmutual-bitcoin-purchase twenty-one-capital-launched`);
 assign("treasury", "car", "buying", `tesla-bitcoin-purchase-disclosed`);
 assign("treasury", "car", "selling", `tesla-sells-most-bitcoin`);
 assign("treasury", "corporate", "selling", `strategy-sells-bitcoin`);
@@ -190,7 +190,7 @@ assign("treasury", "national", "established", `us-strategic-bitcoin-reserve`);
 assign("treasury", "state", "established", `texas-strategic-bitcoin-reserve-law`);
 assign("media", "news", "published", `bitcoin-featured-on-slashdot time-magazine-covers-bitcoin gawker-silk-road-bitcoin-story`);
 assign("media", "film", "released", `weusecoins-video-released`);
-assign("media", "identity-claim", "disputed", `craig-wright-claims-satoshi-identity`);
+assign("media", "identity-claim", "disputed", `craig-wright-claims-satoshi-identity newsweek-names-dorian-nakamoto hbo-money-electric-names-peter-todd`);
 assign("memorial", "finney", "remembrance", `hal-finney-dies`);
 assign("auction", "paddles", "auction", `us-marshals-first-bitcoin-auction`);
 assign("auction", "sale", "completed", `saxony-completes-seized-bitcoin-sale`);
@@ -207,6 +207,20 @@ assign("inscription", "art", "milestone", `ordinals-ten-million-inscriptions`);
 assign("inscription", "token", "experiment", `brc20-experiment-deployed`);
 assign("inscription", "runes", "launched", `runes-protocol-launch`);
 assign("atm", "cash", "open", `first-public-bitcoin-atm`);
+
+// October 2026 additions. Each reuses an existing scene: new motifs and states only
+// change labels, except where noted in exhibit-scenes.ts.
+assign("protocol", "post-quantum", "proposed", `bip360-post-quantum-output-type`);
+assign("mining", "hashrate", "milestone", `bitcoin-hashrate-one-zettahash`);
+assign("security", "hardware-wallet", "stolen", `coldcard-seed-generation-exploit`);
+assign("treasury", "national", "announced", `pakistan-strategic-bitcoin-reserve`);
+assign("treasury", "central-bank", "test-portfolio", `czech-national-bank-bitcoin-test-portfolio`);
+assign("law", "clemency", "pardoned", `ross-ulbricht-pardoned changpeng-zhao-pardoned`);
+assign("law", "retail-access", "permitted", `uk-retail-crypto-etn-access`);
+assign("law", "rulemaking", "proposed", `sec-proposes-regulation-crypto-assets`);
+assign("law", "senate-bill", "cloture-failed", `clarity-act-senate-cloture-fails`);
+assign("court", "ruling", "partial-verdict", `roman-storm-tornado-cash-verdict`);
+assign("court", "sentencing", "sentenced", `samourai-founders-sentenced`);
 
 export const exhibitDesigns: Readonly<Record<string, Readonly<ExhibitDesign>>> = designs;
 export function exhibitDesign(event: Pick<PresentationEvent, "slug">): Readonly<ExhibitDesign> {
