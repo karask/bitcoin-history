@@ -90,8 +90,9 @@ export const setlists: Setlist[] = [
       || (event.kind === "activation" && event.significance !== "context")
       || SCALING_WAR.has(event.slug),
     // Not forks or activations, but the same argument: who sets node policy, and how
-    // the rules might change to survive quantum computers.
-    feature: ["bitcoin-core-v30-op-return-policy", "bip360-post-quantum-output-type"],
+    // the rules might change to survive quantum computers. Core 31's cluster mempool
+    // is the next node-policy change after v30's.
+    feature: ["bitcoin-core-v30-op-return-policy", "bitcoin-core-31-cluster-mempool", "bip360-post-quantum-output-type"],
   },
   {
     id: "boom-and-bust",
@@ -179,7 +180,11 @@ export const setlists: Setlist[] = [
     tagline: "CPUs to ASICs, a halving every four years, and the night half the miners went dark.",
     accent: "mining",
     limit: 22,
-    select: (event) => event.categories.includes("mining"),
+    // Mining runs through many records as a secondary tag. For the minor ones that is
+    // not enough: time spacing otherwise filled the show's spare slots with an exchange
+    // rate and an Ordinals count ahead of the first difficulty increase.
+    select: (event) => event.categories.includes("mining")
+      && (event.category === "mining" || event.significance !== "context"),
   },
   {
     id: "satoshi-question",

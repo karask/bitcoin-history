@@ -88,7 +88,7 @@ test("threads that a show opens are allowed to close", () => {
   assert.ok(law.has("clarity-act-senate-cloture-fails"), "the CLARITY Act's story must reach the Senate floor");
 });
 
-test("every new major record from the October 2026 review has a show", () => {
+test("records from the October 2026 review are placed in their shows", () => {
   const placements = {
     "newsweek-names-dorian-nakamoto": "satoshi-question",
     "hbo-money-electric-names-peter-todd": "satoshi-question",
@@ -103,11 +103,24 @@ test("every new major record from the October 2026 review has a show", () => {
     "us-401k-alternative-assets-order": "money-becomes-real",
     "czech-national-bank-bitcoin-test-portfolio": "money-becomes-real",
     "bip360-post-quantum-output-type": "fork-wars",
+    "bitcoin-core-31-cluster-mempool": "fork-wars",
     "coldcard-seed-generation-exploit": "broken-trust",
   };
   for (const [slug, id] of Object.entries(placements)) {
     assert.ok(bySlug.has(slug), `${slug} is not in the corpus`);
     assert.ok(slugsOf(id).has(slug), `${slug} is not in ${id}`);
+  }
+});
+
+test("the machine's minor chapters are about mining, not merely tagged with it", () => {
+  const machine = show("the-machine");
+  for (const event of machine) {
+    if (event.significance !== "context") continue;
+    assert.equal(event.category, "mining", `${event.slug} is a ${event.category} record in The Machine`);
+  }
+  assert.ok(machine.some((event) => event.slug === "first-bitcoin-difficulty-increase"));
+  for (const slug of ["new-liberty-standard-exchange-rate", "ordinals-ten-million-inscriptions"]) {
+    assert.ok(!machine.some((event) => event.slug === slug), `${slug} belongs to other shows`);
   }
 });
 
