@@ -25,12 +25,15 @@ test("server-renders the timeline explorer and site metadata", async () => {
   assert.match(html, /BITCOIN TIMECHAIN/i);
   assert.match(html, /History doesn’t move/i);
   assert.match(html, /One chain\. Hundreds/i);
-  assert.match(html, /Start cinematic ride/i);
+  assert.match(html, /Start the 3D ride/i);
   assert.match(html, /Ride through Bitcoin history in 3D/i);
   assert.match(html, /class="browse-events" href="#explore"/);
   assert.match(html, /class="hero-scroll" href="#explore"/);
   assert.match(html, /Scroll to explore the events/i);
-  assert.match(html, /Event timeline/i);
+  assert.match(html, /ride-preview\.webp/);
+  assert.doesNotMatch(html, /01 \/ ORIGINS/, "the hero kicker no longer carries a stale chapter label");
+  // One header everywhere: the same destinations under the same names.
+  assert.match(html, />Timeline<\/a>.*>3D ride<\/a>.*>Method<\/a>/s);
   assert.match(html, /VISIBLE CHAIN/i);
   assert.match(html, /ALL EVENTS/i);
   assert.match(html, /FILTERS/i);
@@ -39,6 +42,17 @@ test("server-renders the timeline explorer and site metadata", async () => {
   assert.match(html, new RegExp(`/events/${firstCuratedEvent.slug}`, "i"));
   assert.match(html, /og\.png/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("the archive ships a visible search and a year jump bar", async () => {
+  const html = await (await render("/")).text();
+  // Search is in the page, not behind the Filters button.
+  assert.match(html, /<input[^>]*type="search"/);
+  for (const year of new Set(all.filter((event) => event.curated).map((event) => event.date.slice(0, 4)))) {
+    assert.match(html, new RegExp(`href="#year-${year}"`), `no jump link for ${year}`);
+    assert.match(html, new RegExp(`id="year-${year}"`), `no year group for ${year}`);
+  }
+  assert.match(html, /aria-pressed="true"[^>]*>List</, "the compact list is the default layout");
 });
 
 test("the white-paper record includes a licensed archive artifact", async () => {
@@ -59,8 +73,24 @@ test("event pages distinguish exact-date daily reference prices from sourced mil
   assert.match(html, /Mt\. Gox parity threshold/);
   assert.match(html, /\$1\.00/);
   assert.doesNotMatch(html, /MONTH CLOSE|\$0\.64/);
-  const pizza = await render("/events/bitcoin-pizza-purchase");
-  assert.match(await pizza.text(), /No recorded daily price/);
+  // The pizza purchase predates the first observation, and says so rather than showing a price.
+  const pizza = await (await render("/events/bitcoin-pizza-purchase")).text();
+  assert.match(pizza, /Before the first recorded exchange price/);
+  assert.doesNotMatch(pizza, /<strong>\$[\d.,]+<\/strong>/);
+});
+
+test("event pages link into the ride and chart the price at the time", async () => {
+  const html = await (await render("/events/first-bitcoin-halving")).text();
+  assert.match(html, /Ride to this stop/);
+  // The first show that stops here, starting at this event, returning to this record.
+  assert.match(html, /href="\/present\?setlist=grand-tour&amp;event=first-bitcoin-halving&amp;from=record"/);
+  assert.match(html, /IN THE SHOWS/);
+  assert.match(html, /class="price-at-time"/);
+  assert.match(html, /role="img" aria-label="Bitcoin price history on a log scale/);
+  assert.match(html, />Timeline<\/a>.*>3D ride<\/a>.*>Method<\/a>/s);
+  // A month-precision record has no daily price, and the page says why.
+  const monthly = all.find((event) => event.precision === "month" && event.date >= "2011-01-01");
+  assert.match(await (await render(`/events/${monthly.slug}`)).text(), /Exact date unknown, so no daily price/);
 });
 
 test("event detail metadata is record-specific and clears the generic card", async () => {
@@ -79,9 +109,13 @@ test("presentation route renders a user-triggered launch", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Enter the Timechain/i);
-  assert.match(html, /Sound remains off/i);
-  assert.match(html, /Rail follows a smoothed price trend/i);
-  assert.match(html, /Comfort starts ON/i);
+  assert.match(html, /Sound stays off until you turn it on/i);
+  assert.match(html, /track follows a smoothed price trend/i);
+  assert.match(html, /Comfort mode starts on/i);
+  assert.match(html, /ride-launch\.webp/);
+  // Every other show is offered on the start screen, with its length.
+  assert.match(html, /The Satoshi Question[\s\S]*?\d+ stops/);
+  assert.doesNotMatch(html, /Rail follows/, "the start screen no longer uses the old Rail name");
   assert.match(html, /Presentation mode — Bitcoin Timechain/i);
 });
 

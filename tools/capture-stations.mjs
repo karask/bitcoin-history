@@ -48,7 +48,7 @@ const DEFAULT_STATIONS = [
   "bitcoin-2025-all-time-high",
 ];
 
-const HUD = ".presentation-chrome, .presentation-controls, .presentation-stage, .ride-hud, .keyboard-hint";
+const HUD = ".presentation-chrome, .presentation-controls, .presentation-stage, .ride-hud, .ride-settings, .keyboard-hint";
 
 async function launch() {
   return chromium.launch({

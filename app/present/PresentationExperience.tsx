@@ -20,6 +20,7 @@ import priceContext from "@/content/price-context.json";
 import { formatDailyPrice } from "@/lib/prices";
 import RailMode from "./RailMode";
 import RideHUD from "./ride/RideHUD";
+import RideSettings from "./RideSettings";
 import type { RideTelemetry, RideView } from "@/lib/ride-path";
 import { sitePath } from "@/lib/site-path";
 import { matchesPlace } from "@/lib/places";
@@ -73,6 +74,10 @@ export default function PresentationExperience({
   const queryAppliedRef = useRef(false);
   const detailRef = useRef<HTMLDialogElement>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  /** No pointer or key input for a while: the controls step aside while the train moves. */
+  const [idle, setIdle] = useState(false);
+  const settingsButtonRef = useRef<HTMLButtonElement>(null);
   const [rideView, setRideView] = useState<RideView>("exhibit");
   const [telemetry, setTelemetry] = useState<RideTelemetry | null>(null);
   const [journey, setJourney] = useState(() => ({ events: initialEvents, returnHref: initialReturnHref,
@@ -166,7 +171,8 @@ export default function PresentationExperience({
     for (const key of ["scope", "cat", "kind", "q", "from", "to", "place", "sig", "domain", "evidence"]) {
       const value = params.get(key); if (value && !(key === "scope" && value === "curated")) returnParams.set(key, value);
     }
-    const returnHref = requested && !params.has("setlist") ? `/events/${requested.slug}` : `/${returnParams.size ? `?${returnParams}` : ""}#events`;
+    const fromRecord = requested && (!params.has("setlist") || params.get("from") === "record");
+    const returnHref = fromRecord ? `/events/${requested.slug}` : `/${returnParams.size ? `?${returnParams}` : ""}#events`;
     setJourney({ events: selected, returnHref, setlistId: id, setlistTitle: title, setlistKicker: kicker, setlistTagline: tagline });
     const requestedIndex = requested ? selected.findIndex(event => event.slug === requested.slug) : 0;
     const animationFrame = window.requestAnimationFrame(() => setCurrentIndex(Math.max(0, requestedIndex)));
@@ -242,7 +248,7 @@ export default function PresentationExperience({
       const isButtonOrLink = target?.matches("button, a");
 
       if (event.key === "Escape") {
-        if (detailsOpen) return;
+        if (settingsOpen) { setSettingsOpen(false); return; }
         if (document.fullscreenElement) void document.exitFullscreen();
         else window.location.assign(sitePath(returnHref));
         return;
@@ -265,7 +271,29 @@ export default function PresentationExperience({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [detailsOpen, goTo, reducedMotion, returnHref, safeIndex, started, togglePlay]);
+  }, [detailsOpen, goTo, reducedMotion, returnHref, safeIndex, settingsOpen, started, togglePlay]);
+
+  useEffect(() => {
+    if (!started) return;
+    let timer = 0;
+    const wake = () => {
+      setIdle(false);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setIdle(true), 2600);
+    };
+    wake();
+    const inputs = ["pointermove", "pointerdown", "keydown", "wheel", "touchstart"] as const;
+    for (const name of inputs) window.addEventListener(name, wake, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      for (const name of inputs) window.removeEventListener(name, wake);
+    };
+  }, [started]);
+
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false);
+    settingsButtonRef.current?.focus();
+  }, []);
 
   useEffect(() => () => {
     audioRef.current?.dispose();
@@ -419,7 +447,7 @@ export default function PresentationExperience({
   return (
     <div
       ref={shellRef}
-      className={`presentation-shell mode-${mode}${started ? " is-started" : ""}${arrived ? " is-arrived" : " is-travelling"}`}
+      className={`presentation-shell mode-${mode}${started ? " is-started" : ""}${arrived ? " is-arrived" : " is-travelling"}${idle && playing && !arrived && !settingsOpen && !detailsOpen ? " chrome-hidden" : ""}`}
       style={sceneStyle}
     >
       {started && mode === "ride" && (
@@ -464,22 +492,16 @@ export default function PresentationExperience({
             exit={{ opacity: 0, scale: reducedMotion ? 1 : 1.025 }}
             transition={{ duration: reducedMotion ? 0.12 : 0.65 }}
           >
+            <div className="launch-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${sitePath("/ride-launch.webp")})` }} />
             <div className="launch-topline">
               <span className="timechain-mark"><b>₿</b> BITCOIN TIMECHAIN</span>
-              <Link href={sitePath(returnHref)} className="text-link">EXIT TO ARCHIVE <span aria-hidden="true">↗</span></Link>
+              <Link href={sitePath(returnHref)} className="text-link"><span aria-hidden="true">←</span> Back<span className="link-detail"> to the {returnHref.startsWith("/events/") ? "record" : "archive"}</span></Link>
             </div>
 
             <div className="launch-copy">
-              <p className="micro-label">{setlistKicker || "A GUIDED JOURNEY"} / {eventCount} CHAPTERS</p>
+              <p className="micro-label">{setlistKicker || "A GUIDED JOURNEY"} · {eventCount} STOPS · {getYear(events[0])}–{getYear(events[eventCount - 1])}</p>
               <h1 id="launch-title">{setlistTitle}</h1>
               <p className="launch-deck">{setlistTagline}</p>
-
-              <p className="launch-premise">
-                Board a front-seat roller coaster shaped by Bitcoin’s price. Climb the rallies,
-                descend through bear markets, then stop inside detailed 3D historical exhibits.
-                Travel through forests, river valleys and seaside villages between stops.
-                Drag at an exhibit to look around. Zoom out to see the track.
-              </p>
 
               <button className="start-button" type="button" onClick={startJourney}>
                 <span className="start-icon" aria-hidden="true">▶</span>
@@ -488,32 +510,32 @@ export default function PresentationExperience({
                   Enter the Timechain
                 </span>
               </button>
-              <p className="launch-note">
-                Sound remains off until you choose to enable it.
-                {" Rail follows a smoothed price trend with broad, rounded hills. Comfort starts ON. Event prices use unchanged daily UTC observations; intraday milestones are shown separately. Not live quotes."}
-                {reducedMotion && " Your device requests reduced motion. Scenery animation stays still; choose Reader for the calmer 2D view."}
-              </p>
-
-              <nav className="setlist-picker" aria-label="Choose a different show">
-                <span className="micro-label">OR RIDE SOMETHING ELSE</span>
-                <ul>
-                  {setlistOptions.filter((option) => option.id !== setlistId).map((option) => (
-                    <li key={option.id}>
-                      <Link href={sitePath(`/present?setlist=${option.id}`)}>
-                        <strong>{option.title}</strong>
-                        <small>{option.kicker}</small>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <ul className="launch-facts">
+                <li>A roller coaster shaped by Bitcoin’s price, with a 3D exhibit at every stop</li>
+                <li>Sound stays off until you turn it on</li>
+                <li>Comfort mode starts on: steady horizon, gentle turns</li>
+                {reducedMotion && <li>Your device asks for reduced motion, so scenery stays still. The 2D reader is the calmer option.</li>}
+              </ul>
+              <details className="launch-data">
+                <summary>About the price data</summary>
+                <p>The track follows a smoothed price trend with broad, rounded hills. Event prices are unchanged daily UTC observations; intraday milestones are shown separately. Not live quotes.</p>
+              </details>
             </div>
 
-            <div className="launch-footer" aria-hidden="true">
-              <span>{getYear(events[0])}</span>
-              <i />
-              <span>{getYear(events[eventCount - 1])}</span>
-            </div>
+            <nav className="setlist-picker" aria-label="Choose a different show">
+              <span className="micro-label">OR RIDE ANOTHER SHOW</span>
+              <ul>
+                {setlistOptions.filter((option) => option.id !== setlistId).map((option) => (
+                  <li key={option.id}>
+                    <Link href={sitePath(`/present?setlist=${option.id}`)}>
+                      <small>{option.kicker}</small>
+                      <strong>{option.title}</strong>
+                      <span>{`${option.eventSlugs.length} stops`}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </motion.section>
         )}
       </AnimatePresence>
@@ -521,15 +543,12 @@ export default function PresentationExperience({
       {started && (
         <>
           <header className="presentation-chrome">
-            <Link className="exit-button" href={sitePath(returnHref)} aria-label="Exit presentation and return to the archive">
-              <span aria-hidden="true">←</span><span>EXIT</span>
+            <Link className="exit-button" href={sitePath(returnHref)} aria-label={returnHref.startsWith("/events/") ? "Exit the ride and return to the record" : "Exit the ride and return to the archive"}>
+              <span aria-hidden="true">←</span><span>Exit</span>
             </Link>
-            <div className="chrome-brand" aria-label="Bitcoin Timechain presentation">
-              <b>₿</b><span>{setlistTitle}</span>
-            </div>
             <p className="chapter-readout">
-              CHAPTER <strong>{String(safeIndex + 1).padStart(2, "0")}</strong>
-              <span>/</span>{String(eventCount).padStart(2, "0")}
+              <span className="chrome-show">{setlistTitle}</span>
+              <span className="chrome-count">STOP <strong>{String(safeIndex + 1).padStart(2, "0")}</strong> / {String(eventCount).padStart(2, "0")}</span>
             </p>
           </header>
 
@@ -630,16 +649,12 @@ export default function PresentationExperience({
             </div>
 
             <div className="chapter-scrubber">
-              <div className="scrubber-labels">
-                <span>{getYear(events[0])}</span>
-                <strong>{currentEvent.title}</strong>
-                <span>{getYear(events[eventCount - 1])}</span>
-              </div>
+              <span className="scrubber-year">{getYear(events[0])}</span>
               <div className="range-wrap">
                 <div className="range-progress" style={{ width: `${eventCount > 1 ? (safeIndex / (eventCount - 1)) * 100 : 100}%` }} />
                 <div className="range-markers" aria-hidden="true">
-                  {events.map((event) => (
-                    <i key={event.slug} className={`marker-${event.significance}`} />
+                  {events.map((event, index) => (
+                    <i key={event.slug} className={`marker-${event.significance}${index <= safeIndex ? " is-past" : ""}`} />
                   ))}
                 </div>
                 <input
@@ -659,102 +674,56 @@ export default function PresentationExperience({
                   aria-valuetext={`${safeIndex + 1} of ${eventCount}: ${currentEvent.title}`}
                 />
               </div>
+              <span className="scrubber-year">{getYear(events[eventCount - 1])}</span>
             </div>
 
             <div className="utility-controls">
-              <div className="mode-control" role="group" aria-label="Presentation mode">
-                <button
-                  type="button"
-                  className={mode === "ride" ? "is-active" : ""}
-                  onClick={() => setModeChoice("ride")}
-                  aria-pressed={mode === "ride"}
-                  disabled={Boolean(rideUnavailable)}
-                  title={rideUnavailable ? `3D unavailable: ${rideUnavailable}` : undefined}
-                >
-                  RIDE
-                </button>
-                <button
-                  type="button"
-                  className={mode === "reader" ? "is-active" : ""}
-                  onClick={() => setModeChoice("reader")}
-                  aria-pressed={mode === "reader"}
-                >
-                  READER
-                </button>
-              </div>
-              <div className="speed-control" role="group" aria-label="Playback speed">
-                {SPEEDS.map((option) => (
-                  <button
-                    type="button"
-                    key={option}
-                    className={speed === option ? "is-active" : ""}
-                    onClick={() => setSpeed(option)}
-                    aria-pressed={speed === option}
-                  >
-                    {option}×
-                  </button>
-                ))}
-              </div>
-              <div className="comfort-control">
               <button
+                ref={settingsButtonRef}
                 type="button"
-                className={`utility-button${comfort ? " is-active" : ""}`}
-                onClick={() => setComfortChoice(!comfort)}
-                aria-pressed={comfort}
-                aria-label={comfort ? "Turn comfort mode off" : "Turn comfort mode on"}
-                aria-describedby="comfort-explanation"
-                title="Comfort keeps a steady horizon, gentle pitch and slower camera turns, with no banking or speed zoom."
+                className={`utility-button settings-toggle${settingsOpen ? " is-active" : ""}`}
+                onClick={() => setSettingsOpen((open) => !open)}
+                aria-expanded={settingsOpen}
+                aria-controls="ride-settings"
+                aria-label="Ride settings"
               >
-                <span>{comfort ? "COMFORT ON" : "COMFORT OFF"}</span>
-              </button>
-              <p id="comfort-explanation" role="tooltip">Comfort ON limits pitch and camera turn speed, with no banking or speed zoom. OFF adds those coaster effects. The smoothed rail and gentle acceleration remain in both settings.</p>
-              </div>
-              <button
-                type="button"
-                className={`utility-button${soundEnabled ? " is-active" : ""}`}
-                onClick={() => void enableSound(!soundEnabled)}
-                disabled={audioBusy}
-                aria-pressed={soundEnabled}
-                aria-label={soundEnabled ? "Turn arrival chimes off" : "Turn arrival chimes on"}
-              >
-                <span className="sound-bars" aria-hidden="true"><i /><i /><i /></span>
-                <span>{audioBusy ? "STARTING…" : audioUnavailable ? "RETRY SOUND" : soundEnabled ? "SOUND ON" : "SOUND OFF"}</span>
-              </button>
-              <details className="audio-settings">
-                <summary>Audio settings</summary>
-                <div className="audio-settings-panel">
-                  <label htmlFor="ride-volume">Volume <output>{volume}%</output></label>
-                  <input id="ride-volume" type="range" min="0" max="100" value={volume} onChange={event => {
-                    const value = Number(event.target.value); setVolume(value); audioRef.current?.setVolume(value / 100);
-                  }} />
-                  <button type="button" onClick={() => void enableSound(true, true)} disabled={audioBusy}>Test sound</button>
-                  <p role="status">{audioUnavailable ?? (soundEnabled ? "Soft arrival chimes only. Travel is silent." : "Sound is off. Enable it for soft arrival chimes.")}</p>
-                  <p>If you hear nothing, unmute this browser tab and check your device volume and selected speakers or headphones.</p>
-                </div>
-              </details>
-              <button
-                type="button"
-                className="utility-button"
-                onClick={savePostcard}
-                aria-label="Save a postcard of this station"
-              >
-                <span>POSTCARD</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h9M15 6h2M3 14h2M8 14h9" /><circle cx="13.5" cy="6" r="1.8" /><circle cx="6.5" cy="14" r="1.8" /></svg>
+                <span>Settings</span>
               </button>
               <button
                 type="button"
-                className="utility-button fullscreen-button"
+                className="utility-button icon-only fullscreen-button"
                 onClick={() => void toggleFullscreen()}
                 aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
               >
-                <span className="fullscreen-icon" aria-hidden="true" />
-                <span>{isFullscreen ? "WINDOW" : "FULLSCREEN"}</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">{isFullscreen
+                  ? <path d="M7 3v4H3M13 3v4h4M7 17v-4H3M13 17v-4h4" />
+                  : <path d="M3 7V3h4M17 7V3h-4M3 13v4h4M17 13v4h-4" />}</svg>
               </button>
             </div>
           </footer>
 
-          <p className="keyboard-hint" aria-hidden="true">
-            ← → NAVIGATE&nbsp;&nbsp; SPACE PLAY / PAUSE&nbsp;&nbsp; C COMFORT&nbsp;&nbsp; ESC EXIT
-          </p>
+          {settingsOpen && <RideSettings
+            id="ride-settings"
+            onClose={closeSettings}
+            mode={mode}
+            onMode={setModeChoice}
+            rideUnavailable={rideUnavailable}
+            view={rideView}
+            onView={setRideView}
+            speeds={SPEEDS}
+            speed={speed}
+            onSpeed={(value) => setSpeed(value as (typeof SPEEDS)[number])}
+            comfort={comfort}
+            onComfort={setComfortChoice}
+            sound={{ enabled: soundEnabled, busy: audioBusy, error: audioUnavailable, volume }}
+            onSound={(next, test) => void enableSound(next, test)}
+            onVolume={(value) => { setVolume(value); audioRef.current?.setVolume(value / 100); }}
+            onPostcard={savePostcard}
+            fullscreen={isFullscreen}
+            onFullscreen={() => void toggleFullscreen()}
+          />}
         </>
       )}
     </div>

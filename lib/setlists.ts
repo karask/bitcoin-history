@@ -21,3 +21,18 @@ export function getFilteredSetlistEvents(params: EventFilterParams): TimelineEve
 export function countSetlistEvents(setlist: Setlist): number {
   return shapeSetlist(getAllEvents(), setlist).length;
 }
+
+let membership: Map<string, Setlist[]> | undefined;
+
+/** The shows that stop at an event, in setlist order, so a record can link into its rides. */
+export function getShowsForEvent(slug: string): Setlist[] {
+  if (!membership) {
+    membership = new Map();
+    for (const setlist of setlists) {
+      for (const event of shapeSetlist(getAllEvents(), setlist)) {
+        membership.set(event.slug, [...membership.get(event.slug) ?? [], setlist]);
+      }
+    }
+  }
+  return membership.get(slug) ?? [];
+}

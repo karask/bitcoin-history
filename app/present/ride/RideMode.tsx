@@ -166,12 +166,35 @@ export default function RideMode({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [track, events, reducedMotion]);
 
-  const pointer = useRef<{ x: number; y: number } | null>(null);
+  // One pointer orbits; two pointers pinch to zoom, as on any touch map.
+  const pointers = useRef(new Map<number, { x: number; y: number }>());
+  const pinch = useRef<number | null>(null);
+  const spread = () => {
+    const [a, b] = [...pointers.current.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
   return <canvas ref={canvasRef} className="ride-canvas" tabIndex={0}
-    aria-label="3D historical exhibit. Drag to orbit and scroll to zoom at a stop. Use arrow keys on this canvas to orbit, plus and minus to zoom."
-    onPointerDown={event => { if (view !== "exhibit") return; pointer.current = { x: event.clientX, y: event.clientY }; event.currentTarget.setPointerCapture(event.pointerId); }}
-    onPointerMove={event => { if (!pointer.current) return; sceneRef.current?.orbit(event.clientX - pointer.current.x, event.clientY - pointer.current.y); pointer.current = { x: event.clientX, y: event.clientY }; }}
-    onPointerUp={() => { pointer.current = null; }} onPointerCancel={() => { pointer.current = null; }}
+    aria-label="3D historical exhibit. Drag to orbit and scroll or pinch to zoom at a stop. Use arrow keys on this canvas to orbit, plus and minus to zoom."
+    onPointerDown={event => {
+      if (view !== "exhibit") return;
+      pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      event.currentTarget.setPointerCapture(event.pointerId);
+      pinch.current = pointers.current.size === 2 ? spread() : null;
+    }}
+    onPointerMove={event => {
+      const last = pointers.current.get(event.pointerId);
+      if (!last) return;
+      pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pointers.current.size === 2 && pinch.current !== null) {
+        const next = spread();
+        sceneRef.current?.zoom((pinch.current - next) * 2.5);
+        pinch.current = next;
+      } else if (pointers.current.size === 1) {
+        sceneRef.current?.orbit(event.clientX - last.x, event.clientY - last.y);
+      }
+    }}
+    onPointerUp={event => { pointers.current.delete(event.pointerId); pinch.current = null; }}
+    onPointerCancel={event => { pointers.current.delete(event.pointerId); pinch.current = null; }}
     onWheel={event => { if (view === "exhibit") sceneRef.current?.zoom(event.deltaY); }}
     onKeyDown={event => {
       if (view !== "exhibit") return;

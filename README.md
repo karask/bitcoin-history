@@ -18,17 +18,27 @@ npm run dev -- --hostname 100.96.113.72
 Open `http://100.96.113.72:3000/present` from this machine or an authorized
 Tailscale peer. For loopback-only development, use `npm run dev`.
 
-- **Auto / exhibits:** ride between consecutive chapters, then frame the exhibit.
-- **Front seat:** remain in the coaster, including at stops.
-- **Overhead:** see the price-shaped track from above.
-- Drag the exhibit to orbit; scroll or use `+` / `-` to zoom. Focus the canvas and
+The play bar holds only previous / play / next, the chapter timeline, **Settings** and
+fullscreen. While the train is moving and nothing is touched for a few seconds, the
+controls fade out so only the approach caption remains; any pointer, touch or key input
+brings them back, and keyboard focus keeps them visible.
+
+- **Camera** (top right on wide screens, in Settings on phones):
+  - **Auto:** ride between consecutive chapters, then frame the exhibit.
+  - **Front seat:** remain in the coaster, including at stops.
+  - **Overhead:** see the price-shaped track from above.
+- Drag the exhibit to orbit; scroll, pinch or use `+` / `-` to zoom. Focus the canvas and
   use arrow keys for keyboard orbiting. Outside the canvas, left/right navigate.
 - Space plays/pauses. Playback speed affects travel and stop duration. All chapter
   arrows travel along the track; seeking on the bottom timeline teleports to the
   selected event and preserves playback. Initial deep links also position directly.
 - **Read the story & sources** pauses the ride and opens the full sourced record.
-- **Ride** is the default, including for reduced-motion preferences. The former
-  Rail view is now **Reader**, a 2D price chart with the full reading panel;
+- **Settings** gathers everything else in one sheet: display (3D ride or 2D reader),
+  camera, speed, comfort, sound and volume, a postcard of the current stop, fullscreen,
+  the track-data notes and the keyboard shortcuts. Escape closes the sheet before it
+  exits the ride.
+- **3D ride** is the default, including for reduced-motion preferences. The former
+  Rail view is now the **2D reader**, a price chart with the full reading panel;
   the old separate Reader mode has been removed.
 - Travel accelerates away from an exhibit and brakes before the next stop.
   Tight price bends also trigger anticipatory braking. The front-seat camera stays
@@ -37,12 +47,25 @@ Tailscale peer. For loopback-only development, use `npm run dev`.
   look-ahead and 3.6-second exhibit transfers. It removes banking and speed-related
   zoom; **OFF** adds those coaster effects and uses 2.4-second transfers. Both settings
   retain the rounded rail and gentler acceleration/braking. Comfort reduces abrupt
-  motion but cannot guarantee that every viewer will be comfortable; Reader remains
-  available for a stationary 2D experience.
-- **Sound ON** plays a three-note confirmation and enables the synthesized
-  arrival chimes, with no continuous engine/buzzing sound. **Audio settings** has a
-  volume slider and **Test sound** button.
+  motion but cannot guarantee that every viewer will be comfortable; the 2D reader
+  remains available for a stationary experience.
+- **Sound** (in Settings) plays a three-note confirmation and enables the synthesized
+  arrival chimes, with no continuous engine/buzzing sound. Once on, a volume slider
+  and **Test sound** button appear.
   If the cue is silent, check the tab mute, device volume, and selected output.
+
+### Archive and event pages
+
+- The archive opens as a compact **List**, grouped by year; **Story** restores the
+  large reading cards. Search stays visible in a slim sticky bar with a year jump strip
+  (press `/` to focus it). Topics, scope and the **Filters** panel sit just below it.
+  **Price context** in Filters shows each event's daily reference price on one log scale.
+- Each event page shows its ride exhibit, rendered in place. three.js loads only when
+  the exhibit scrolls into view; drag or use the arrow keys to look around. Beside it,
+  **Ride to this stop** opens the event's first show at that stop (exiting returns to
+  the record), and the other shows that include it are listed. A small log-scale chart
+  marks the event on the whole price history.
+- Every archive page shares one header: **Timeline**, **3D ride**, **Method**.
 
 ### Data and interpretation
 
@@ -53,12 +76,12 @@ compression, positive-weight spatial filtering rounds the rail with a minimum
 100-world-unit Gaussian sigma, widened adaptively for tight curvature. Vertical
 exaggeration falls from 1,450 to 960 units. Peaks and turning points may soften or
 shift; stations sit on the rounded rail rather than being forced onto raw-price
-spikes. Raw data, Reader's 2D daily curve and the archive's event-date chart remain unchanged.
+spikes. Raw data, the 2D reader's daily curve and the event-page charts remain unchanged.
 Dates and unrounded values are preserved from the source. The displayed
 event price uses its exact dated observation at 00:00 UTC, independently of the
 interpolated rail. These are daily references, not live quotes, intraday highs/lows,
 or exact event-time transaction prices. Missing observations and events dated only
-to a month/year display no recorded daily price. The archive chart leaves gaps.
+to a month/year display no recorded daily price, and the charts leave gaps.
 Separately sourced parity/threshold and intraday-high milestones appear alongside
 the daily reference; differing exchange/index quotes are identified in their labels.
 Dates are compressed horizontally to pace the chapters; lateral bends are scenic.

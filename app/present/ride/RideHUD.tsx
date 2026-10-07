@@ -4,11 +4,12 @@ import type { RideTelemetry, RideView } from "@/lib/ride-path";
 import priceContext from "@/content/price-context.json";
 import { priceOnDate, formatDailyPrice } from "@/lib/prices";
 import { formatEventRange, type PresentationEvent } from "@/lib/event-schema";
+import { CAMERA_VIEWS } from "../RideSettings";
 
 export default function RideHUD({ track, telemetry, view, onView, event }: {
   track: Track; telemetry: RideTelemetry | null; view: RideView; onView: (view: RideView) => void; event: PresentationEvent;
 }) {
-  const line = useMemo(() => track.points.map((p, i) => `${i ? "L" : "M"}${(p.u * 300).toFixed(2)},${(76 - p.elevation * 68).toFixed(2)}`).join(" "), [track]);
+  const line = useMemo(() => track.points.map((p, i) => `${i ? "L" : "M"}${(p.u * 300).toFixed(2)},${(52 - p.elevation * 46).toFixed(2)}`).join(" "), [track]);
   const u = telemetry?.u ?? track.stations[0].u;
   const point = sampleTrack(track, u);
   const atEvent = !telemetry || telemetry.arrived;
@@ -19,23 +20,26 @@ export default function RideHUD({ track, telemetry, view, onView, event }: {
   const state = telemetry?.arrived ? "AT THE EXHIBIT" : telemetry?.phase === "paused" ? "PAUSED" : telemetry?.phase === "departing" ? "ACCELERATING" : telemetry?.phase === "braking" ? "BRAKING" : (telemetry?.grade ?? 0) > 0.04 ? "CLIMBING" : (telemetry?.grade ?? 0) < -0.04 ? "DESCENDING" : "ON THE TRACK";
   return <section className="ride-hud" aria-label="Ride camera and price context">
     <div className="ride-view-picker" role="group" aria-label="Camera view">
-      {(["seat", "exhibit", "overview"] as const).map(option => <button type="button" key={option} onClick={() => onView(option)} aria-pressed={view === option}>
-        {option === "seat" ? "Front seat" : option === "exhibit" ? "Auto / exhibits" : "Overhead"}
+      {CAMERA_VIEWS.map(option => <button type="button" key={option.id} onClick={() => onView(option.id)} aria-pressed={view === option.id} title={option.title}>
+        {option.label}
       </button>)}
     </div>
     <div className="ride-instruments">
-      <div className="ride-live-price"><span>{atEvent ? formatEventRange(event) : date} <i /> {state}</span><small className="ride-price-basis">DAILY REFERENCE · 00:00 UTC</small><strong>{formatDailyPrice(price)}</strong>
-        {milestone && <a className="ride-price-milestone" href={milestone.source.url} target="_blank" rel="noreferrer"><b>{milestone.approximate ? "≈ " : ""}{formatDailyPrice(milestone.usd)}</b> · {milestone.label} ↗</a>}
-      </div>
-      <svg viewBox="-2 0 304 84" role="img" aria-label="Ride elevation follows a smoothed logarithmic Bitcoin price trend; the dot marks your position.">
-        {[8, 42, 76].map(y => <line key={y} x1="0" y1={y} x2="300" y2={y} stroke="white" strokeOpacity="0.1" />)}
+      <p className="ride-status"><span>{atEvent ? formatEventRange(event) : date}</span><i aria-hidden="true" /><span>{state}</span></p>
+      <p className="ride-price">
+        {price !== null ? <strong>{formatDailyPrice(price)}</strong> : <strong className="is-empty">No daily price</strong>}
+        <small>BTC / USD · DAILY · 00:00 UTC</small>
+      </p>
+      {milestone && <a className="ride-price-milestone" href={milestone.source.url} target="_blank" rel="noreferrer"><b>{milestone.approximate ? "≈ " : ""}{formatDailyPrice(milestone.usd)}</b> · {milestone.label} ↗</a>}
+      <svg viewBox="-2 0 304 58" role="img" aria-label="Ride elevation follows a smoothed logarithmic Bitcoin price trend; the dot marks your position.">
         <path d={line} fill="none" stroke="#94b5bc" strokeWidth="1.5" />
-        <line x1={u * 300} y1="0" x2={u * 300} y2="82" stroke="#ffbb63" strokeOpacity="0.4" />
-        <circle cx={u * 300} cy={76 - point.elevation * 68} r="3.8" fill="#ffc476" />
+        <line x1={u * 300} y1="0" x2={u * 300} y2="56" stroke="#ffbb63" strokeOpacity="0.4" />
+        <circle cx={u * 300} cy={52 - point.elevation * 46} r="3.8" fill="#ffc476" />
       </svg>
       <div className="ride-chart-labels"><span>{track.span.from.slice(0, 4)}</span><span>SMOOTHED PRICE TREND</span><span>{track.span.to.slice(0, 4)}</span></div>
-      <details className="ride-data-note"><summary>About the track data</summary><p>Rail follows a smoothed price trend: centered two-week Gaussian weighting in log-price space, followed by distance-based rounding of compressed bends. Hills are lower and peaks/turning points may be softened or shifted; station heights follow this illustrative trend. The displayed price remains the unchanged daily reference at 00:00 UTC on the shown date. It is not an event-time trade or a daily high. Sourced milestones appear separately; markets may quote different highs. Horizontal time is compressed; sideways bends are scenic. Coverage: {priceContext.source.coverage}. Missing or imprecise dates show no recorded daily price; the pre-price rail is flat.</p><a href={priceContext.source.request} target="_blank" rel="noreferrer">Coin Metrics source ↗</a></details>
     </div>
-    <p className="orbit-hint">{effectiveView === "exhibit" ? "DRAG TO ORBIT · SCROLL TO ZOOM" : effectiveView === "overview" ? "THE MARKET, SEEN AS A LANDSCAPE" : "THE CLIMBS AND DROPS FOLLOW PRICE"}</p>
+    <p className="orbit-hint">{effectiveView === "exhibit"
+      ? <><span className="hint-pointer">Drag to look around · scroll to zoom</span><span className="hint-touch">Drag to look around · pinch to zoom</span></>
+      : effectiveView === "overview" ? "The market, seen as a landscape" : "The climbs and drops follow price"}</p>
   </section>;
 }
