@@ -93,6 +93,13 @@ test("event pages link into the ride and chart the price at the time", async () 
   assert.match(await (await render(`/events/${monthly.slug}`)).text(), /Exact date unknown, so no daily price/);
 });
 
+test("the site icon resolves from every page, not relative to the current path", async () => {
+  for (const path of ["/", "/present", "/events/bitcoin-pizza-purchase"]) {
+    const html = await (await render(path)).text();
+    assert.match(html, /<link rel="icon" href="\/favicon\.png"/, `${path}: icon must be root-relative`);
+  }
+});
+
 test("event detail metadata is record-specific and clears the generic card", async () => {
   const event = all.find((item) => item.slug === "bitcoin-white-paper-announced");
   const response = await render(`/events/${event.slug}`);
