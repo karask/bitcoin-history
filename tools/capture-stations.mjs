@@ -4,7 +4,7 @@
  *
  *   node tools/capture-stations.mjs capture <outDir> [--clean] [--setlist=id] [--viewport=1440x900] [slug ...]
  *   node tools/capture-stations.mjs pages   <outDir> [--full] [--viewport=1440x900] [/path ...]
- *   node tools/capture-stations.mjs compare <beforeDir> <afterDir> <out.png> [--title=text]
+ *   node tools/capture-stations.mjs compare <beforeDir> <afterDir> <out.png> [--title=text] [--width=1600]
  *
  * `capture` opens the ride at each station, pauses, lets the exhibit framing settle and
  * screenshots it. `--clean` hides the HUD so the scenery itself is what gets compared.
@@ -142,7 +142,8 @@ async function compare(beforeDir, afterDir, out) {
     figcaption.after{color:#7ee2a8}
   </style><h1>${title}</h1>${rows.join("")}`;
   const browser = await launch();
-  const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
+  // Narrower sheets keep phone-sized captures readable without a very tall image.
+  const page = await browser.newPage({ viewport: { width: Number(flags.width) || 1600, height: 1000 } });
   try {
     await page.setContent(html, { waitUntil: "load" });
     await page.screenshot({ path: out, fullPage: true });
