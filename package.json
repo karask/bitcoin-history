@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
     "preview:stations": "vite --config tools/station-gallery/vite.config.mjs",
+    "capture": "node tools/capture-stations.mjs",
     "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build",
     "build:pages": "GITHUB_PAGES=true WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build && node scripts/prepare-github-pages.mjs",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",

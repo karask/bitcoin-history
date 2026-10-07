@@ -125,6 +125,19 @@ no lights of their own. Each is material-batched to fewer than 65 meshes and
 Market sculptures are labeled directional illustrations; the rail remains the
 smoothed price-trend visualization. Its mini-chart uses the same rounded curve.
 
+### Before/after captures
+
+`npm run capture -- capture <dir> --clean [slug …]` opens the ride at each station,
+pauses, waits for the exhibit framing to settle and screenshots it with the HUD hidden.
+`npm run capture -- pages <dir> [--full] [/path …]` screenshots site routes, and
+`npm run capture -- compare <before> <after> <out.png>` pairs same-named files from two
+runs into one labelled sheet. Set `RIDE_URL`, and `PLAYWRIGHT_MODULE_PATH` /
+`CHROMIUM_EXECUTABLE_PATH` as for the browser tests.
+
+Capture on a real GPU. Under software GL the quality watchdog disables shadows, so ride
+captures abort when frames exceed `CAPTURE_MAX_FRAME_MS` (30 ms) rather than produce a
+"before" and "after" at different quality levels.
+
 ### Verification
 
 `npm test` builds the site and runs corpus, server-rendering, hydration, track,
