@@ -153,8 +153,8 @@ smoothed price-trend visualization. Its mini-chart uses the same rounded curve.
 `npm run capture -- capture <dir> --clean [slug …]` opens the ride at each station,
 pauses, waits for the exhibit framing to settle and screenshots it with the HUD hidden.
 `npm run capture -- pages <dir> [--full] [/path …]` screenshots site routes, and
-`npm run capture -- compare <before> <after> <out.png>` pairs same-named files from two
-runs into one labelled sheet. Set `RIDE_URL`, and `PLAYWRIGHT_MODULE_PATH` /
+`npm run capture -- compare <before> <after> <out.png> [--width=1600]` pairs same-named
+files from two runs into one labelled sheet (a narrower width suits phone captures). Set `RIDE_URL`, and `PLAYWRIGHT_MODULE_PATH` /
 `CHROMIUM_EXECUTABLE_PATH` as for the browser tests.
 
 Capture on a real GPU. Under software GL the quality watchdog disables shadows, so ride
