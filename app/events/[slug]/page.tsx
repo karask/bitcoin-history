@@ -13,6 +13,7 @@ import { buildPriceChart } from "@/lib/price-chart";
 import { formatGridPrice } from "@/lib/palette";
 import priceContext from "@/content/price-context.json";
 import ExhibitPreview from "./ExhibitPreview";
+import { eventImage, shareMetadata } from "@/lib/share-meta";
 
 type EventPageProps = { params: Promise<{ slug: string }> };
 
@@ -28,8 +29,7 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
   return {
     title,
     description: event.summary,
-    openGraph: { title, description: event.summary, type: "article", images: [] },
-    twitter: { card: "summary", title, description: event.summary, images: [] },
+    ...shareMetadata({ title, description: event.summary, path: `/events/${event.slug}`, type: "article", image: eventImage(event.slug, event.title) }),
   };
 }
 

@@ -193,6 +193,18 @@ the physical speakers or the operating system's output volume.
 `node tests/ride-smoothness-browser.mjs` checks continuous distant chapter selection
 and measures real-time seat alignment and camera motion through the 2017–2018 descent.
 
+## Share links and preview images
+
+Link previews (X, Slack, iMessage…) read static tags only, so query strings like
+`/present?setlist=grand-tour&event=<slug>` always show the generic card.
+
+- Share an event with **`https://kkarasavvas.com/bitcoin-history/present/<slug>`**. That page carries the
+  event's own title, summary and image, then opens the presentation at that event
+  (first show that stops there, else the default show). `/events/<slug>` has the same card.
+- Event cards live in `public/og/events/<slug>.png` (1200×630). Regenerate after adding or renaming events:
+  `PLAYWRIGHT_MODULE_PATH=… CHROMIUM_EXECUTABLE_PATH=… node tools/generate-event-og.mjs [slug …]`.
+  `tests/og-images.test.mjs` fails if a card is missing or stale.
+
 ## Underlying starter
 
 A clean full-stack starter running on

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { shareMetadata } from "@/lib/share-meta";
 import PresentationExperience from "./PresentationExperience";
 import { toTimelineEvent } from "@/lib/event-schema";
 import { getAllEvents, getEventBySlug } from "@/lib/events";
@@ -14,16 +15,9 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Presentation mode — Bitcoin Timechain",
   description: "A cinematic guided journey through the events that shaped Bitcoin.",
-  openGraph: {
-    title: "Presentation mode — Bitcoin Timechain",
-    description: "A cinematic guided journey through the events that shaped Bitcoin.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Presentation mode — Bitcoin Timechain",
-    description: "A cinematic guided journey through the events that shaped Bitcoin.",
-  },
+  // Query strings (?setlist=…&event=…) cannot change these static tags; per-event previews
+  // live at /present/<slug> (app/present/[slug]/page.tsx).
+  ...shareMetadata({ title: "Presentation mode — Bitcoin Timechain", description: "A cinematic guided journey through the events that shaped Bitcoin.", path: "/present" }),
 };
 
 export default function PresentPage() {
