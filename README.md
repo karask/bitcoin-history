@@ -9,6 +9,9 @@ creates the static export in `dist/client` with the `/bitcoin-history` base path
 used in production. It also normalizes Vinext's asset output for the GitHub
 project-site mount path.
 
+Use the GitHub Actions workflow in `.github/workflows/pages.yml` for all
+production releases. OpenAI Pages and OpenAI Sites are retired for this project.
+
 ## Run the local ride
 
 ```bash
