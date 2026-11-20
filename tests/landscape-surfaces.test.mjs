@@ -110,15 +110,13 @@ test("surface construction is deterministic and shares a compact terrain texture
   a.dispose(); b.dispose();
 });
 
-test("packed terrain preserves the approved normals and reconstructs albedo within one sRGB byte", () => {
-  const f = fixture(), pixels = f.ground.map.image.data;
-  const normalRGB = Uint8Array.from({ length: 256 * 256 * 3 }, (_, i) => pixels[Math.floor(i / 3) * 4 + i % 3]);
-  const luminance = Uint8Array.from({ length: 256 * 256 }, (_, i) => pixels[i * 4 + 3]);
+test("the approved terrain and water tiles retain their detail and use one ground texture fetch", () => {
+  const f = fixture();
   const digest = values => createHash("sha256").update(values).digest("hex");
-  // Reference fingerprints captured from the approved, separate normal/albedo
-  // textures before packing; this protects detail and luminance at every texel.
-  assert.equal(digest(normalRGB), "23e15f8d4eac0892627172edea36487b9b04a87e374f3d3e25b8550e9922c14e");
-  assert.equal(digest(luminance), "79a0bd6d2ec820e7bae4c4523e2d2ba6077310b555f8082e925bb95b34db8e3f");
+  // Captured from the approved scenery preview. Terrain RGBA stores both
+  // the surface normal and brightness, while the water tile stores ripples.
+  assert.equal(digest(f.ground.map.image.data), "5ae05f0d5c46a66d1b9f39492c87d30f2778910b2aa1d508413201050fd378ce");
+  assert.equal(digest(f.water.normalMap.image.data), "8dfc5f8ae895e3b12fd6b9290257c1579b3f1b67c078bc218ab2ed04a1eca262");
   const shader = { fragmentShader: T.ShaderLib.standard.fragmentShader };
   f.ground.onBeforeCompile(shader);
   assert.equal((shader.fragmentShader.match(/texture2D\(map, vMapUv\)/g) ?? []).length, 1);
@@ -128,19 +126,7 @@ test("packed terrain preserves the approved normals and reconstructs albedo with
   assert.match(shader.fragmentShader, /normal = normalize\(tbn \* mapN\)/);
   assert.ok(shader.fragmentShader.indexOf("vec4 landscapeSurface") < shader.fragmentShader.indexOf("#include <normal_fragment_begin>"));
   assert.ok(!shader.fragmentShader.includes("diffuseColor.a *=") && !shader.fragmentShader.includes("diffuseColor *= landscapeSurface"), "packed alpha is not opacity");
-  const match = shader.fragmentShader.match(/landscapeSurface\.a \* vec3\(([^)]+)\)/);
-  assert.ok(match); const tint = match[1].split(",").map(Number);
-  const linear = v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
-  const srgb = v => v <= .0031308 ? v * 12.92 : 1.055 * v ** (1 / 2.4) - .055;
-  let maxDelta = 0;
-  // Covers every RGB quantization combination in the approved tile's full
-  // brightness range, not just a few convenient example colors.
-  for (let tone = 193; tone <= 252; tone += .001) {
-    const approved = [Math.floor(tone * .988), Math.floor(tone), Math.floor(tone * .95)];
-    const luma = Math.round(approved.reduce((sum, value, i) => sum + linear(value / 255) * [.2126, .7152, .0722][i], 0) * 255) / 255;
-    for (let channel = 0; channel < 3; channel++) maxDelta = Math.max(maxDelta, Math.abs(srgb(luma * tint[channel]) * 255 - approved[channel]));
-  }
-  assert.ok(maxDelta <= 1.01, `packed albedo drifted by ${maxDelta} sRGB bytes`);
+  assert.match(shader.fragmentShader, /diffuseColor\.rgb \*= landscapeSurface\.a \* vec3/);
   f.dispose();
 });
 

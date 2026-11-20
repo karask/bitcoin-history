@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { makeTree, makeUnderstory } from "../app/present/ride/landscape-models.ts";
 
-// The previous scenery's triangle counts are ceilings for each shared model.
+// The approved tree prototypes set the triangle ceilings for each shared model.
 // Added instances multiply this cost, so both distance levels must stay bounded.
 const treeBudgets = {
-  oak: [2472, 188], pine: [2114, 154], birch: [2604, 188],
-  autumn: [2472, 188], willow: [3984, 188], orchard: [2832, 188],
+  oak: [1976, 162], pine: [1594, 122], birch: [2072, 162],
+  autumn: [1976, 162], willow: [1976, 162], orchard: [2136, 162],
 };
 const understoryBudgets = { grass: 520, flowers: 624, reeds: 504, rock: 180, hay: 384, fern: 2548 };
 
